@@ -5,24 +5,24 @@ import { Globe, Users, Layers } from "lucide-react";
 const products = [
 {
   icon: Globe,
-  title: "Persona.vn",
-  subtitle: "Nền tảng Định danh số",
+  title: "MERCY TECH",
+  subtitle: "GIẢI PHÁP CÔNG NGHỆ & KIẾN TRÚC HỆ THỐNG",
   description:
-  "Web Blog + NFC — Giúp cá nhân sở hữu \"Di sản số\" vĩnh viễn, thoát khỏi sự phụ thuộc vào mạng xã hội."
+  "Đơn vị chuyên cung cấp dịch vụ Outsource giải pháp công nghệ B2B. Không chỉ tạo ra những Platform mạnh mẽ để tung ra thị trường, Mercy Tech còn đóng vai trò phát triển các ứng dụng bổ trợ, tối ưu hóa luồng dữ liệu và hạ tầng kỹ thuật cho Mercy Shop. Mọi dòng code đều tuân thủ nguyên tắc tối thượng: Minh bạch và vị nhân sinh."
 },
 {
   icon: Users,
-  title: "Dedicated Team",
-  subtitle: "Outsourcing cao cấp",
+  title: "MERCY SHOP",
+  subtitle: "TRẠM PHÂN PHỐI ĐẶC QUYỀN",
   description:
-  "Cung cấp đội ngũ kỹ sư chuyên biệt cho các dự án công nghệ yêu cầu chất lượng cao nhất."
+  "Kênh thương mại điện tử và bán lẻ cao cấp. Mercy Shop là nơi phân phối trực tiếp các \"vũ khí\" phần cứng hữu hình của hệ sinh thái đến tay người dùng VIP: Từ các dòng Thẻ định danh NFC của Persona, đến Kính thông minh và thiết bị IoT bảo mật."
 },
 {
   icon: Layers,
-  title: "SaaS Platform",
-  subtitle: "Giải pháp bán lẻ",
+  title: "MERCY PLATFORM",
+  subtitle: "NỀN TẢNG ỨNG DỤNG & DỊCH VỤ",
   description:
-  "Phát triển các nền tảng SaaS tối ưu cho thị trường bán lẻ, tự động hóa vận hành."
+  "\"Trạm cung cấp\" các nền tảng phần mềm lõi của hệ sinh thái. Nơi tập trung phát triển và phát hành các ứng dụng giải quyết triệt để những nhu cầu thiết yếu của cộng đồng, giúp mọi người dễ dàng tiếp cận với sự tiện lợi của công nghệ."
 }];
 
 
