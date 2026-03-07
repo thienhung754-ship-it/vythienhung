@@ -41,7 +41,7 @@ const About = () => {
               <p>
                 Chuyên tâm nghiên cứu về <span className="text-foreground font-medium">AI Vật lý (Physical AI)</span> và <span className="text-foreground font-medium">AI Wearables</span>, đưa trí tuệ nhân tạo tích hợp sâu vào đời sống thực tế.
               </p>
-              <p>Triết lý quản trị của anh xoay quanh "Engineering Excellence" — tối ưu hóa hệ thống từ những dòng code (load < 2s) cho đến bài toán dòng tiền thực tế. Từng đảm nhận vị trí CEO ứng dụng sách nói Bookas, anh thể hiện sự quyết đoán mạnh mẽ trong việc xử lý khủng hoảng truyền thông nhằm bảo vệ an toàn tài chính cho cộng đồng.
+              <p>Triết lý quản trị của anh xoay quanh "Engineering Excellence" — tối ưu hóa hệ thống từ những dòng code cho đến bài toán dòng tiền thực tế. Từng đảm nhận vị trí CEO ứng dụng sách nói Bookas, anh thể hiện sự quyết đoán mạnh mẽ trong việc xử lý khủng hoảng truyền thông nhằm bảo vệ an toàn tài chính cho cộng đồng.
                 <span className="text-foreground font-medium">"Engineering Excellence"</span> – Tối ưu hiệu suất kỹ thuật tuyệt đối, tự động hóa quy trình lên đến 90% và cam kết tốc độ load hệ thống dưới 2 giây.
               </p>
             </div>

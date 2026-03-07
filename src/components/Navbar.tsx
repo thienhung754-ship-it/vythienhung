@@ -28,7 +28,7 @@ const Navbar = () => {
       
       <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
         <a href="#" className="text-sm font-semibold tracking-tight text-foreground">
-
+          @vythienhung
         </a>
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) =>
