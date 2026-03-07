@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Globe, Users, Layers } from "lucide-react";
+import { Globe, Users, Layers, FlaskConical } from "lucide-react";
 
 const products = [
 {
