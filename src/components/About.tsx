@@ -27,14 +27,14 @@ const About = () => {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-2 gap-6 md:gap-12 lg:gap-20 items-center">
           <motion.div
             variants={fadeUp}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
             className="order-2 md:order-1">
             
-            <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
+            <div className="space-y-3 md:space-y-6 text-xs md:text-base leading-relaxed text-muted-foreground">
               <p>
                 <span className="text-foreground font-semibold">Vy Thiên Hùng</span> (sinh ngày 31/12/2001) là một doanh nhân trẻ và chuyên gia kỹ thuật dày dặn kinh nghiệm thực chiến.
               </p>
