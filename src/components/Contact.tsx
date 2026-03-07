@@ -1,16 +1,14 @@
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
-import { Send } from "lucide-react";
+import { MessageCircle } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
+
+const ZALO_LINK = "https://zalo.me/0763068614";
 
 const Contact = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
+  const [showQR, setShowQR] = useState(false);
 
   return (
     <section id="contact" className="section-padding bg-secondary/40" ref={ref}>
@@ -27,48 +25,53 @@ const Contact = () => {
           </h2>
         </motion.div>
 
-        <motion.form
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          onSubmit={handleSubmit}
-          className="space-y-5"
+          className="flex flex-col items-center"
         >
-          {submitted ? (
-            <div className="text-center py-12">
-              <p className="text-foreground font-medium text-lg">Cảm ơn bạn đã liên hệ.</p>
-              <p className="text-muted-foreground text-sm mt-2">Tôi sẽ phản hồi sớm nhất.</p>
-            </div>
-          ) : (
-            <>
-              <input
-                type="text"
-                placeholder="Họ tên"
-                required
-                className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-foreground/20 transition"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                required
-                className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-foreground/20 transition"
-              />
-              <textarea
-                placeholder="Nội dung"
-                rows={4}
-                required
-                className="w-full px-4 py-3 bg-background border border-border rounded-xl text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-1 focus:ring-foreground/20 transition resize-none"
-              />
-              <button
-                type="submit"
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-foreground text-primary-foreground rounded-xl text-sm font-medium hover:opacity-90 transition-opacity"
+          <button
+            onClick={() => setShowQR(!showQR)}
+            className="flex items-center gap-3 px-8 py-4 bg-foreground text-primary-foreground rounded-2xl text-sm font-medium hover:opacity-90 transition-opacity"
+          >
+            <MessageCircle className="w-5 h-5" />
+            {showQR ? "Ẩn mã QR" : "Kết bạn qua Zalo"}
+          </button>
+
+          <AnimatePresence>
+            {showQR && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, scale: 0.9 }}
+                animate={{ opacity: 1, height: "auto", scale: 1 }}
+                exit={{ opacity: 0, height: 0, scale: 0.9 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                className="mt-8 flex flex-col items-center"
               >
-                Gửi tin nhắn
-                <Send className="w-4 h-4" />
-              </button>
-            </>
-          )}
-        </motion.form>
+                <div className="bg-background p-6 rounded-2xl border border-border shadow-lg">
+                  <QRCodeSVG
+                    value={ZALO_LINK}
+                    size={200}
+                    bgColor="transparent"
+                    fgColor="hsl(var(--foreground))"
+                    level="H"
+                  />
+                </div>
+                <p className="text-muted-foreground text-sm mt-4">
+                  Quét mã QR để kết bạn Zalo
+                </p>
+                <a
+                  href={ZALO_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-muted-foreground/60 mt-2 hover:text-foreground transition-colors underline"
+                >
+                  Hoặc bấm vào đây
+                </a>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );
