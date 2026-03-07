@@ -23,6 +23,13 @@ const products = [
   subtitle: "NỀN TẢNG ỨNG DỤNG & DỊCH VỤ",
   description:
   "\"Trạm cung cấp\" các nền tảng phần mềm lõi của hệ sinh thái. Nơi tập trung phát triển và phát hành các ứng dụng giải quyết triệt để những nhu cầu thiết yếu của cộng đồng, giúp mọi người dễ dàng tiếp cận với sự tiện lợi của công nghệ."
+},
+{
+  icon: FlaskConical,
+  title: "MERCY LABS",
+  subtitle: "PHÒNG THÍ NGHIỆM & ĐỔI MỚI",
+  description:
+  "Trung tâm nghiên cứu và phát triển của hệ sinh thái. Mercy Labs là nơi ươm mầm những ý tưởng đột phá, thử nghiệm công nghệ tiên phong và kiến tạo các giải pháp sáng tạo trước khi đưa vào ứng dụng thực tế."
 }];
 
 
