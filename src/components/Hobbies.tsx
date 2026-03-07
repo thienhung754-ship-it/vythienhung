@@ -29,10 +29,10 @@ const Hobbies = () => {
             className="rounded-2xl overflow-hidden">
             
             <img
-              src={hungEvent}
+
               alt="Vy Thiên Hùng tại sự kiện"
               className="w-full h-80 object-cover"
-              loading="lazy" />
+              loading="lazy" src="/lovable-uploads/33ac4f62-98c8-482a-98cc-0ccaf4e55ee3.jpg" />
             
           </motion.div>
 
