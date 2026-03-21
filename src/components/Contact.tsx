@@ -2,13 +2,14 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { MessageCircle } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
-
-const ZALO_LINK = "https://zalo.me/0763068614";
+import { useSiteData } from "@/contexts/SiteDataContext";
 
 const Contact = () => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const [showQR, setShowQR] = useState(false);
+  const { siteData } = useSiteData();
+  const ZALO_LINK = siteData.contact.zaloLink;
 
   return (
     <section id="contact" className="section-padding bg-secondary/40" ref={ref}>

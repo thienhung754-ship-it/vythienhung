@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
 import hungPortrait from "@/assets/hung-portrait.jpg";
+import { useSiteData } from "@/contexts/SiteDataContext";
 
 const Hero = () => {
+  const { siteData } = useSiteData();
+  const hero = siteData.hero;
+  const avatarSrc = hero.avatar || hungPortrait;
+
   return (
     <section className="relative min-h-screen flex items-center justify-center section-padding overflow-hidden">
       {/* Subtle gradient background */}
@@ -16,8 +21,8 @@ const Hero = () => {
           
           <div className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full overflow-hidden mb-10 ring-1 ring-border">
             <img
-              src={hungPortrait}
-              alt="Vy Thiên Hùng"
+              src={avatarSrc}
+              alt={hero.name}
               className="w-full h-full object-cover" />
             
           </div>
@@ -29,25 +34,21 @@ const Hero = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-foreground mb-4">
           
-          Vy Thiên Hùng
+          {hero.name}
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg md:text-xl text-muted-foreground font-medium mb-6">Founder, Director, CEO @ MERCY TECH GLOBAL
-
-
+          className="text-lg md:text-xl text-muted-foreground font-medium mb-6">{hero.title}
         </motion.p>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="text-base md:text-lg text-muted-foreground/80 max-w-xl mx-auto mb-10 leading-relaxed">Nhà điều hành Mercy Tech Global – nơi công nghệ lõi giải quyết các bài toán thực chiến. Tập trung phát triển hệ sinh thái SaaS và phần cứng thông minh với cam kết tuyệt đối về bảo mật dữ liệu, mang đến sự tăng trưởng bền vững cho doanh nghiệp.
-
-
+          className="text-base md:text-lg text-muted-foreground/80 max-w-xl mx-auto mb-10 leading-relaxed">{hero.bio}
         </motion.p>
 
         <motion.div
