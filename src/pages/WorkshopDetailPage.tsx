@@ -1,9 +1,10 @@
 import { motion, useInView } from "framer-motion";
 import { useParams, Link } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { saveRegistration } from "@/lib/registrations";
 import type { Registration } from "@/lib/registrations";
 import PaymentModal from "@/components/PaymentModal";
+import ShareButton from "@/components/ShareButton";
 import {
   Calendar,
   MapPin,
@@ -14,14 +15,46 @@ import {
   CheckCircle2,
   User,
   Gift,
-  Zap,
-  Star,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useSiteData } from "@/contexts/SiteDataContext";
 import CoverflowCarousel, { CaseStudyItem } from "@/components/CoverflowCarousel";
 import FomoNotification from "@/components/FomoNotification";
+
+/** Sets dynamic <head> meta tags for the workshop page for OG sharing */
+function useWorkshopMeta(workshop: { title: string; description?: string; subtitle?: string; image?: string; slug: string } | null) {
+  useEffect(() => {
+    if (!workshop) return;
+    const prev = {
+      title: document.title,
+      ogTitle: document.querySelector('meta[property="og:title"]')?.getAttribute("content") ?? "",
+      ogDesc: document.querySelector('meta[property="og:description"]')?.getAttribute("content") ?? "",
+      ogImage: document.querySelector('meta[property="og:image"]')?.getAttribute("content") ?? "",
+      ogUrl: document.querySelector('meta[property="og:url"]')?.getAttribute("content") ?? "",
+    };
+    const desc = workshop.subtitle || workshop.description || "";
+    const img = workshop.image || "";
+    const url = `${window.location.origin}/workshops/${workshop.slug}`;
+    const setMeta = (prop: string, value: string) => {
+      let el = document.querySelector(`meta[property="${prop}"]`) as HTMLMetaElement | null;
+      if (!el) { el = document.createElement("meta"); el.setAttribute("property", prop); document.head.appendChild(el); }
+      el.setAttribute("content", value);
+    };
+    document.title = `${workshop.title} — Vy Thiên Hùng`;
+    setMeta("og:title", workshop.title);
+    setMeta("og:description", desc);
+    setMeta("og:image", img);
+    setMeta("og:url", url);
+    return () => {
+      document.title = prev.title;
+      setMeta("og:title", prev.ogTitle);
+      setMeta("og:description", prev.ogDesc);
+      setMeta("og:image", prev.ogImage);
+      setMeta("og:url", prev.ogUrl);
+    };
+  }, [workshop]);
+}
 
 const formatPrice = (price: number) => price.toLocaleString("vi-VN") + "đ";
 
@@ -80,7 +113,7 @@ const CASE_STUDIES: CaseStudyItem[] = [
 
 
 // --- Registration Form ---
-const RegistrationForm = ({ workshopSlug, workshopTitle }: { workshopSlug: string; workshopTitle: string }) => {
+const RegistrationForm = ({ workshopSlug, workshopTitle, priceValue }: { workshopSlug: string; workshopTitle: string; priceValue?: number }) => {
   const [form, setForm] = useState({ name: "", phone: "", email: "", timeSlot: "Sáng 9h00–10h30" as "Sáng 9h00–10h30" | "Tối 20h30–21h30" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pendingReg, setPendingReg] = useState<Registration | null>(null);
@@ -96,10 +129,10 @@ const RegistrationForm = ({ workshopSlug, workshopTitle }: { workshopSlug: strin
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    const reg = saveRegistration({ ...form, workshopSlug, workshopTitle });
+    const reg = await saveRegistration({ ...form, workshopSlug, workshopTitle }, priceValue ?? 0);
     setPendingReg(reg);
   };
 
@@ -174,6 +207,315 @@ const RegistrationForm = ({ workshopSlug, workshopTitle }: { workshopSlug: strin
   );
 };
 
+// ─── Talkshow Registration Form (no payment) ──────────────────────────────
+const TalkshowRegistrationForm = ({ workshopSlug, workshopTitle }: { workshopSlug: string; workshopTitle: string }) => {
+  const [form, setForm] = useState({ name: "", phone: "", email: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [done, setDone] = useState(false);
+
+  const validate = () => {
+    const e: Record<string, string> = {};
+    if (!form.name.trim()) e.name = "Vui lòng nhập họ và tên";
+    if (!form.phone.trim()) e.phone = "Vui lòng nhập số điện thoại";
+    if (!form.email.trim()) e.email = "Vui lòng nhập email";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Email không hợp lệ";
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+    // Save directly as confirmed — free talkshow, no payment needed
+    await saveRegistration({
+      ...form,
+      workshopSlug,
+      workshopTitle,
+    }, 0, "paid");
+    setDone(true);
+  };
+
+  const inputClass = (field: string) =>
+    `w-full px-4 py-2.5 rounded-xl border text-sm bg-background text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/20 transition-all ${errors[field] ? "border-red-400" : "border-border"}`;
+
+  if (done) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 py-8 text-center">
+        <div className="w-14 h-14 rounded-full bg-green-500/10 flex items-center justify-center">
+          <CheckCircle2 className="w-7 h-7 text-green-500" />
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-foreground mb-1">Đăng ký thành công!</h4>
+          <p className="text-sm text-muted-foreground">Link tham gia Talkshow sẽ được gửi qua Email trước ngày diễn ra.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+      <p className="text-xs font-semibold text-foreground uppercase tracking-widest">Điền thông tin đăng ký</p>
+      <div>
+        <label className="text-xs text-muted-foreground mb-1.5 block">Họ và Tên <span className="text-red-400">*</span></label>
+        <input type="text" placeholder="Nguyễn Văn A" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className={inputClass("name")} />
+        {errors.name && <p className="text-xs text-red-400 mt-1">{errors.name}</p>}
+      </div>
+      <div>
+        <label className="text-xs text-muted-foreground mb-1.5 block">Số điện thoại (Zalo) <span className="text-red-400">*</span></label>
+        <input type="tel" placeholder="0912 345 678" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} className={inputClass("phone")} />
+        {errors.phone && <p className="text-xs text-red-400 mt-1">{errors.phone}</p>}
+      </div>
+      <div>
+        <label className="text-xs text-muted-foreground mb-1.5 block">Địa chỉ Email <span className="text-red-400">*</span></label>
+        <input type="email" placeholder="email@gmail.com" value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} className={inputClass("email")} />
+        {errors.email && <p className="text-xs text-red-400 mt-1">{errors.email}</p>}
+      </div>
+      <button type="submit" className="w-full py-4 rounded-xl bg-foreground text-background text-sm font-black hover:opacity-90 transition-opacity uppercase tracking-wide">
+        Đăng ký ngay — Miễn phí
+      </button>
+      <p className="text-xs text-center text-muted-foreground">Link tham gia sẽ được gửi qua Email trước ngày diễn ra.</p>
+    </form>
+  );
+};
+
+// ─── Talkshow Layout ────────────────────────────────────────────────────────
+const TalkshowDetailPage = ({ workshop }: { workshop: ReturnType<typeof useSiteData>["siteData"]["workshops"][0] }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+  const isCompleted = workshop.status === "completed";
+  useWorkshopMeta(workshop);
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <div className="pt-12">
+        <section className="section-padding" ref={ref}>
+          <div className="max-w-3xl mx-auto">
+            {/* Back link */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              className="mb-8"
+            >
+              <Link
+                to="/workshops"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" /> Tất cả sự kiện
+              </Link>
+              <ShareButton slug={workshop.slug} title={workshop.title} />
+            </motion.div>
+
+            {/* Banner */}
+            {workshop.image && (
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6 }}
+                className="rounded-2xl overflow-hidden border border-border mb-8 aspect-[21/9] w-full"
+              >
+                <img src={workshop.image} alt={workshop.title} className="w-full h-full object-cover" />
+              </motion.div>
+            )}
+
+            {/* Category + Free badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="flex items-center gap-3 mb-4"
+            >
+              <span className="text-[10px] text-muted-foreground uppercase tracking-widest">
+                {workshop.category}
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-widest bg-green-500/10 text-green-600 px-2.5 py-1 rounded-full">
+                Miễn phí
+              </span>
+            </motion.div>
+
+            {/* Title & subtitle */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              className="mb-8"
+            >
+              <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-3">
+                {workshop.title}
+              </h1>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl">
+                {workshop.subtitle}
+              </p>
+            </motion.div>
+
+            {/* Meta info */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground mb-8 pb-8 border-b border-border"
+            >
+              <span className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" /> {workshop.date}
+              </span>
+              <span className="flex items-center gap-2">
+                <Clock className="w-4 h-4" /> {workshop.time}
+              </span>
+              <span className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" /> {workshop.location}
+              </span>
+            </motion.div>
+
+            {/* Description */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.25 }}
+              className="mb-12"
+            >
+              <p className="text-base text-muted-foreground leading-relaxed">
+                {workshop.description}
+              </p>
+            </motion.div>
+
+            {/* Highlights — what topics will be discussed */}
+            {workshop.highlights && workshop.highlights.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="mb-12"
+              >
+                <h2 className="text-xl md:text-2xl font-bold text-foreground mb-5">
+                  Chúng ta sẽ nói về gì?
+                </h2>
+                <ul className="space-y-3">
+                  {workshop.highlights.map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-2 w-2 h-2 rounded-full bg-foreground shrink-0" />
+                      <p className="text-sm md:text-base text-foreground leading-relaxed">{item}</p>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+
+            {/* Agenda */}
+            {workshop.agenda && workshop.agenda.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.35 }}
+                className="mb-12"
+              >
+                <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6">
+                  Khung giờ
+                </h2>
+                <div className="space-y-0 border-l-2 border-border ml-2">
+                  {workshop.agenda.map((item, i) => (
+                    <div key={i} className="relative pl-6 py-3">
+                      <div className="absolute left-[-5px] top-4 w-2 h-2 rounded-full bg-foreground" />
+                      <span className="text-xs text-muted-foreground font-mono">{item.time}</span>
+                      <p className="text-sm text-foreground font-medium mt-0.5">{item.title}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Speaker */}
+            {workshop.speaker?.name && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="mb-12"
+              >
+                <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6">Diễn giả</h2>
+                <div className="flex items-center gap-4 p-5 rounded-2xl bg-secondary/30 border border-border">
+                  <div className="w-14 h-14 rounded-full overflow-hidden bg-secondary flex items-center justify-center shrink-0">
+                    {workshop.speaker.avatar ? (
+                      <img src={workshop.speaker.avatar} alt={workshop.speaker.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <User className="w-6 h-6 text-muted-foreground" />
+                    )}
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold text-foreground">{workshop.speaker.name}</h3>
+                    <p className="text-sm text-muted-foreground">{workshop.speaker.title}</p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Registration form — free, no payment */}
+            {!isCompleted && (
+              <motion.div
+                id="dang-ky"
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: 0.45 }}
+                className="mb-16"
+              >
+                <div className="rounded-2xl border border-border overflow-hidden">
+                  <div className="flex flex-col md:flex-row">
+                    {/* Left info panel */}
+                    <div className="md:w-5/12 bg-foreground text-background p-8 md:p-10 flex flex-col justify-between gap-8">
+                      <div>
+                        <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest bg-background/15 text-background px-3 py-1 rounded-full mb-6">
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
+                          Hoàn toàn miễn phí
+                        </span>
+                        <h3 className="text-2xl md:text-3xl font-black uppercase leading-tight tracking-tight">
+                          Tham gia Talkshow cùng mình nhé!
+                        </h3>
+                      </div>
+                      <div className="space-y-4 text-sm">
+                        <div className="flex items-start gap-3">
+                          <Calendar className="w-4 h-4 mt-0.5 opacity-70 shrink-0" />
+                          <div>
+                            <p className="text-background/60 text-[11px] uppercase tracking-widest mb-0.5">Thời gian</p>
+                            <p className="font-semibold">{workshop.date} • {workshop.time}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <MapPin className="w-4 h-4 mt-0.5 opacity-70 shrink-0" />
+                          <div>
+                            <p className="text-background/60 text-[11px] uppercase tracking-widest mb-0.5">Hình thức</p>
+                            <p className="font-semibold">{workshop.location}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3">
+                          <CheckCircle2 className="w-4 h-4 mt-0.5 opacity-70 shrink-0" />
+                          <div>
+                            <p className="text-background/60 text-[11px] uppercase tracking-widest mb-0.5">Xác nhận</p>
+                            <p className="text-background/80 leading-relaxed">Link tham gia sẽ được gửi qua Email trước ngày diễn ra.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Right — form */}
+                    <div className="md:w-7/12 bg-background p-8 md:p-10">
+                      <TalkshowRegistrationForm
+                        workshopSlug={workshop.slug}
+                        workshopTitle={workshop.title}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </section>
+      </div>
+      <Footer />
+      <FomoNotification isTalkshow={true} />
+    </div>
+  );
+};
+
+// ─── Course Layout ────────────────────────────────────────────────────────────
 const WorkshopDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const { siteData } = useSiteData();
@@ -181,6 +523,11 @@ const WorkshopDetailPage = () => {
   const workshop = workshops.find((w) => w.slug === slug);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
+
+  // Route talkshow to its own simple layout
+  if (workshop && workshop.category?.toLowerCase().includes("talkshow")) {
+    return <TalkshowDetailPage workshop={workshop} />;
+  }
 
   if (!workshop) {
     return (
@@ -204,6 +551,8 @@ const WorkshopDetailPage = () => {
   const isCompleted = workshop.status === "completed";
   const hasBonuses = workshop.bonuses && workshop.bonuses.length > 0;
   const hasDiscount = workshop.originalPrice && workshop.originalPrice > 0;
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useWorkshopMeta(workshop);
 
   return (
     <div className="min-h-screen bg-background">
@@ -218,12 +567,15 @@ const WorkshopDetailPage = () => {
               transition={{ duration: 0.5 }}
               className="mb-8"
             >
-              <Link
-                to="/workshops"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <ArrowLeft className="w-4 h-4" /> Tất cả sự kiện
-              </Link>
+              <div className="flex items-center gap-3">
+                <Link
+                  to="/workshops"
+                  className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" /> Tất cả sự kiện
+                </Link>
+                <ShareButton slug={workshop.slug} title={workshop.title} />
+              </div>
             </motion.div>
 
             {/* Banner Image */}
@@ -313,7 +665,7 @@ const WorkshopDetailPage = () => {
                 className="mb-12"
               >
                 <h2 className="text-2xl md:text-4xl font-black text-foreground mb-8 uppercase tracking-tight leading-tight">
-                  Bạn sẽ nhận được gì sau<br className="hidden md:block" /> 7 ngày khoá học?
+                  Bạn sẽ nhận được gì sau<br className="hidden md:block" /> khoá học này?
                 </h2>
                 {/* Illustration image */}
                 <div className="rounded-2xl overflow-hidden mb-8 border border-border">
@@ -323,36 +675,12 @@ const WorkshopDetailPage = () => {
                     className="w-full object-cover"
                   />
                 </div>
-                {/* Rich bullet list */}
+                {/* Dynamic highlight list from admin */}
                 <ul className="space-y-5">
-                  {[
-                    {
-                      bold: "Xây dựng website, miniapp cơ bản hoàn chỉnh từ 0",
-                      desc: " bằng AI mà không cần biết code — từ ý tưởng đến sản phẩm thực tế trong vài ngày.",
-                    },
-                    {
-                      bold: "Làm chủ bộ công cụ Vibe Coding hàng đầu như:",
-                      desc: " Anti Gravity, Cursor, Lovable, Replit — biết chọn đúng tool cho đúng việc.",
-                    },
-                    {
-                      bold: "Prompt Engineering thực chiến",
-                      desc: " để AI hiểu đúng ý đồ và tạo ra sản phẩm đúng như bạn mong muốn.",
-                    },
-                    {
-                      bold: "Tiết kiệm 90% thời gian & chi phí",
-                      desc: " phát triển sản phẩm số bằng cách tận dụng tối đa sức mạnh của AI.",
-                    },
-                    {
-                      bold: "Tư duy kiếm tiền từ kỹ năng Vibe Coding",
-                      desc: " — biết cách biến sản phẩm AI thành nguồn thu nhập thực tế: freelance, SaaS mini, dịch vụ số.",
-                    },
-                  ].map((item, i) => (
+                  {workshop.highlights.map((item, i) => (
                     <li key={i} className="flex items-start gap-3">
                       <span className="mt-1.5 w-2.5 h-2.5 rounded-full bg-purple-500 shrink-0" />
-                      <p className="text-sm md:text-base text-foreground leading-relaxed">
-                        <span className="font-bold">{item.bold}</span>
-                        {item.desc}
-                      </p>
+                      <p className="text-sm md:text-base text-foreground leading-relaxed">{item}</p>
                     </li>
                   ))}
                 </ul>
@@ -586,23 +914,18 @@ const WorkshopDetailPage = () => {
                           </div>
                         </div>
                       </div>
-                      {/* Benefits */}
-                      <div className="space-y-2 text-sm">
-                        <p className="text-[11px] uppercase tracking-widest text-background/60 mb-2">Quyền lợi khi đăng ký</p>
-                        {[
-                          "7 ngày thực chiến — 2 buổi/tuần",
-                          "Full Ebook & Giáo trình Vibe Coding",
-                          "Anti Gravity + công cụ AI >15.000.000đ",
-                          "Hỏi đáp 1:1 với mentor",
-                          "Record vĩnh viễn",
-                          "Cộng đồng VIP member",
-                        ].map((b, i) => (
-                          <div key={i} className="flex items-start gap-2">
-                            <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 text-background/70 shrink-0" />
-                            <span className="text-background/80">{b}</span>
-                          </div>
-                        ))}
-                      </div>
+                      {/* Benefits from bonuses in admin */}
+                      {workshop.bonuses && workshop.bonuses.length > 0 && (
+                        <div className="space-y-2 text-sm">
+                          <p className="text-[11px] uppercase tracking-widest text-background/60 mb-2">Quyền lợi khi đăng ký</p>
+                          {workshop.bonuses.map((b, i) => (
+                            <div key={i} className="flex items-start gap-2">
+                              <CheckCircle2 className="w-3.5 h-3.5 mt-0.5 text-background/70 shrink-0" />
+                              <span className="text-background/80">{b}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
 
                     {/* Right — price + registration form */}
@@ -611,26 +934,18 @@ const WorkshopDetailPage = () => {
                       <div>
                         <p className="text-xs text-muted-foreground uppercase tracking-widest mb-2">Học phí</p>
                         <div className="flex items-baseline gap-3 mb-1">
-                          <span className="text-3xl md:text-4xl font-black text-foreground">693.000đ</span>
-                          <span className="text-base text-muted-foreground line-through">19.000.000đ</span>
+                          <span className="text-3xl md:text-4xl font-black text-foreground">
+                            {workshop.priceValue ? formatPrice(workshop.priceValue) : workshop.price}
+                          </span>
+                          {workshop.originalPrice && workshop.originalPrice > 0 && (
+                            <span className="text-base text-muted-foreground line-through">{formatPrice(workshop.originalPrice)}</span>
+                          )}
                         </div>
                         <p className="text-xs text-muted-foreground">Đã bao gồm VAT • Thanh toán một lần, trọn đời học lại</p>
-                        {/* Slogan stars */}
-                        <p className="text-sm font-semibold text-foreground mt-3 flex items-center gap-1.5 flex-wrap">
-                          <span>Sản phẩm chất lượng</span>
-                          <span className="inline-flex items-center gap-0.5">
-                            {Array.from({ length: 5 }, (_, i) => (
-                              <Star key={i} className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
-                            ))}
-                          </span>
-                          <span>giá</span>
-                          <span className="inline-flex items-center gap-0.5">
-                            {Array.from({ length: 4 }, (_, i) => (
-                              <Star key={i} className="w-3.5 h-3.5 text-yellow-400/30" />
-                            ))}
-                            <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
-                          </span>
-                        </p>
+                        {/* Slogan from admin */}
+                        {workshop.slogan && (
+                          <p className="text-sm font-semibold text-foreground mt-3">{workshop.slogan}</p>
+                        )}
                       </div>
 
                       <hr className="border-border" />
@@ -639,6 +954,7 @@ const WorkshopDetailPage = () => {
                       <RegistrationForm
                         workshopSlug={workshop.slug}
                         workshopTitle={workshop.title}
+                        priceValue={workshop.priceValue}
                       />
                     </div>
                   </div>
