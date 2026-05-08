@@ -42,6 +42,7 @@ const HobbiesEditor: React.FC = () => {
         value={hobbies.image}
         onChange={updateImage}
         label="Ảnh sự kiện"
+        hint="Khuyến nghị: 1200 × 800px — ảnh ngang, tỉ lệ 3:2"
       />
 
       <div>

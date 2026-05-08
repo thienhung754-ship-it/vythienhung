@@ -2,7 +2,7 @@
 // Theo dõi hành vi người dùng — Hệ thống phân tích hoạt động
 // ============================================================
 
-const TRACKER_KEY = "vythienhung_analytics";
+const TRACKER_KEY = "trucanh_analytics";
 const MAX_EVENTS = 1000;
 
 export type EventType =
@@ -99,11 +99,11 @@ const PAGE_NAMES: Record<string, string> = {
 
 const SECTION_NAMES: Record<string, string> = {
   about: "Lời ngỏ / Giới thiệu",
-  ecosystem: "Hệ sinh thái MERCY TECH",
+  ecosystem: "Hệ sinh thái THE BLUE OCEAN GROUP",
   blog: "Chuyên gia chia sẻ",
   press: "Truyền thông / Báo chí",
   contact: "Liên hệ",
-  hobbies: "Bản sắc & Tư duy lãnh đạo",
+  hobbies: "Điểm khác biệt",
 };
 
 export function layTenTrang(path: string): string {

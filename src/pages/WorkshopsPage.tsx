@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { useSiteData } from "@/contexts/SiteDataContext";
 import { WorkshopEvent } from "@/lib/siteData";
 import FomoNotification from "@/components/FomoNotification";
+import ShareButton from "@/components/ShareButton";
 
 const STATUS_LABELS: Record<string, string> = {
   upcoming: "Sắp diễn ra",
@@ -63,7 +64,7 @@ const WorkshopsPage = () => {
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                 Tham gia các workshop thực chiến, khoá học chuyên sâu và talkshow về AI —
-                được dẫn dắt bởi Vy Thiên Hùng & đội ngũ MERCY TECH GLOBAL.
+                được dẫn dắt bởi đội ngũ chuyên gia của chúng tôi.
               </p>
             </motion.div>
 
@@ -114,11 +115,14 @@ const WorkshopsPage = () => {
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                           loading="lazy"
                         />
-                        {/* Status badge on image */}
+                    {/* Status badge on image + share button */}
                         <div className="absolute top-3 left-3">
                           <span className="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-background/90 backdrop-blur-sm text-foreground uppercase tracking-wider">
                             {STATUS_LABELS[workshop.status] || workshop.status}
                           </span>
+                        </div>
+                        <div className="absolute top-3 right-3">
+                          <ShareButton slug={workshop.slug} title={workshop.title} compact />
                         </div>
                       </div>
                     ) : (
@@ -128,6 +132,9 @@ const WorkshopsPage = () => {
                           <span className="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-background/90 text-foreground uppercase tracking-wider">
                             {STATUS_LABELS[workshop.status] || workshop.status}
                           </span>
+                        </div>
+                        <div className="absolute top-3 right-3">
+                          <ShareButton slug={workshop.slug} title={workshop.title} compact />
                         </div>
                       </div>
                     )}

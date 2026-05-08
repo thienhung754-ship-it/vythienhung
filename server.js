@@ -4,7 +4,7 @@ import cors from "cors";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
-import { initDatabase, getSiteData, saveSiteData } from "./db.js";
+import { initDatabase, getSiteData, saveSiteData, getAllRegistrations, saveRegistrationToDB, updateRegistrationStatusInDB, getPendingRegistrations, getRegistrationByOrderId } from "./db.js";
 import multer from "multer";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -66,7 +66,139 @@ app.put("/api/site-data", async (req, res, next) => {
   }
 });
 
+// --- Registrations API ---
+
+// GET all registrations
+app.get("/api/registrations", async (req, res) => {
+  try {
+    const regs = await getAllRegistrations();
+    res.json(regs);
+  } catch (err) {
+    console.error("[API] GET /api/registrations error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST new registration
+app.post("/api/registrations", async (req, res) => {
+  try {
+    const reg = req.body;
+    if (!reg || !reg.id || !reg.orderId) {
+      return res.status(400).json({ error: "Missing required fields: id, orderId" });
+    }
+    await saveRegistrationToDB(reg);
+    res.json({ success: true, id: reg.id, orderId: reg.orderId });
+  } catch (err) {
+    console.error("[API] POST /api/registrations error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET registration status by orderId (for PaymentModal polling)
+app.get("/api/registrations/status/:orderId", async (req, res) => {
+  try {
+    const reg = await getRegistrationByOrderId(req.params.orderId);
+    if (!reg) return res.status(404).json({ found: false, status: "pending" });
+    res.json({ found: true, status: reg.status, paidAt: reg.paidAt ?? null });
+  } catch (err) {
+    console.error("[API] GET /api/registrations/status error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PATCH update registration status
+app.patch("/api/registrations/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    if (!["pending", "paid", "cancelled"].includes(status)) {
+      return res.status(400).json({ error: "Invalid status" });
+    }
+    await updateRegistrationStatusInDB(id, status);
+    res.json({ success: true, id, status });
+  } catch (err) {
+    console.error("[API] PATCH /api/registrations/:id error:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- 🔔 Cron Job: Auto check payments ---
+// Cài URL này vào cron-job.org mỗi 5 phút để tự động xác nhận thanh toán
+app.get("/api/cron/check-payments", async (req, res) => {
+  const startTime = Date.now();
+  const results = { checked: 0, confirmed: 0, errors: 0, orderIds: [] };
+
+  // Fallback API URL in case paymentSettings not yet saved in DB
+  const FALLBACK_API_URL = "https://api.sieuthicode.net/historyapiacb/ec4f8aeb9d87bc0ffa48f709365313d1";
+
+  try {
+    // 1. Get API URL from siteData (with fallback)
+    let apiUrl = FALLBACK_API_URL;
+    try {
+      const siteData = await getSiteData();
+      apiUrl = siteData?.paymentSettings?.apiUrl || FALLBACK_API_URL;
+    } catch {
+      console.warn("[CRON] Could not load siteData, using fallback API URL");
+    }
+
+    console.log("[CRON] Fetching bank transactions from:", apiUrl);
+
+    // 2. Fetch bank transaction history (10s timeout)
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    let transactions = [];
+    try {
+      const bankRes = await fetch(apiUrl, { signal: controller.signal });
+      const bankJson = await bankRes.json();
+      clearTimeout(timeout);
+      // ACB API trả về { date: [...] } hoặc { data: [...] } hoặc { messageStatus, data }
+      transactions = bankJson.date ?? bankJson.data ?? [];
+      if (!Array.isArray(transactions)) transactions = [];
+      console.log(`[CRON] Got ${transactions.length} bank transactions`);
+
+    } catch (fetchErr) {
+      clearTimeout(timeout);
+      console.error("[CRON] Bank API fetch error:", fetchErr.message);
+      return res.json({ success: false, error: `Bank API fetch failed: ${fetchErr.message}`, elapsed_ms: Date.now() - startTime });
+    }
+
+    // 3. Get all pending registrations from DB
+    const pending = await getPendingRegistrations();
+    results.checked = pending.length;
+    console.log(`[CRON] Checking ${pending.length} pending registrations`);
+
+    // 4. Match transactions → pending orders
+    for (const reg of pending) {
+      try {
+        const matched = transactions.find(
+          (t) =>
+            t.type === "IN" &&
+            Number(t.amount) >= (reg.amount || 0) &&
+            String(t.description || "").toUpperCase().includes(reg.orderId.toUpperCase())
+        );
+        if (matched) {
+          await updateRegistrationStatusInDB(reg.id, "paid");
+          results.confirmed++;
+          results.orderIds.push(reg.orderId);
+          console.log(`[CRON] ✅ Confirmed payment for order ${reg.orderId}`);
+        }
+      } catch (innerErr) {
+        results.errors++;
+        console.error(`[CRON] Error processing order ${reg.orderId}:`, innerErr.message);
+      }
+    }
+
+    const elapsed = Date.now() - startTime;
+    console.log(`[CRON] Done in ${elapsed}ms — confirmed: ${results.confirmed}/${results.checked}`);
+    res.json({ success: true, elapsed_ms: elapsed, ...results });
+  } catch (err) {
+    console.error("[CRON] Fatal error:", err.message);
+    res.status(500).json({ success: false, error: err.message, elapsed_ms: Date.now() - startTime });
+  }
+});
+
 // --- PDF Upload API ---
+
 app.post("/api/upload-pdf", upload.single("pdf"), (req, res) => {
   try {
     if (!req.file) {
@@ -147,12 +279,26 @@ app.use(async (req, res, next) => {
       return `${baseUrl}${url.startsWith("/") ? url : "/" + url}`;
     };
 
-    // Inject SEO meta tags from database
+    // Load site data for SEO injection
     const data = await getSiteData();
     const seo = data?.seo || {};
-    const title = seo.siteTitle || "Vy Thiên Hùng — Founder & CEO @ MERCY TECH GLOBAL";
-    const desc = seo.metaDescription || "Trang cá nhân của Vy Thiên Hùng — Nhà sáng lập Mercy Tech Global, chuyên gia AI & Công nghệ.";
-    const ogImage = toAbsoluteUrl(seo.ogImage || "/vythienhung-avatar.jpg");
+
+    // Check if this is a workshop page → inject per-workshop OG tags
+    const workshopSlugMatch = req.path.match(/^\/workshops\/(.+)$/);
+    let title = seo.siteTitle || "Vy Thiên Hùng — Founder & CEO @ MERCY TECH GLOBAL";
+    let desc = seo.metaDescription || "Trang cá nhân của Vy Thiên Hùng — Nhà sáng lập Mercy Tech Global, chuyên gia AI & Công nghệ.";
+    let ogImage = toAbsoluteUrl(seo.ogImage || "/vythienhung-avatar.jpg");
+
+    if (workshopSlugMatch) {
+      const slug = workshopSlugMatch[1];
+      const workshops = data?.workshops || [];
+      const ws = workshops.find((w) => w.slug === slug);
+      if (ws) {
+        title = `${ws.title} — Vy Thiên Hùng`;
+        desc = ws.subtitle || ws.description || desc;
+        if (ws.image) ogImage = toAbsoluteUrl(ws.image);
+      }
+    }
 
     html = html
       .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)

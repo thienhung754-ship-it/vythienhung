@@ -22,6 +22,8 @@ import {
   RotateCcw,
   Loader2,
   Calendar,
+  TrendingUp,
+  CreditCard,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -50,6 +52,8 @@ import FloatingActionsEditor from "@/components/admin/FloatingActionsEditor";
 import ToolsEditor from "@/components/admin/ToolsEditor";
 import WorkshopsEditor from "@/components/admin/WorkshopsEditor";
 import RegistrationsView from "@/components/admin/RegistrationsView";
+import CashFlowView from "@/components/admin/CashFlowView";
+import PaymentSettingsEditor from "@/components/admin/PaymentSettingsEditor";
 
 const sections = [
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, group: "Tổng quan" },
@@ -68,6 +72,8 @@ const sections = [
   { id: "vibe-coding", label: "Vibe Coding", icon: Users, group: "Trang phụ" },
   { id: "workshops", label: "Workshop/Sự Kiện", icon: Calendar, group: "Trang phụ" },
   { id: "registrations", label: "Đăng ký học viên", icon: Users, group: "Trang phụ" },
+  { id: "cash-flow", label: "Dòng Tiền", icon: TrendingUp, group: "Tài chính" },
+  { id: "payment-settings", label: "Cài đặt Thanh toán", icon: CreditCard, group: "Tài chính" },
   { id: "footer", label: "Footer", icon: FileText, group: "Cài đặt" },
   { id: "floating-actions", label: "Nút nổi / Chat", icon: MessageCircle, group: "Cài đặt" },
   { id: "zalo-links", label: "Liên kết Zalo", icon: MessageCircle, group: "Cài đặt" },
@@ -132,6 +138,8 @@ const AdminPage: React.FC = () => {
       case "vibe-coding": return <VibeCodingEditor />;
       case "workshops": return <WorkshopsEditor />;
       case "registrations": return <RegistrationsView />;
+      case "cash-flow": return <CashFlowView />;
+      case "payment-settings": return <PaymentSettingsEditor />;
       case "footer": return <FooterEditor />;
       case "floating-actions": return <FloatingActionsEditor />;
       case "zalo-links": return <ZaloLinksEditor />;
@@ -261,7 +269,7 @@ const AdminPage: React.FC = () => {
         </header>
 
         {/* Content */}
-        <div className="p-8 max-w-4xl">
+        <div className="p-8">
           {renderContent()}
         </div>
       </main>

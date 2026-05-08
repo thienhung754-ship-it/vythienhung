@@ -187,346 +187,167 @@ export interface SiteData {
 // --- Default Data (copied from existing hardcoded components) ---
 
 export const DEFAULT_SITE_DATA: SiteData = {
-  hero: {
-    avatar: "",  // will fallback to imported asset
-    name: "Vy Thiên Hùng",
-    title: "Founder, Director, CEO @ MERCY TECH GLOBAL",
-    bio: "Nhà điều hành Mercy Tech Global – nơi công nghệ lõi giải quyết các bài toán thực chiến. Tập trung phát triển hệ sinh thái SaaS và phần cứng thông minh với cam kết tuyệt đối về bảo mật dữ liệu, mang đến sự tăng trưởng bền vững cho doanh nghiệp.",
+  "hero": {
+    "avatar": "",
+    "name": "Nguyễn Trúc Anh",
+    "title": "Founder & CEO @ THE BLUE OCEAN GROUP",
+    "bio": "Với hơn 15 năm thực chiến trong ngành Marketing, tôi tập trung kiến tạo các hệ thống vận hành tinh gọn và mô hình kinh doanh hiện đại. Lấy chiến lược Marketing làm gốc và đòn bẩy AI làm giá trị cốt lõi, tôi đồng hành cùng doanh nghiệp giải quyết triệt để các bài toán về quy mô và tăng trưởng."
   },
-  about: {
-    sectionLabel: "Lời ngỏ",
-    heading: "Lời ngỏ từ Vy Thiên Hùng",
-    paragraphsVisible: [
-      'Chúng ta đang đứng giữa một cuộc cách mạng chưa từng có — khi Trí tuệ Nhân tạo không còn là viễn tưởng, mà đã trở thành đồng nghiệp, trở thành đối thủ, và đôi khi — trở thành người thay thế.',
-      'AI viết code nhanh hơn lập trình viên. AI thiết kế logo đẹp hơn designer. AI phân tích dữ liệu chính xác hơn cả một đội ngũ analyst. Vậy câu hỏi đặt ra không phải là "AI có thể làm gì?" — mà là "Bạn sẽ đứng ở đâu trong kỷ nguyên này?"',
+  "stats": {
+    "experience": "15+",
+    "experienceLabel": "Năm kinh nghiệm",
+    "clients": "300+",
+    "clientsLabel": "Khách hàng",
+    "projects": "500+",
+    "projectsLabel": "Dự án hoàn thành"
+  },
+  "about": {
+    "sectionLabel": "Lời ngỏ",
+    "heading": "Từ chiến lược Marketing đến kiến trúc hệ thống",
+    "paragraphsVisible": [
+      "Tôi bắt đầu hành trình của mình trong thế giới Marketing từ hơn 15 năm trước. Qua hàng trăm dự án, tôi nhận ra rằng một chiến dịch sáng tạo dù hay đến đâu cũng sẽ vô nghĩa nếu không dựa trên một bộ khung vận hành vững chắc.",
+      "Với tôi, Marketing không chỉ là câu chuyện về bề nổi của truyền thông. Đó là sự thấu hiểu sâu sắc về mô hình kinh doanh, là nghệ thuật thiết kế các điểm chạm để biến dữ liệu thành giá trị thực tế và chuyển đổi bền vững."
     ],
-    paragraphsCollapsed: [
-      'Tôi tin rằng: con người không thua AI ở trí thông minh — mà thua ở tốc độ thích nghi. Người chiến thắng không phải người giỏi nhất, mà là người dám học lại từ đầu, dám phá vỡ lối mòn, và dám biến công nghệ thành vũ khí của chính mình.',
-      'Đó là lý do tôi xây dựng MERCY TECH GLOBAL — một hệ sinh thái nơi công nghệ phục vụ con người, nơi AI không thay thế bạn mà khuếch đại bạn. Từ nghiên cứu AI tiên phong tại Mercy Labs, đến đào tạo thực chiến giúp doanh nghiệp và cá nhân làm chủ trí tuệ nhân tạo — mọi thứ tôi làm đều hướng về một sứ mệnh duy nhất:',
-      'Giúp bạn không chỉ tồn tại, mà tỏa sáng trong kỷ nguyên AI.',
-      'Phiên bản mạnh mẽ nhất của bạn không nằm ở thuật toán — nó nằm ở tư duy dám thay đổi. Và hành trình đó bắt đầu ngay bây giờ.',
+    "paragraphsCollapsed": [
+      "Trong một kỷ nguyên mà sự thay đổi diễn ra theo từng giây, tôi tin rằng sức mạnh của doanh nghiệp nằm ở sự kết hợp giữa Tư duy hệ thống sắc bén và Đòn bẩy AI thực chiến.",
+      "Hệ sinh thái mà tôi đang xây dựng không nằm ngoài mục tiêu đó: Giúp các doanh nghiệp không chỉ \"tăng trưởng nóng\", mà còn phải \"tăng trưởng bền vững\" thông qua những hệ thống vận hành tinh gọn, tự động hóa và có khả năng tự tiến hóa theo thời gian.",
+      "Triết lý làm việc của tôi gói gọn trong việc \"giải quyết các bài toán quy mô bằng sự tinh gọn\". Tôi không tin vào những giải pháp cồng kềnh hay những lý thuyết xa rời thực tế.",
+      "Mọi chiến lược tôi đưa ra đều phải đi từ cốt lõi của giá trị thực, sử dụng công nghệ làm bàn đạp để tối ưu hóa nguồn lực. Mục tiêu cuối cùng là giúp doanh nghiệp vận hành nhẹ nhàng hơn nhưng mang lại hiệu quả đột phá hơn."
     ],
-    image: "",  // will fallback to imported asset
+    "image": ""
   },
-  ecosystem: [
+  "ecosystem": [
     {
-      icon: "Globe",
-      title: "MERCY TECH",
-      subtitle: "GIẢI PHÁP CÔNG NGHỆ & KIẾN TRÚC HỆ THỐNG",
-      description: "Đơn vị chuyên cung cấp dịch vụ Outsource giải pháp công nghệ B2B. Không chỉ tạo ra những Platform mạnh mẽ để tung ra thị trường, Mercy Tech còn đóng vai trò phát triển các ứng dụng bổ trợ, tối ưu hóa luồng dữ liệu và hạ tầng kỹ thuật cho Mercy Shop. Mọi dòng code đều tuân thủ nguyên tắc tối thượng: Minh bạch và vị nhân sinh.",
+      "icon": "Target",
+      "title": "BRANDING & STRATEGY",
+      "subtitle": "XÂY DỰNG THƯƠNG HIỆU & CHIẾN LƯỢC",
+      "description": "Thiết kế và triển khai chiến lược thương hiệu toàn diện — từ định vị, nhận diện đến hệ thống truyền thông. Giúp doanh nghiệp tạo dựng hình ảnh khác biệt và bền vững trên thị trường."
     },
     {
-      icon: "Users",
-      title: "MERCY SHOP",
-      subtitle: "TRẠM PHÂN PHỐI ĐẶC QUYỀN",
-      description: 'Kênh thương mại điện tử và bán lẻ cao cấp. Mercy Shop là nơi phân phối trực tiếp các "vũ khí" phần cứng hữu hình của hệ sinh thái đến tay người dùng VIP: Từ các dòng Thẻ định danh NFC của Persona, đến Kính thông minh và thiết bị IoT bảo mật.',
+      "icon": "TrendingUp",
+      "title": "PERFORMANCE ADS",
+      "subtitle": "QUẢNG CÁO HIỆU SUẤT CAO",
+      "description": "Tối ưu hóa ngân sách quảng cáo trên Facebook, Google, TikTok với phương pháp data-driven. Biến mỗi đồng chi ra thành doanh thu đo lường được thông qua phễu chuyển đổi tinh gọn."
     },
     {
-      icon: "Layers",
-      title: "MERCY PLATFORM",
-      subtitle: "NỀN TẢNG ỨNG DỤNG & DỊCH VỤ",
-      description: '"Trạm cung cấp" các nền tảng phần mềm lõi của hệ sinh thái. Nơi tập trung phát triển và phát hành các ứng dụng giải quyết triệt để những nhu cầu thiết yếu của cộng đồng, giúp mọi người dễ dàng tiếp cận với sự tiện lợi của công nghệ.',
+      "icon": "ShoppingBag",
+      "title": "E-COMMERCE & SHOPEE MALL",
+      "subtitle": "THƯƠNG MẠI ĐIỆN TỬ & SÀN TMĐT",
+      "description": "Xây dựng và vận hành gian hàng Shopee Mall, TikTok Shop chuyên nghiệp. Từ setup store, tối ưu listing đến quản lý đơn hàng — đưa doanh nghiệp lên sàn TMĐT một cách bài bản."
     },
     {
-      icon: "FlaskConical",
-      title: "MERCY LABS",
-      subtitle: "NGHIÊN CỨU & ĐÀO TẠO AI",
-      description: "Trung tâm nghiên cứu chuyên sâu và đào tạo về Trí tuệ Nhân tạo, quy tụ đội ngũ chuyên gia hàng đầu dưới sự dẫn dắt trực tiếp của Vy Thiên Hùng. Mercy Labs tập trung vào R&D các mô hình AI tiên phong, đồng thời tổ chức các chương trình đào tạo thực chiến — giúp doanh nghiệp và cá nhân nắm bắt, ứng dụng AI một cách hiệu quả nhất vào vận hành và sản phẩm thực tế.",
-    },
-  ],
-  blog: [
-    {
-      category: "Công nghệ & AI",
-      title: "Physical AI: Khi trí tuệ nhân tạo bước ra thế giới thực",
-      excerpt: "Khám phá xu hướng AI Vật lý và cách nó thay đổi tương tác giữa con người với máy móc.",
-      content: "Physical AI (AI Vật lý) đang mở ra một kỷ nguyên mới, nơi trí tuệ nhân tạo không chỉ tồn tại trong thế giới ảo mà còn tương tác trực tiếp với môi trường vật lý. Từ robot tự hành, drone giao hàng đến các thiết bị wearable thông minh — tất cả đều được điều khiển bởi AI có khả năng cảm nhận, phản ứng và học hỏi từ thế giới thực.\n\nTại MERCY TECH GLOBAL, chúng tôi tin rằng Physical AI sẽ là bước tiến tiếp theo trong cuộc cách mạng công nghệ. Việc tích hợp AI vào phần cứng không chỉ đơn thuần là gắn chip xử lý mạnh hơn — mà là tạo ra những hệ thống có khả năng tự thích ứng, tự tối ưu và tự học hỏi trong môi trường thực tế.\n\nChúng tôi đang nghiên cứu và phát triển các giải pháp AI Wearables, nơi công nghệ trở thành một phần tự nhiên của cuộc sống hàng ngày, giúp con người nâng cao năng suất và trải nghiệm sống.",
-      date: "2026",
+      "icon": "Globe",
+      "title": "WEBSITE & SEO",
+      "subtitle": "WEBSITE & TỐI ƯU TÌM KIẾM",
+      "description": "Thiết kế website chuyên nghiệp kết hợp SEO chiến lược, giúp doanh nghiệp hiện diện mạnh mẽ trên Google và thu hút khách hàng tự nhiên một cách bền vững."
     },
     {
-      category: "Quản trị Vận hành",
-      title: "Đạt điểm hòa vốn trong 6 tháng — Chiến lược thực chiến",
-      excerpt: "Chia sẻ framework quản trị giúp startup đạt break-even nhanh chóng với nguồn lực tối thiểu.",
-      content: "Một trong những thách thức lớn nhất của bất kỳ startup nào là đạt được điểm hòa vốn (break-even point) trong thời gian ngắn nhất có thể. Với kinh nghiệm thực chiến, tôi chia sẻ framework đã giúp các dự án của mình đạt break-even chỉ trong 6 tháng.\n\nBước 1: Tối ưu hóa chi phí vận hành — Tự động hóa quy trình lên đến 90%, giảm thiểu nhân sự thừa và tập trung vào core competency.\n\nBước 2: Xây dựng dòng tiền nhanh — Tập trung vào sản phẩm MVP có khả năng monetize ngay lập tức, thay vì chạy theo tính năng hoàn hảo.\n\nBước 3: Engineering Excellence — Đảm bảo hệ thống kỹ thuật luôn vận hành ổn định với load time dưới 2 giây, giảm thiểu downtime và tối ưu trải nghiệm người dùng.\n\nTriết lý cốt lõi: Không cần nhiều tiền để bắt đầu, nhưng cần đúng chiến lược để tồn tại.",
-      date: "2026",
+      "icon": "Users",
+      "title": "INFLUENCER & KOL",
+      "subtitle": "BOOKING INFLUENCER & KOL",
+      "description": "Kết nối doanh nghiệp với hệ thống Influencer, KOL phù hợp. Lên chiến lược booking, quản lý campaign và đo lường hiệu quả từng đợt hợp tác."
     },
     {
-      category: "Sáng tạo & Thẩm mỹ",
-      title: "Ứng dụng AI trong thiết kế: Từ ý tưởng đến sản phẩm",
-      excerpt: "Cách tận dụng AI generative để nâng cao quy trình sáng tạo và thiết kế sản phẩm số.",
-      content: "AI Generative đang thay đổi hoàn toàn cách chúng ta tiếp cận thiết kế. Từ việc tạo concept art, wireframe đến hoàn thiện UI/UX — AI trở thành người đồng hành không thể thiếu của designer hiện đại.\n\nTại MERCY TECH GLOBAL, chúng tôi ứng dụng AI vào quy trình thiết kế theo 3 giai đoạn:\n\n1. Ideation: Sử dụng AI để brainstorm ý tưởng, tạo mood board và khám phá các hướng sáng tạo mới.\n\n2. Prototyping: AI giúp tăng tốc quá trình tạo prototype từ vài ngày xuống còn vài giờ.\n\n3. Refinement: Kết hợp thẩm mỹ của con người với khả năng xử lý của AI để tạo ra sản phẩm hoàn thiện.\n\nĐiều quan trọng: AI không thay thế sự sáng tạo của con người — nó khuếch đại nó. Người thiết kế vẫn là người đưa ra quyết định cuối cùng về thẩm mỹ và trải nghiệm.",
-      date: "2025",
-    },
-  ],
-  press: [
-    {
-      source: "Báo Đồng Nai",
-      title: "Báo Đồng Nai nói về Vy Thiên Hùng",
-      description: "Người trẻ làm sách nói — câu chuyện khởi nghiệp và đam mê công nghệ của Vy Thiên Hùng được Báo Đồng Nai đưa tin.",
-      url: "https://baodongnai.com.vn/xa-hoi/202504/nguoi-tre-lam-sach-noi-ea65435/",
-      image: "https://baodongnai.com.vn/file/e7837c02876411cd0187645a2551379f/042025/hung_2_20250409213306.jpg?width=600&height=-&type=resize",
-      color: "from-blue-500/10 to-blue-600/5",
-      iconColor: "text-blue-500",
-      iconName: "Newspaper",
+      "icon": "Video",
+      "title": "LIVESTREAM & CONTENT",
+      "subtitle": "LIVESTREAM BÁN HÀNG & NỘI DUNG SỐ",
+      "description": "Xây dựng kịch bản và vận hành livestream bán hàng chuyên nghiệp. Kết hợp sản xuất content đa nền tảng để tối đa hóa reach và engagement."
     },
     {
-      source: "Báo Công An Nhân Dân",
-      title: "Vy Thiên Hùng cảnh báo lừa đảo được Báo Bộ Công An đưa tin",
-      description: "Cảnh báo thủ đoạn lừa đảo nhắm vào những người viết văn chương — thông tin quan trọng được Báo Công An Nhân Dân ghi nhận.",
-      url: "https://congan.com.vn/vu-an/canh-giac/canh-bao-thu-doan-lua-dao-nham-vao-nhung-nguoi-viet-van-chuong_180096.html",
-      image: "https://cloud.tienlenquyetthang.com/thumbnail/CATP-480-2025-7-6/fd8c6fe6e7b851e608a9_655_393_270.jpg",
-      color: "from-red-500/10 to-red-600/5",
-      iconColor: "text-red-500",
-      iconName: "Shield",
+      "icon": "Bot",
+      "title": "AI & AUTOMATION",
+      "subtitle": "TỰ ĐỘNG HÓA & ỨNG DỤNG AI",
+      "description": "Ứng dụng AI và automation vào vận hành Marketing — từ chatbot, email marketing tự động đến phân tích dữ liệu khách hàng quy mô lớn. Giúp doanh nghiệp vận hành tinh gọn hơn."
     },
     {
-      source: "HTV - Truyền hình TP.HCM",
-      title: "Vy Thiên Hùng góp mặt trong Hội sách Tết 2025 trên truyền hình HTV",
-      description: "Xuất hiện trên sóng truyền hình HTV trong chương trình Hội sách Tết 2025, chia sẻ về hành trình sách nói và công nghệ.",
-      url: "https://www.youtube.com/watch?v=P-G-LlRkBk8",
-      image: "https://img.youtube.com/vi/P-G-LlRkBk8/maxresdefault.jpg",
-      color: "from-purple-500/10 to-purple-600/5",
-      iconColor: "text-purple-500",
-      iconName: "Tv",
-    },
-  ],
-  hobbies: {
-    image: "",  // will fallback to imported asset
-    sections: [
-      {
-        title: "Nỗi ám ảnh về Trải nghiệm & Thẩm mỹ (UX/UI Excellence)",
-        description: "Sự yêu thích việc ứng dụng AI Generative không chỉ dừng ở đồ họa cá nhân, mà được tôi chuyển hóa thành tiêu chuẩn khắt khe cho mọi sản phẩm B2B. Tôi tin rằng một nền tảng doanh nghiệp (SaaS) xuất sắc không chỉ cần luồng code chạy mượt, mà sự hoàn hảo trong từng pixel hiển thị mới là thứ định vị đẳng cấp thương hiệu của đối tác.",
-      },
-      {
-        title: "Linh hoạt & Phá vỡ Giới hạn",
-        description: "Thói quen tùy biến (customization) trong đời sống cá nhân rèn luyện cho tôi khả năng không bao giờ chấp nhận các bộ khung có sẵn. Tôi liên tục đập bỏ và tái cấu trúc các giải pháp phần mềm để chúng có thể Scale-up (mở rộng) không giới hạn cùng doanh nghiệp.",
-      },
-    ],
-  },
-  contact: {
-    zaloLink: "https://zalo.me/0763068614",
-  },
-  ebooks: [
-    {
-      title: "Nhập môn Vibe Coding với AI",
-      description: "Hướng dẫn từ A-Z cách sử dụng AI để lập trình mà không cần kiến thức coding truyền thống. Phù hợp cho người mới bắt đầu.",
-      pages: "32 trang",
-      format: "PDF",
-      file: "#",
+      "icon": "RefreshCw",
+      "title": "CRM & RETENTION",
+      "subtitle": "QUẢN TRỊ KHÁCH HÀNG & GIỮ CHÂN",
+      "description": "Thiết kế hệ thống CRM và chiến lược retention chuyên sâu. Biến khách hàng mới thành khách trung thành thông qua các chương trình chăm sóc tự động và cá nhân hóa."
     },
     {
-      title: "Prompt Engineering cho Developer",
-      description: "Kỹ thuật viết prompt hiệu quả khi làm việc với Gemini AI, ChatGPT, Cursor và các công cụ AI coding khác.",
-      pages: "28 trang",
-      format: "PDF",
-      file: "#",
-    },
-    {
-      title: "AI trong Doanh nghiệp — Ứng dụng thực tế",
-      description: "Case study và chiến lược triển khai AI vào vận hành doanh nghiệp, tối ưu quy trình và tăng năng suất lên đến 300%.",
-      pages: "45 trang",
-      format: "PDF",
-      file: "#",
-    },
-  ],
-  communities: [
-    {
-      name: "Cộng Đồng Chia Sẻ Vibe Coding",
-      description: "Cộng đồng Zalo dành cho những ai đam mê lập trình cùng AI — chia sẻ kinh nghiệm Vibe Coding với Gemini AI, Cursor, GitHub Copilot và các công cụ AI coding hàng đầu.",
-      members: "500+",
-      color: "from-blue-500 to-blue-600",
-      link: "/community/vibe-coding",
-      linkText: "Chọn nhóm phù hợp",
-      image: "/vibe-coding.jpg",
-      internal: true,
-    },
-    {
-      name: "Facebook Group",
-      description: 'Nhóm Facebook dành cho cộng đồng yêu thích AI & Công nghệ — chia sẻ thực chiến, case study và networking cùng những người đam mê đổi mới sáng tạo.',
-      members: "1,000+",
-      color: "from-indigo-500 to-purple-600",
-      link: "https://www.facebook.com/groups/vibecoding007",
-      linkText: "Tham gia Group",
-      image: "/facebook-group.png",
-      internal: false,
-    },
-    {
-      name: "Mercy Labs — AI Training",
-      description: "Cộng đồng học viên Mercy Labs — nơi đào tạo thực chiến về Trí tuệ Nhân tạo, hỗ trợ doanh nghiệp & cá nhân ứng dụng AI vào công việc và cuộc sống.",
-      members: "Đang mở đăng ký",
-      color: "from-emerald-500 to-teal-600",
-      link: "https://oshioxi.com/pages/vibe-coding",
-      linkText: "Tìm hiểu thêm",
-      image: "/mercy-labs.png",
-      internal: false,
-    },
-  ],
-  seo: {
-    siteTitle: "Vy Thiên Hùng — Founder & CEO @ MERCY TECH GLOBAL",
-    metaDescription: "Trang cá nhân của Vy Thiên Hùng — Nhà sáng lập Mercy Tech Global, chuyên gia AI & Công nghệ.",
-    ogImage: "",
-  },
-  footer: {
-    companyName: "MERCY TECH GLOBAL",
-    copyrightName: "Vy Thiên Hùng",
-  },
-  networkingPhotos: [
-    { image: "/networking/photo-1.jpg", caption: "Ký kết hợp tác cùng Đại học Đồng Nai" },
-    { image: "/networking/photo-2.jpg", caption: "Tặng sách cho trẻ em khó khăn cùng TT Hỗ trợ việc làm Thủ Đức" },
-    { image: "/networking/photo-3.jpg", caption: "Thiện nguyện tặng Sách nói cho trẻ em khiếm thị" },
-    { image: "/networking/photo-4.jpg", caption: "Talkshow tại ĐH Khoa học Xã hội & Nhân văn TP.HCM" },
-    { image: "/networking/photo-5.jpg", caption: "Giám khảo Chung kết Khởi nghiệp tại ĐH Nam Cần Thơ" },
-    { image: "/networking/photo-6.jpg", caption: "Mercy đồng hành Ngày hội Việc làm TP. Thủ Đức" },
-  ],
-  vibeCodingGroups: [
-    {
-      title: "Người mới bắt đầu",
-      subtitle: "Dành cho bạn chưa có kinh nghiệm coding",
-      description: "Bạn mới tìm hiểu về Vibe Coding và AI? Đây là nơi lý tưởng để bắt đầu! Cộng đồng sẽ hướng dẫn bạn từ con số 0.",
-      features: ["Hướng dẫn cơ bản từ A-Z", "Hỗ trợ tận tình từ mentor", "Tài liệu dành cho người mới", "Không yêu cầu kinh nghiệm"],
-      link: "https://zalo.me/g/ljzjzz617",
-      linkText: "Tham gia nhóm Beginner",
-    },
-    {
-      title: "Đã có kinh nghiệm",
-      subtitle: "Dành cho bạn đã biết coding hoặc đã dùng AI",
-      description: "Bạn đã có nền tảng lập trình? Tham gia nhóm nâng cao để chia sẻ case study thực chiến và networking.",
-      features: ["Thảo luận kỹ thuật chuyên sâu", "Case study & dự án thực tế", "Networking với developer", "Cập nhật xu hướng AI coding"],
-      link: "https://zalo.me/g/knfhm1bqcempjbodwfwa",
-      linkText: "Tham gia nhóm Advanced",
-    },
-  ],
-  tools: [
-    {
-      name: "ChatGPT Plus",
-      category: "AI Chat",
-      description: "GPT-5.4, Codex 5.4, DALL-E 3, Browsing, Plugins",
-      features: ["Truy cập GPT-5.4 không giới hạn", "Codex 5.4 hỗ trợ lập trình", "DALL-E 3 tạo ảnh AI", "Browsing & Plugins"],
-      duration: "1 tháng",
-      price: 525000,
-      originalPrice: 525000,
-      badge: "BEST SELLER",
-      affiliateLink: "https://openai.com/chatgpt/pricing/",
-    },
-    {
-      name: "CapCut Pro",
-      category: "Design & Video",
-      description: "CapCut Pro — Chỉnh sửa video chuyên nghiệp, xuất 4K, AI Tools, toàn bộ thư viện Premium.",
-      features: ["Xuất video 4K không watermark", "Toàn bộ thư viện hiệu ứng Premium", "Công cụ AI chỉnh sửa nâng cao", "Template & Font Pro độc quyền"],
-      duration: "1 tháng",
-      price: 199000,
-      originalPrice: 199000,
-      badge: "PRO",
-      affiliateLink: "https://www.capcut.com/pricing",
-    },
-    {
-      name: "30TB / Antigravity Ultra / Gemini Ultra / Cli Claude / Cli Gemini",
-      category: "Gemini",
-      description: "Gói siêu cấp 1 Slot: Gemini Ultra + Antigravity Ultra + Veo 3 + 30TB Drive",
-      features: ["Truy cập Gemini Ultra không giới hạn", "Antigravity Ultra (Claude Max Opus 4.6)", "CLI Claude — Lập trình AI dòng lệnh", "Kho lưu trữ 30TB Google Drive"],
-      duration: "1 tháng",
-      price: 6000000,
-      originalPrice: 6000000,
-      badge: "BEST SELLER",
-      affiliateLink: "https://one.google.com/explore-plan/gemini-advanced",
-    },
-  ],
-  zaloLinks: {
-    contactZalo: "https://zalo.me/0763068614",
-    ebookGroupZalo: "https://zalo.me/g/ljzjzz617",
-  },
-  floatingActions: {
-    contactZaloLink: "https://zalo.me/0763068614",
-    communityLink: "/community/vibe-coding",
-    communityLabel: "Cộng đồng",
-  },
-  workshops: [
-    {
-      slug: "talkshow-vibe-coding-loi-hay-hai",
-      title: "Talkshow: Vibe Coding — Lợi hay Hại?",
-      subtitle: "Góc nhìn đa chiều về Vibe Coding và tác động của AI đến ngành lập trình",
-      description: "Buổi talkshow thảo luận sâu về Vibe Coding — xu hướng lập trình bằng AI đang gây tranh cãi: Liệu nó là công cụ giải phóng sáng tạo hay mối nguy cho developer?",
-      date: "04/04/2026",
-      time: "19:00 - 21:00",
-      location: "Online qua Zoom",
-      image: "/talkshow-vibe-coding.png",
-      category: "Talkshow",
-      status: "upcoming",
-      highlights: [
-        "Phân tích ưu & nhược điểm thực tế của Vibe Coding",
-        "Chia sẻ từ người đã xây dựng sản phẩm thực bằng AI",
-        "Thảo luận mở: Developer cần thích nghi thế nào?",
-        "Q&A trực tiếp với diễn giả"
-      ],
-      agenda: [
-        { time: "19:00 - 19:15", title: "Khai mạc & Giới thiệu" },
-        { time: "19:15 - 20:00", title: "Keynote: Vibe Coding — Lợi hay Hại?" },
-        { time: "20:00 - 20:40", title: "Panel Discussion & Case Study thực tế" },
-        { time: "20:40 - 21:00", title: "Q&A & Networking" }
-      ],
-      speaker: {
-        name: "Vy Thiên Hùng",
-        title: "Founder & CEO @ MERCY TECH GLOBAL",
-        avatar: ""
-      },
-      price: "Miễn phí",
-      ctaText: "Đăng ký tham gia",
-      ctaLink: "https://zalo.me/0763068614",
-      reviewCount: 328
-    },
-    {
-      slug: "khoa-hoc-vibe-coding-a-z",
-      title: "Khoá học Vibe Coding từ A-Z",
-      subtitle: "7 ngày thực chiến (2 buổi/tuần) — Từ zero đến tạo sản phẩm thực tế bằng AI",
-      description: "Khoá học chuyên sâu 7 ngày, 2 buổi/tuần, hướng dẫn bạn làm chủ Vibe Coding — xây dựng website, ứng dụng hoàn chỉnh chỉ bằng AI mà không cần biết code.",
-      date: "26/04/2026",
-      time: "2 buổi/tuần",
-      location: "Online",
-      image: "/khoa-hoc-vibe-coding.png",
-      category: "Khoá học",
-      status: "upcoming",
-      highlights: [
-        "7 ngày thực chiến — 2 buổi/tuần",
-        "Xây dựng sản phẩm thực tế từ A-Z bằng AI",
-        "Được xem lại toàn bộ Record",
-        "Hỗ trợ 1-1 từ mentor trong suốt khoá học"
-      ],
-      agenda: [
-        { time: "Buổi 1-2", title: "Nhập môn Vibe Coding & Setup công cụ AI" },
-        { time: "Buổi 3-4", title: "Tạo giao diện website với AI" },
-        { time: "Buổi 5-6", title: "Backend, Database & API" },
-        { time: "Buổi 7", title: "Deploy, tối ưu & Bảo vệ dự án" }
-      ],
-      speaker: {
-        name: "Vy Thiên Hùng",
-        title: "Founder & CEO @ MERCY TECH GLOBAL",
-        avatar: ""
-      },
-      price: "693.000đ (đã bao gồm VAT)",
-      priceValue: 693000,
-      originalPrice: 19000000,
-      slogan: "Sản phẩm 5⭐ giá 1⭐",
-      bonuses: [
-        "Tài khoản Anti Gravity (Hot)",
-        "Full bộ Ebook/Giáo trình Vibe Coding",
-        "Tài khoản học Vibecoding trên nền tảng Elearning",
-        "Được xem lại Record",
-        "Gemini Ultra",
-        "25.000 Credit Veo 3.1",
-        "Hạn mức cao nhất Notebook LM",
-        "Gemini trong tài liệu, Gmail và nhiều công cụ khác",
-        "30TB Google Drive",
-        "ChatGPT Plus",
-        "Capcut Pro",
-        "Canva Pro",
-        "Cơ hội nhận thêm: Youtube Premium, Kling AI, Perplexity Pro, Loveable Pro",
-        "Vào cộng đồng VIP member chất lượng — Cam kết không loãng"
-      ],
-      ctaText: "Tìm hiểu thêm",
-      ctaLink: "https://zalo.me/0763068614",
-      reviewCount: 286
+      "icon": "GraduationCap",
+      "title": "TRAINING & COACHING",
+      "subtitle": "ĐÀO TẠO & TƯ VẤN DOANH NGHIỆP",
+      "description": "Đào tạo in-house và coaching 1-1 cho đội ngũ Marketing, Sales. Từ mindset chiến lược đến kỹ năng thực thi — giúp doanh nghiệp tự chủ năng lực vận hành và tăng trưởng bền vững."
     }
   ],
-  lastUpdated: new Date().toISOString(),
+  "blog": [
+    {
+      "category": "Marketing & Hệ thống",
+      "title": "Đừng chỉ làm Marketing, hãy xây dựng \"Hệ điều hành\" cho tăng trưởng",
+      "excerpt": "Trong suốt 15 năm lăn lộn với hàng trăm dự án Marketing, tôi nhận ra một lỗ hổng chí mạng mà nhiều doanh nghiệp đang gặp phải.",
+      "content": "Trong suốt 15 năm lăn lộn với hàng trăm dự án Marketing, từ những chiến dịch \"đánh nhanh thắng nhanh\" đến những kế hoạch dài hơi, tôi nhận ra một lỗ hổng chí mạng mà nhiều doanh nghiệp đang gặp phải: Làm Marketing như một ốc đảo tách biệt.\n\nNhiều người vẫn lầm tưởng rằng chỉ cần một clip viral, một kịch bản livestream bùng nổ hay một ngân sách quảng cáo khổng lồ là đủ để thay đổi vận mệnh doanh nghiệp. Nhưng thực tế phũ phàng hơn nhiều: Marketing không thể cứu vãn một mô hình kinh doanh lỗi thời hay một hệ thống vận hành rệu rã.\n\n## 1. Cái bẫy của \"Bề nổi truyền thông\"\n\nĐã bao giờ bạn tự hỏi tại sao có những thương hiệu bùng nổ rất nhanh rồi lại biến mất cũng nhanh không kém? Câu trả lời nằm ở \"bộ khung\". Một chiến dịch sáng tạo mà thiếu đi sự thấu hiểu về điểm chạm khách hàng (Touchpoints) hay quy trình xử lý dữ liệu thì chẳng khác nào xây một tòa lâu đài trên cát.\n\nRiêng tôi, tôi chọn cách tiếp cận khác: Marketing phải là hệ quả của một mô hình kinh doanh đúng đắn. Thay vì chỉ hỏi \"Làm sao để bán được hàng?\", tôi đặt câu hỏi \"Làm sao để hệ thống này tự vận hành và tự tạo ra khách hàng?\".\n\n## 2. Tư duy hệ thống: \"Bộ xương\" của doanh nghiệp\n\nNếu Marketing là làn da, là hơi thở, thì tư duy hệ thống chính là bộ xương. Một doanh nghiệp muốn \"giải bài toán quy mô\" (Scaling) mà không có tính hệ thống thì càng lớn sẽ càng rối.\n\nTái cấu trúc không phải là đập đi xây lại mọi thứ, mà là thiết kế lại cách thức các bộ phận tương tác với nhau. Khi các luồng dữ liệu từ Marketing được đổ vào hệ thống vận hành một cách trơn tru, doanh nghiệp sẽ đạt được trạng thái \"Tinh gọn\". Đây là lúc chúng ta không còn dùng sức người để bù đắp cho sự thiếu hụt của quy trình.\n\n## 3. Đòn bẩy AI: Không còn là xu hướng, đó là sự sống còn\n\nNhiều người hỏi tôi: \"AI sẽ thay thế Marketer?\". Tôi trả lời: \"Không, nhưng Marketer biết dùng AI sẽ thay thế Marketer không biết dùng AI\".\n\nTrong hệ sinh thái tôi đang vận hành, AI không chỉ để viết content hay tạo ảnh. Chúng tôi dùng AI như một \"Hệ thần kinh\":\n\n- Phân tích hành vi khách hàng ở quy mô lớn.\n- Tối ưu hóa các kịch bản phản hồi tự động.\n- Xây dựng các \"Knowledge Hub\" để quản trị tri thức doanh nghiệp.\n\nĐây chính là đòn bẩy thực chiến giúp những doanh nghiệp dù nhỏ vẫn có thể đấu lại những gã khổng lồ bằng tốc độ và sự chính xác.\n\n## Lời kết\n\nMục tiêu cuối cùng của tôi trên hành trình này là giúp các cộng sự và khách hàng hiểu rằng: Sức mạnh thực sự nằm ở sự giao thoa.\n\nNếu bạn đang tìm kiếm một \"phép màu\" Marketing ngắn hạn, có lẽ tôi không phải người phù hợp. Nhưng nếu bạn muốn xây dựng một \"hệ điều hành\" tăng trưởng bền vững, dựa trên tư duy logic và công nghệ hiện đại, chúng ta có rất nhiều điều để thảo luận.",
+      "date": "2026"
+    },
+    {
+      "category": "Thương mại điện tử",
+      "title": "Tại sao Shopee Mall không còn là cuộc chơi của giá rẻ?",
+      "excerpt": "Thương mại điện tử đang bước vào giai đoạn trưởng thành. Việc chỉ dựa vào cạnh tranh giá đã không còn hiệu quả. Đâu là lời giải cho bài toán lợi nhuận?",
+      "content": "Từ những ngày đầu, các sàn TMĐT như Shopee hay Lazada được ví như một khu chợ khổng lồ, nơi giá cả là yếu tố quyết định. Nhưng cục diện đã thay đổi.\n\n## 1. Sự kết thúc của kỷ nguyên đốt tiền\nKhi các nền tảng bắt đầu tối ưu hóa lợi nhuận, chi phí Traffic ngày càng đắt đỏ. Các thương hiệu không thể tồn tại nếu chỉ dựa vào việc phá giá.\n\n## 2. Dịch chuyển sang giá trị thương hiệu\nKhách hàng hiện đại trên Shopee Mall tìm kiếm sự uy tín, trải nghiệm đóng gói và dịch vụ hậu mãi. Đó là lý do Branding trở thành yếu tố sống còn.\n\n## 3. Quản trị chuỗi cung ứng là vua\nĐể tối ưu hóa biên lợi nhuận, bạn cần một hệ thống quản lý kho, logistics và data-driven marketing. Không thể chỉ nhập hàng và cầu nguyện có đơn.",
+      "date": "2026"
+    },
+    {
+      "category": "Performance Ads",
+      "title": "Tối ưu hóa phễu chuyển đổi: Đừng chỉ nhìn vào ROAS",
+      "excerpt": "Nhiều Marketer bị ám ảnh bởi chỉ số ROAS mà quên mất rằng vòng đời khách hàng (LTV) mới là thứ quyết định sự sống còn.",
+      "content": "Quảng cáo hiệu suất cao (Performance Ads) đã thay đổi hoàn toàn cách chúng ta làm Marketing. Nhưng nó cũng mang lại một cái bẫy: Ám ảnh ngắn hạn.\n\n## ROAS cao chưa chắc đã có lãi\nChi phí vận hành, chi phí sản phẩm, và chi phí nhân sự thường bị bỏ qua khi nhìn vào bảng báo cáo quảng cáo xanh mướt.\n\n## Xây dựng phễu thay vì chạy phễu\nThay vì dồn toàn bộ tiền vào chuyển đổi trực tiếp, hãy chia ngân sách cho việc Educate khách hàng, Retargeting và chăm sóc sau bán.\n\n## Tư duy LTV (Life-Time Value)\nKhách hàng mua lần đầu có thể huề vốn hoặc lỗ, nhưng nếu họ quay lại mua 3, 4 lần thì sao? Đó là lúc hệ thống CRM lên ngôi.",
+      "date": "2026"
+    },
+    {
+      "category": "AI & Tự động hóa",
+      "title": "Ứng dụng AI vào CRM: Cá nhân hóa trải nghiệm khách hàng quy mô lớn",
+      "excerpt": "AI không chỉ để viết nội dung. Sức mạnh thực sự của nó nằm ở việc phân tích dữ liệu và tự động hóa điểm chạm khách hàng.",
+      "content": "Bạn có hàng ngàn khách hàng cũ nhưng không biết cách khai thác? Bạn gửi SMS/Email hàng loạt nhưng tỷ lệ chuyển đổi lẹt đẹt?\n\n## Từ Data thô đến Insight\nBằng cách ứng dụng AI, chúng ta có thể phân khúc khách hàng theo hành vi mua sắm, sở thích và dự đoán thời điểm họ sẽ mua lại.\n\n## Tự động hóa có cảm xúc\nHệ thống tự động không có nghĩa là máy móc. Bằng cách cá nhân hóa thông điệp dựa trên lịch sử tương tác, khách hàng sẽ cảm thấy được thấu hiểu.\n\n## Bắt đầu từ đâu?\nHãy bắt đầu bằng việc làm sạch dữ liệu. Sau đó là thiết lập các Trigger tự động trên Zalo ZNS hoặc Email. Đó là bước đi nhỏ nhưng mang lại hiệu quả khổng lồ.",
+      "date": "2026"
+    }
+  ],
+  "press": [],
+  "hobbies": {
+    "image": "",
+    "sections": [
+      {
+        "title": "Tư duy Founder, không phải Agency",
+        "description": "Tôi không nhìn bài toán qua lăng kính \"chạy quảng cáo\". Tôi nhìn bằng con mắt của người điều hành: Soi xét mô hình kinh doanh, biên lợi nhuận và khả năng vận hành trước khi đổ tiền vào Marketing."
+      },
+      {
+        "title": "Marketing là Hệ điều hành",
+        "description": "Thay vì thực thi rời rạc, tôi xây dựng hệ thống kết nối giữa Marketing - Vận hành - Công nghệ. Khách hàng chọn tôi để có một bộ máy tự vận hành, không phải một chiến dịch ngắn hạn."
+      },
+      {
+        "title": "Đòn bẩy AI & 15 năm thực chiến",
+        "description": "Tôi dùng AI để tự động hóa tri thức và tối ưu hiệu suất, thay vì chỉ tạo nội dung. Cộng với 15 năm kinh nghiệm \"xương máu\", tôi giúp doanh nghiệp đi tắt qua các sai lầm về quy mô (scaling)."
+      }
+    ]
+  },
+  "contact": {
+    "zaloLink": "https://zalo.me/0919376786"
+  },
+  "ebooks": [],
+  "communities": [],
+  "seo": {
+    "siteTitle": "Nguyễn Trúc Anh — Founder & CEO @ THE BLUE OCEAN GROUP",
+    "metaDescription": "Trang cá nhân của Nguyễn Trúc Anh — 15+ năm thực chiến Marketing, chuyên gia tư vấn chiến lược & kiến trúc hệ thống tăng trưởng cho doanh nghiệp.",
+    "ogImage": ""
+  },
+  "footer": {
+    "companyName": "THE BLUE OCEAN GROUP",
+    "copyrightName": "Nguyễn Trúc Anh"
+  },
+  "networkingPhotos": [],
+  "vibeCodingGroups": [],
+  "tools": [],
+  "zaloLinks": {
+    "contactZalo": "https://zalo.me/0919376786",
+    "ebookGroupZalo": ""
+  },
+  "floatingActions": {
+    "contactZaloLink": "https://zalo.me/0919376786",
+    "communityLink": "",
+    "communityLabel": "Tư vấn miễn phí"
+  },
+  "workshops": [],
+  "lastUpdated": "2026-05-04T00:00:00.000Z"
 };
 
 // --- LocalStorage Cache (fallback) ---

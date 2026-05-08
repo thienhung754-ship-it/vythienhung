@@ -8,7 +8,6 @@ import Index from "./pages/Index";
 import BlogPage from "./pages/BlogPage";
 import CommunityPage from "./pages/CommunityPage";
 import VibeCodingPage from "./pages/VibeCodingPage";
-import LibraryPage from "./pages/LibraryPage";
 import AdminPage from "./pages/AdminPage";
 import NotFound from "./pages/NotFound";
 import WorkshopsPage from "./pages/WorkshopsPage";
@@ -31,7 +30,6 @@ const App = () => (
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/community/vibe-coding" element={<VibeCodingPage />} />
-            <Route path="/thu-vien" element={<LibraryPage />} />
             <Route path="/workshops" element={<WorkshopsPage />} />
             <Route path="/workshops/:slug" element={<WorkshopDetailPage />} />
             <Route path="/adminhungdz" element={<AdminPage />} />

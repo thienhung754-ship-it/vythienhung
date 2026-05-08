@@ -16,7 +16,7 @@ const ImportExportView: React.FC = () => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `vythienhung-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.download = `trucanh-backup-${new Date().toISOString().slice(0, 10)}.json`;
       a.click();
       URL.revokeObjectURL(url);
       setMessage({ type: "success", text: "Đã xuất file backup thành công!" });

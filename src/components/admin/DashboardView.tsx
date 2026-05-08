@@ -7,7 +7,7 @@ const DashboardView: React.FC = () => {
 
   const storageUsed = (() => {
     try {
-      const raw = localStorage.getItem("vythienhung_site_data");
+      const raw = localStorage.getItem("trucanh_site_data");
       if (raw) {
         const bytes = new Blob([raw]).size;
         if (bytes > 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;

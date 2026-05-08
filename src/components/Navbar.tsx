@@ -6,9 +6,6 @@ import { Menu, X } from "lucide-react";
 const navItems = [
   { label: "Giới thiệu", href: "/#about" },
   { label: "Blog", href: "/blog" },
-  { label: "Cộng đồng", href: "/community" },
-  { label: "Thư Viện/Công Cụ", href: "/thu-vien" },
-  { label: "Workshop/Sự Kiện", href: "/workshops" },
 ];
 
 const menuItemVariants = {
@@ -67,12 +64,12 @@ const Navbar = () => {
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled || mobileOpen ? "glass shadow-sm" : "bg-transparent"
+          scrolled || mobileOpen ? "glass-card border-b border-[hsla(211,100%,50%,0.1)] shadow-[0_4px_30px_hsla(0,0%,0%,0.5)]" : "bg-transparent"
         }`}
       >
-        <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
-          <Link to="/" className="text-sm font-semibold tracking-tight text-foreground">
-            @vythienhung
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link to="/" className="text-lg font-bold tracking-tight text-gradient-ocean">
+            @trucanh
           </Link>
 
           {/* Desktop nav */}
@@ -82,9 +79,10 @@ const Navbar = () => {
                 key={item.href}
                 to={item.href}
                 onClick={() => handleNavClick(item.href)}
-                className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-300"
+                className="text-sm font-medium text-muted-foreground hover:text-[hsl(211,100%,60%)] transition-colors duration-300 relative group"
               >
                 {item.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[hsl(211,100%,50%)] transition-all duration-300 group-hover:w-full" />
               </Link>
             ))}
           </div>
@@ -92,7 +90,7 @@ const Navbar = () => {
           {/* Mobile hamburger button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden relative w-9 h-9 flex items-center justify-center rounded-xl bg-secondary/80 hover:bg-secondary text-foreground transition-all duration-300"
+            className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-xl glass-card text-foreground transition-all duration-300 hover:border-[hsla(211,100%,50%,0.3)]"
             aria-label="Toggle menu"
           >
             <AnimatePresence mode="wait">
@@ -104,7 +102,7 @@ const Navbar = () => {
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-5 h-5 text-[hsl(211,100%,60%)]" />
                 </motion.div>
               ) : (
                 <motion.div
@@ -114,12 +112,15 @@ const Navbar = () => {
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Menu className="w-4 h-4" />
+                  <Menu className="w-5 h-5" />
                 </motion.div>
               )}
             </AnimatePresence>
           </button>
         </div>
+        
+        {/* Progress line indicator (only when scrolled) */}
+        {scrolled && <div className="absolute bottom-0 left-0 h-[1px] bg-gradient-to-r from-[hsl(211,100%,50%)] to-transparent w-1/4 opacity-50" />}
       </motion.nav>
 
       {/* Mobile menu dropdown */}
@@ -130,7 +131,7 @@ const Navbar = () => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -8 }}
             transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="fixed top-14 left-4 right-4 z-40 rounded-2xl bg-background/95 backdrop-blur-xl shadow-2xl border border-border/60 overflow-hidden md:hidden"
+            className="fixed top-20 left-4 right-4 z-40 rounded-2xl glass-card shadow-2xl overflow-hidden md:hidden"
           >
             <div className="p-3 flex flex-col gap-1">
               {navItems.map((item, i) => (
@@ -145,7 +146,7 @@ const Navbar = () => {
                   <Link
                     to={item.href}
                     onClick={() => handleNavClick(item.href)}
-                    className="flex items-center gap-3 py-3.5 px-4 rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary/80 active:bg-secondary active:scale-[0.98] transition-all duration-200"
+                    className="flex items-center gap-3 py-4 px-5 rounded-xl text-sm font-semibold text-muted-foreground hover:text-[hsl(211,100%,60%)] hover:bg-[hsla(211,100%,50%,0.05)] active:scale-[0.98] transition-all duration-200"
                   >
                     {item.label}
                   </Link>
@@ -154,7 +155,7 @@ const Navbar = () => {
             </div>
 
             {/* Bottom accent line */}
-            <div className="h-1 bg-gradient-to-r from-blue-500/30 via-purple-500/30 to-pink-500/30" />
+            <div className="h-1 bg-gradient-ocean opacity-50" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -167,7 +168,7 @@ const Navbar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-30 bg-black/30 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm md:hidden"
             onClick={() => setMobileOpen(false)}
           />
         )}

@@ -8,43 +8,50 @@ interface FomoPerson {
   timeAgo: string;
 }
 
+// Avatar pools — Vietnamese faces, gender-matched
+// Female: tên có "Thị" hoặc tên nữ (Lan, Hoa, Mai, Thu, Hương, Nga, Tú, Linh, Kim, Yến, Diệu, Oanh, Hạnh, Thảo, Loan)
+// Male: tên có "Văn" hoặc tên nam (Minh, Đức, Hùng, Nam, Long, Bình, Thắng, An, Phong, Tùng, Quân, Trọng, Sơn, Dũng, Khoa)
+const F = (n: number) => `/avatars/vn-f${n}.png`;
+const M = (n: number) => `/avatars/vn-m${n}.png`;
+
 // 15 người cho Khoá học Vibe Coding
 const COURSE_PEOPLE: FomoPerson[] = [
-  { name: "Nguyễn Thị Lan", avatar: "https://randomuser.me/api/portraits/women/12.jpg", city: "TP.HCM", timeAgo: "2 phút trước" },
-  { name: "Trần Văn Minh", avatar: "https://randomuser.me/api/portraits/men/22.jpg", city: "Hà Nội", timeAgo: "5 phút trước" },
-  { name: "Lê Thị Hoa", avatar: "https://randomuser.me/api/portraits/women/44.jpg", city: "Đà Nẵng", timeAgo: "7 phút trước" },
-  { name: "Phạm Văn Đức", avatar: "https://randomuser.me/api/portraits/men/55.jpg", city: "Cần Thơ", timeAgo: "12 phút trước" },
-  { name: "Hoàng Thị Mai", avatar: "https://randomuser.me/api/portraits/women/31.jpg", city: "Hải Phòng", timeAgo: "15 phút trước" },
-  { name: "Võ Văn Hùng", avatar: "https://randomuser.me/api/portraits/men/67.jpg", city: "Bình Dương", timeAgo: "18 phút trước" },
-  { name: "Đặng Thị Thu", avatar: "https://randomuser.me/api/portraits/women/18.jpg", city: "Đồng Nai", timeAgo: "23 phút trước" },
-  { name: "Bùi Văn Nam", avatar: "https://randomuser.me/api/portraits/men/39.jpg", city: "TP.HCM", timeAgo: "27 phút trước" },
-  { name: "Ngô Thị Hương", avatar: "https://randomuser.me/api/portraits/women/57.jpg", city: "Nha Trang", timeAgo: "31 phút trước" },
-  { name: "Đinh Văn Long", avatar: "https://randomuser.me/api/portraits/men/83.jpg", city: "Hà Nội", timeAgo: "38 phút trước" },
-  { name: "Trịnh Thị Nga", avatar: "https://randomuser.me/api/portraits/women/6.jpg", city: "Vũng Tàu", timeAgo: "45 phút trước" },
-  { name: "Phan Văn Bình", avatar: "https://randomuser.me/api/portraits/men/14.jpg", city: "TP.HCM", timeAgo: "52 phút trước" },
-  { name: "Lý Thị Tú", avatar: "https://randomuser.me/api/portraits/women/72.jpg", city: "Huế", timeAgo: "1 giờ trước" },
-  { name: "Hồ Văn Thắng", avatar: "https://randomuser.me/api/portraits/men/46.jpg", city: "Đà Lạt", timeAgo: "1 giờ trước" },
-  { name: "Cao Thị Linh", avatar: "https://randomuser.me/api/portraits/women/26.jpg", city: "Long An", timeAgo: "2 giờ trước" },
+  { name: "Nguyễn Thị Lan",   avatar: F(1), city: "TP.HCM",      timeAgo: "2 phút trước" },
+  { name: "Trần Văn Minh",    avatar: M(1), city: "Hà Nội",      timeAgo: "5 phút trước" },
+  { name: "Lê Thị Hoa",       avatar: F(2), city: "Đà Nẵng",     timeAgo: "7 phút trước" },
+  { name: "Phạm Văn Đức",     avatar: M(2), city: "Cần Thơ",     timeAgo: "12 phút trước" },
+  { name: "Hoàng Thị Mai",    avatar: F(3), city: "Hải Phòng",   timeAgo: "15 phút trước" },
+  { name: "Võ Văn Hùng",      avatar: M(3), city: "Bình Dương",  timeAgo: "18 phút trước" },
+  { name: "Đặng Thị Thu",     avatar: F(4), city: "Đồng Nai",    timeAgo: "23 phút trước" },
+  { name: "Bùi Văn Nam",      avatar: M(4), city: "TP.HCM",      timeAgo: "27 phút trước" },
+  { name: "Ngô Thị Hương",    avatar: F(5), city: "Nha Trang",   timeAgo: "31 phút trước" },
+  { name: "Đinh Văn Long",    avatar: M(5), city: "Hà Nội",      timeAgo: "38 phút trước" },
+  { name: "Trịnh Thị Nga",    avatar: F(1), city: "Vũng Tàu",    timeAgo: "45 phút trước" },
+  { name: "Phan Văn Bình",    avatar: M(2), city: "TP.HCM",      timeAgo: "52 phút trước" },
+  { name: "Lý Thị Tú",        avatar: F(3), city: "Huế",         timeAgo: "1 giờ trước" },
+  { name: "Hồ Văn Thắng",     avatar: M(1), city: "Đà Lạt",      timeAgo: "1 giờ trước" },
+  { name: "Cao Thị Linh",     avatar: F(2), city: "Long An",     timeAgo: "2 giờ trước" },
 ];
 
 // 15 người cho Talkshow (hoàn toàn khác)
 const TALKSHOW_PEOPLE: FomoPerson[] = [
-  { name: "Nguyễn Văn An", avatar: "https://randomuser.me/api/portraits/men/3.jpg", city: "TP.HCM", timeAgo: "1 phút trước" },
-  { name: "Trần Thị Kim", avatar: "https://randomuser.me/api/portraits/women/8.jpg", city: "Hà Nội", timeAgo: "4 phút trước" },
-  { name: "Lê Văn Phong", avatar: "https://randomuser.me/api/portraits/men/71.jpg", city: "Bắc Ninh", timeAgo: "9 phút trước" },
-  { name: "Phạm Thị Yến", avatar: "https://randomuser.me/api/portraits/women/15.jpg", city: "TP.HCM", timeAgo: "13 phút trước" },
-  { name: "Hoàng Văn Tùng", avatar: "https://randomuser.me/api/portraits/men/28.jpg", city: "Quảng Nam", timeAgo: "16 phút trước" },
-  { name: "Võ Thị Diệu", avatar: "https://randomuser.me/api/portraits/women/52.jpg", city: "Cà Mau", timeAgo: "21 phút trước" },
-  { name: "Đặng Văn Quân", avatar: "https://randomuser.me/api/portraits/men/43.jpg", city: "Thái Nguyên", timeAgo: "25 phút trước" },
-  { name: "Bùi Thị Oanh", avatar: "https://randomuser.me/api/portraits/women/36.jpg", city: "Thanh Hoá", timeAgo: "29 phút trước" },
-  { name: "Ngô Văn Trọng", avatar: "https://randomuser.me/api/portraits/men/62.jpg", city: "TP.HCM", timeAgo: "34 phút trước" },
-  { name: "Đinh Thị Hạnh", avatar: "https://randomuser.me/api/portraits/women/48.jpg", city: "Hà Nội", timeAgo: "41 phút trước" },
-  { name: "Trịnh Văn Sơn", avatar: "https://randomuser.me/api/portraits/men/77.jpg", city: "Đà Nẵng", timeAgo: "48 phút trước" },
-  { name: "Phan Thị Loan", avatar: "https://randomuser.me/api/portraits/women/64.jpg", city: "Kiên Giang", timeAgo: "55 phút trước" },
-  { name: "Lý Văn Dũng", avatar: "https://randomuser.me/api/portraits/men/91.jpg", city: "An Giang", timeAgo: "1 giờ trước" },
-  { name: "Hồ Thị Thảo", avatar: "https://randomuser.me/api/portraits/women/21.jpg", city: "Bình Phước", timeAgo: "1 giờ trước" },
-  { name: "Cao Văn Khoa", avatar: "https://randomuser.me/api/portraits/men/35.jpg", city: "Lâm Đồng", timeAgo: "2 giờ trước" },
+  { name: "Nguyễn Văn An",    avatar: M(3), city: "TP.HCM",      timeAgo: "1 phút trước" },
+  { name: "Trần Thị Kim",     avatar: F(4), city: "Hà Nội",      timeAgo: "4 phút trước" },
+  { name: "Lê Văn Phong",     avatar: M(4), city: "Bắc Ninh",    timeAgo: "9 phút trước" },
+  { name: "Phạm Thị Yến",     avatar: F(5), city: "TP.HCM",      timeAgo: "13 phút trước" },
+  { name: "Hoàng Văn Tùng",   avatar: M(5), city: "Quảng Nam",   timeAgo: "16 phút trước" },
+  { name: "Võ Thị Diệu",      avatar: F(1), city: "Cà Mau",      timeAgo: "21 phút trước" },
+  { name: "Đặng Văn Quân",    avatar: M(1), city: "Thái Nguyên", timeAgo: "25 phút trước" },
+  { name: "Bùi Thị Oanh",     avatar: F(2), city: "Thanh Hoá",   timeAgo: "29 phút trước" },
+  { name: "Ngô Văn Trọng",    avatar: M(2), city: "TP.HCM",      timeAgo: "34 phút trước" },
+  { name: "Đinh Thị Hạnh",    avatar: F(3), city: "Hà Nội",      timeAgo: "41 phút trước" },
+  { name: "Trịnh Văn Sơn",    avatar: M(3), city: "Đà Nẵng",     timeAgo: "48 phút trước" },
+  { name: "Phan Thị Loan",    avatar: F(4), city: "Kiên Giang",  timeAgo: "55 phút trước" },
+  { name: "Lý Văn Dũng",      avatar: M(4), city: "An Giang",    timeAgo: "1 giờ trước" },
+  { name: "Hồ Thị Thảo",      avatar: F(5), city: "Bình Phước",  timeAgo: "1 giờ trước" },
+  { name: "Cao Văn Khoa",     avatar: M(5), city: "Lâm Đồng",    timeAgo: "2 giờ trước" },
 ];
+
 
 interface FomoNotificationProps {
   isTalkshow?: boolean;
