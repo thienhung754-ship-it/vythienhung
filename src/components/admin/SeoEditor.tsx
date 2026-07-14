@@ -50,7 +50,6 @@ const SeoEditor: React.FC = () => {
           value={seo.ogImage}
           onChange={(v) => update("ogImage", v)}
           label="OG Image (ảnh chia sẻ mạng xã hội)"
-          hint="Chuẩn: 1200 × 630px — hiển thị khi share link lên Facebook, Zalo, Twitter"
         />
 
         {/* Preview */}
@@ -58,7 +57,7 @@ const SeoEditor: React.FC = () => {
           <label className="block text-xs font-medium text-neutral-400 mb-2">Preview Google</label>
           <div className="bg-white rounded-xl p-4 space-y-1">
             <p className="text-blue-700 text-base font-medium truncate">{seo.siteTitle || "Site Title"}</p>
-            <p className="text-green-700 text-xs">trucanh.com</p>
+            <p className="text-green-700 text-xs">vythienhung.com</p>
             <p className="text-gray-600 text-xs leading-relaxed line-clamp-2">{seo.metaDescription || "Meta description sẽ hiển thị ở đây..."}</p>
           </div>
         </div>

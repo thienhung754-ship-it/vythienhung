@@ -8,7 +8,6 @@ interface ImageUploaderProps {
   fallbackSrc?: string;
   accept?: string;
   className?: string;
-  hint?: string;  // e.g. "Khuyến nghị: 1200 × 630px"
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({
@@ -18,7 +17,6 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   fallbackSrc,
   accept = "image/*",
   className = "",
-  hint,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragOver, setDragOver] = useState(false);
@@ -98,12 +96,6 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
         >
           <X className="w-3 h-3" /> Xóa ảnh (dùng mặc định)
         </button>
-      )}
-      {hint && (
-        <p className="mt-1.5 text-[11px] text-neutral-500 flex items-center gap-1">
-          <span className="inline-block w-3 h-3 rounded-sm bg-neutral-600 text-center leading-3 text-[9px] font-bold text-neutral-300">i</span>
-          {hint}
-        </p>
       )}
     </div>
   );

@@ -60,7 +60,6 @@ const CommunityEditor: React.FC = () => {
             onChange={(v) => updateItem(i, "image", v)}
             label="Banner image"
             fallbackSrc={item.image && !item.image.startsWith("data:") ? item.image : undefined}
-            hint="Khuyến nghị: 800 × 400px — ảnh ngang, tỉ lệ 2:1, hiển thị trong card cộng đồng"
           />
 
           <div className="grid grid-cols-2 gap-4">

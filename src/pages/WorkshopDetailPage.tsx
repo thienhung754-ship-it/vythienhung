@@ -41,7 +41,7 @@ function useWorkshopMeta(workshop: { title: string; description?: string; subtit
       if (!el) { el = document.createElement("meta"); el.setAttribute("property", prop); document.head.appendChild(el); }
       el.setAttribute("content", value);
     };
-    document.title = `${workshop.title}`;
+    document.title = `${workshop.title} — Vy Thiên Hùng`;
     setMeta("og:title", workshop.title);
     setMeta("og:description", desc);
     setMeta("og:image", img);

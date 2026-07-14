@@ -21,7 +21,6 @@ const HeroEditor: React.FC = () => {
         value={hero.avatar}
         onChange={(v) => update("avatar", v)}
         label="Avatar / Ảnh đại diện"
-        hint="Khuyến nghị: 400 × 400px — ảnh vuông, sẽ hiển thị dạng tròn"
       />
 
       <div>

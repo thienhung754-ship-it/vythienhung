@@ -27,7 +27,7 @@ const ActivitiesPage = () => {
                 Hoạt động
               </p>
               <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-6">
-                Các hoạt động
+                Các hoạt động của Vy Thiên Hùng
               </h1>
               <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                 Những khoảnh khắc đáng nhớ trong hành trình kết nối cộng đồng, chia sẻ kiến thức và đóng góp cho xã hội.

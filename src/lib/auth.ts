@@ -2,7 +2,7 @@
 // Admin Authentication — simple client-side auth with session
 // ============================================================
 
-const AUTH_KEY = "trucanh_admin_auth";
+const AUTH_KEY = "vythienhung_admin_auth";
 const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
 
 // Credentials stored as hashed values for minimal security
@@ -18,7 +18,7 @@ function hashString(str: string): string {
     hash |= 0;
   }
   // Add salt for extra security layer
-  const salted = `bog_${hash}_${str.length}_trucanh`;
+  const salted = `vth_${hash}_${str.length}_mercy`;
   let hash2 = 0;
   for (let i = 0; i < salted.length; i++) {
     const char = salted.charCodeAt(i);

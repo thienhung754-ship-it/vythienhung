@@ -46,7 +46,6 @@ const AboutEditor: React.FC = () => {
         value={about.image}
         onChange={(v) => update("image", v)}
         label="Ảnh About section"
-        hint="Khuyến nghị: 800 × 600px — ảnh dọc hoặc ngang đều được"
       />
 
       {/* Visible paragraphs */}

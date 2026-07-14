@@ -57,7 +57,6 @@ const NetworkingPhotosEditor: React.FC = () => {
               value={photo.image}
               onChange={(val) => updatePhoto(i, "image", val)}
               label="Ảnh"
-              hint="Khuyến nghị: 800 × 600px hoặc 600 × 600px — hiển thị dạng lưới ảnh"
             />
 
             {/* Or URL */}

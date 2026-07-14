@@ -166,7 +166,7 @@ const CommunityPage = () => {
                   Bạn muốn hợp tác hoặc có câu hỏi?
                 </h3>
                 <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
-                  Liên hệ trực tiếp để trao đổi về cơ hội hợp tác hoặc bất kỳ thắc mắc nào.
+                  Liên hệ trực tiếp với Vy Thiên Hùng để trao đổi về cơ hội hợp tác, tư vấn AI hoặc bất kỳ thắc mắc nào.
                 </p>
 
                 <button

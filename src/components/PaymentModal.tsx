@@ -1,13 +1,23 @@
 import { useState, useEffect, useCallback } from "react";
 import { CheckCircle2, Copy, X, Clock, Loader2, AlertCircle } from "lucide-react";
 import { Registration, updateRegistrationStatus } from "@/lib/registrations";
-import { useSiteData } from "@/contexts/SiteDataContext";
 
 interface PaymentModalProps {
   registration: Registration;
   amount?: number;            // default 693000
   onSuccess: () => void;
   onClose: () => void;
+}
+
+const BANK_ACCOUNT = "24488671";
+const BANK_NAME = "ACB";
+const ACCOUNT_NAME = "MAI XUAN ANH";
+const API_URL = "https://api.sieuthicode.net/historyapiacb/ec4f8aeb9d87bc0ffa48f709365313d1";
+const POLL_INTERVAL = 5000;   // 5 seconds
+const TIMEOUT_MINUTES = 30;
+
+function vietQRUrl(amount: number, info: string) {
+  return `https://img.vietqr.io/image/${BANK_NAME}-${BANK_ACCOUNT}-compact2.png?amount=${amount}&addInfo=${encodeURIComponent(info)}&accountName=${encodeURIComponent(ACCOUNT_NAME)}`;
 }
 
 function formatMs(ms: number) {
@@ -18,18 +28,6 @@ function formatMs(ms: number) {
 }
 
 const PaymentModal = ({ registration, amount = 693000, onSuccess, onClose }: PaymentModalProps) => {
-  const { siteData } = useSiteData();
-  const ps = siteData.paymentSettings;
-  const BANK_ACCOUNT = ps?.accountNumber ?? "24488671";
-  const BANK_NAME = ps?.bankName ?? "ACB";
-  const ACCOUNT_NAME = ps?.accountHolderName ?? "MAI XUAN ANH";
-  const API_URL = ps?.apiUrl ?? "https://api.sieuthicode.net/historyapiacb/ec4f8aeb9d87bc0ffa48f709365313d1";
-  const POLL_INTERVAL = (ps?.pollIntervalSeconds ?? 5) * 1000;
-  const TIMEOUT_MINUTES = ps?.timeoutMinutes ?? 30;
-
-  function vietQRUrl(amt: number, info: string) {
-    return `https://img.vietqr.io/image/${BANK_NAME}-${BANK_ACCOUNT}-compact2.png?amount=${amt}&addInfo=${encodeURIComponent(info)}&accountName=${encodeURIComponent(ACCOUNT_NAME)}`;
-  }
   const [copied, setCopied] = useState<string | null>(null);
   const [status, setStatus] = useState<"pending" | "checking" | "paid" | "expired">("pending");
   const [remaining, setRemaining] = useState(TIMEOUT_MINUTES * 60 * 1000);
@@ -44,27 +42,6 @@ const PaymentModal = ({ registration, amount = 693000, onSuccess, onClose }: Pay
   const checkPayment = useCallback(async () => {
     try {
       setStatus("checking");
-
-      // 1. Poll our own server for status (set by cron job)
-      try {
-        const res = await fetch(`/api/registrations/status/${registration.orderId}`);
-        if (res.ok) {
-          const json = await res.json();
-          if (json.status === "paid") {
-            updateRegistrationStatus(registration.id, "paid");
-            setStatus("paid");
-            setTimeout(onSuccess, 1800);
-            return;
-          }
-          // Still pending on server — no need to hit bank API
-          setStatus("pending");
-          return;
-        }
-      } catch {
-        // Server unavailable — fall through to direct bank API check
-      }
-
-      // 2. Fallback: check bank API directly (when running locally without server)
       const res = await fetch(API_URL);
       const json = await res.json();
       if (json?.messageStatus !== "success") { setStatus("pending"); return; }
@@ -85,8 +62,7 @@ const PaymentModal = ({ registration, amount = 693000, onSuccess, onClose }: Pay
     } catch {
       setStatus("pending");
     }
-  }, [registration.id, registration.orderId, amount, onSuccess, API_URL]);
-
+  }, [registration.id, registration.orderId, amount, onSuccess]);
 
   // Countdown
   useEffect(() => {

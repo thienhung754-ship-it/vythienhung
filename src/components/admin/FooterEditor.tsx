@@ -3,7 +3,7 @@ import { useSiteData } from "@/contexts/SiteDataContext";
 
 const FooterEditor: React.FC = () => {
   const { siteData, updateSection } = useSiteData();
-  const footer = siteData.footer || { companyName: "THE BLUE OCEAN GROUP", copyrightName: "Nguyễn Trúc Anh" };
+  const footer = siteData.footer || { companyName: "MERCY TECH GLOBAL", copyrightName: "Vy Thiên Hùng" };
 
   return (
     <div className="space-y-6">

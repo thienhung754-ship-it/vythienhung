@@ -23,10 +23,10 @@ const Blog = () => {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-8 md:mb-12"
+          className="text-center mb-12"
         >
-          <p className="text-xs md:text-sm text-muted-foreground tracking-widest uppercase mb-3">Góc nhìn</p>
-          <h2 className="text-2xl md:text-5xl font-bold tracking-tight text-foreground">
+          <p className="text-sm text-muted-foreground tracking-widest uppercase mb-3">Góc nhìn</p>
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
             Chuyên gia chia sẻ
           </h2>
         </motion.div>
@@ -35,12 +35,12 @@ const Blog = () => {
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-2 md:gap-3 mb-8 md:mb-12"
+          className="flex flex-wrap justify-center gap-3 mb-12"
         >
           {categories.map((cat) => (
             <span
               key={cat}
-              className="px-3 md:px-4 py-1 md:py-1.5 text-[10px] md:text-xs font-medium rounded-full border border-border text-muted-foreground"
+              className="px-4 py-1.5 text-xs font-medium rounded-full border border-border text-muted-foreground"
             >
               {cat}
             </span>
@@ -54,20 +54,20 @@ const Blog = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
-              className="py-5 md:py-8 border-b border-border last:border-b-0"
+              className="py-8 border-b border-border last:border-b-0"
             >
               <div
-                className="flex items-start justify-between gap-3 md:gap-4 cursor-pointer group"
+                className="flex items-start justify-between gap-4 cursor-pointer group"
                 onClick={() => toggleExpand(i)}
               >
                 <div className="flex-1">
                   <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2">
                     {post.category}
                   </p>
-                  <h3 className="text-base md:text-xl font-semibold text-foreground group-hover:text-[hsl(211,100%,60%)] transition-colors duration-300 mb-1 md:mb-2 leading-snug">
+                  <h3 className="text-lg md:text-xl font-semibold text-foreground group-hover:text-apple-blue transition-colors duration-300 mb-2">
                     {post.title}
                   </h3>
-                  <p className="text-xs md:text-sm text-muted-foreground leading-relaxed max-w-2xl hidden sm:block">
+                  <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
                     {post.excerpt}
                   </p>
                 </div>
@@ -91,43 +91,16 @@ const Blog = () => {
                     transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
                     className="overflow-hidden"
                   >
-                    <div className="pt-4 md:pt-6 pb-2 pl-0">
-                      <div className="bg-background/60 rounded-xl p-4 md:p-8 border border-border/50">
-                        {post.content.split("\n\n").map((block, pIdx) => {
-                          // Handle ## headings
-                          if (block.startsWith("## ")) {
-                            return (
-                              <h4
-                                key={pIdx}
-                                className="text-base md:text-lg font-semibold text-foreground mt-6 mb-2"
-                              >
-                                {block.replace(/^##\s*/, "")}
-                              </h4>
-                            );
-                          }
-                          // Handle blocks that contain inline ## (e.g. "text\n## Heading")
-                          const subBlocks = block.split("\n");
-                          return subBlocks.map((line, lIdx) => {
-                            if (line.startsWith("## ")) {
-                              return (
-                                <h4
-                                  key={`${pIdx}-${lIdx}`}
-                                  className="text-base md:text-lg font-semibold text-foreground mt-6 mb-2"
-                                >
-                                  {line.replace(/^##\s*/, "")}
-                                </h4>
-                              );
-                            }
-                            return line.trim() ? (
-                              <p
-                                key={`${pIdx}-${lIdx}`}
-                                className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4 last:mb-0"
-                              >
-                                {line}
-                              </p>
-                            ) : null;
-                          });
-                        })}
+                    <div className="pt-6 pb-2 pl-0 md:pl-0">
+                      <div className="bg-background/60 rounded-xl p-6 md:p-8 border border-border/50">
+                        {post.content.split("\n\n").map((paragraph, pIdx) => (
+                          <p
+                            key={pIdx}
+                            className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4 last:mb-0"
+                          >
+                            {paragraph}
+                          </p>
+                        ))}
                       </div>
                     </div>
                   </motion.div>

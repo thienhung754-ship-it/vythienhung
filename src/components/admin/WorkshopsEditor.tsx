@@ -2,7 +2,6 @@ import React from "react";
 import { useSiteData } from "@/contexts/SiteDataContext";
 import { WorkshopEvent } from "@/lib/siteData";
 import ImageUploader from "./ImageUploader";
-import ShareButton from "@/components/ShareButton";
 import { Plus, Trash2, Calendar, ChevronDown, ChevronUp } from "lucide-react";
 
 const emptyWorkshop: WorkshopEvent = {
@@ -112,9 +111,6 @@ const WorkshopsEditor: React.FC = () => {
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-neutral-700 text-neutral-300">{item.status}</span>
               </div>
               <div className="flex items-center gap-2">
-                {item.slug && (
-                  <ShareButton slug={item.slug} title={item.title || `Sự kiện #${i + 1}`} compact />
-                )}
                 <button
                   onClick={(e) => { e.stopPropagation(); removeItem(i); }}
                   className="p-2 text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-lg transition-colors"
@@ -155,7 +151,6 @@ const WorkshopsEditor: React.FC = () => {
                   onChange={(v) => updateItem(i, { image: v })}
                   label="Banner image"
                   fallbackSrc={item.image && !item.image.startsWith("data:") ? item.image : undefined}
-                  hint="Khuyến nghị: 1200 × 630px — banner chính sự kiện, tỉ lệ 16:9 hoặc 1.91:1"
                 />
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

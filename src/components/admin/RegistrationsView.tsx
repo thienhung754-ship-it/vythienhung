@@ -124,29 +124,17 @@ const RegistrationsView = () => {
                   <td className="px-4 py-3 text-neutral-300">{reg.phone}</td>
                   <td className="px-4 py-3 text-neutral-300">{reg.email}</td>
                   <td className="px-4 py-3">
-                    {reg.timeSlot ? (
-                      <span className={`px-2 py-0.5 rounded-full text-[11px] font-semibold ${
-                        reg.timeSlot === "Sáng 9h00–10h30" ? "bg-yellow-500/15 text-yellow-400" : "bg-blue-500/15 text-blue-400"
-                      }`}>{reg.timeSlot}</span>
-                    ) : (
-                      <span className="text-neutral-600 text-sm">—</span>
-                    )}
+                    <span className={`px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                      reg.timeSlot === "Sáng 9h00–10h30" ? "bg-yellow-500/15 text-yellow-400" : "bg-blue-500/15 text-blue-400"
+                    }`}>{reg.timeSlot}</span>
                   </td>
-                  <td className="px-4 py-3 text-neutral-400 min-w-[160px]">{reg.workshopTitle}</td>
+                  <td className="px-4 py-3 text-neutral-400 max-w-[140px] truncate">{reg.workshopTitle}</td>
                   <td className="px-4 py-3">
-                    {!reg.timeSlot ? (
-                      <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-green-500/15 text-green-400">
-                        ✓ Miễn phí
-                      </span>
-                    ) : reg.status === "paid" ? (
-                      <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-green-500/15 text-green-400">
-                        ✓ Đã TT
-                      </span>
-                    ) : (
-                      <span className="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-yellow-500/10 text-yellow-500">
-                        ⧖ Chờ TT
-                      </span>
-                    )}
+                    <span className={`px-2 py-0.5 rounded-full text-[11px] font-semibold ${
+                      reg.status === "paid" ? "bg-green-500/15 text-green-400" : "bg-yellow-500/10 text-yellow-500"
+                    }`}>
+                      {reg.status === "paid" ? "✓ Đã TT" : "⧖ Chờ TT"}
+                    </span>
                   </td>
                   <td className="px-4 py-3 text-neutral-500 text-xs whitespace-nowrap">
                     {new Date(reg.registeredAt).toLocaleString("vi-VN", { dateStyle: "short", timeStyle: "short" })}
