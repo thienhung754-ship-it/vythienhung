@@ -4,6 +4,9 @@ import cors from "cors";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const { PDFParse } = require("pdf-parse");
 import { initDatabase, getSiteData, saveSiteData } from "./db.js";
 import multer from "multer";
 
@@ -67,13 +70,38 @@ app.put("/api/site-data", async (req, res, next) => {
 });
 
 // --- PDF Upload API ---
-app.post("/api/upload-pdf", upload.single("pdf"), (req, res) => {
+app.post("/api/upload-pdf", upload.single("pdf"), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: "No PDF file uploaded" });
     }
     const fileUrl = `/uploads/pdfs/${req.file.filename}`;
-    res.json({ success: true, url: fileUrl, filename: req.file.filename, originalName: req.file.originalname });
+    
+    // Read PDF metadata
+    let pages = null;
+    let title = null;
+    try {
+      const filePath = path.join(uploadsDir, req.file.filename);
+      const buffer = fs.readFileSync(filePath);
+      const uint8Array = new Uint8Array(buffer);
+      const parser = new PDFParse(uint8Array);
+      await parser.load();
+      const infoObj = await parser.getInfo();
+      pages = infoObj.total || null;
+      title = infoObj.info?.Title || null;
+      parser.destroy();
+    } catch (parseErr) {
+      console.warn("Failed to parse PDF metadata:", parseErr.message);
+    }
+
+    res.json({
+      success: true,
+      url: fileUrl,
+      filename: req.file.filename,
+      originalName: req.file.originalname,
+      pages,
+      title
+    });
   } catch (error) {
     console.error("PDF upload error:", error.message);
     res.status(500).json({ error: "Failed to upload PDF" });

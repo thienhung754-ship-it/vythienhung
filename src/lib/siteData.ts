@@ -448,7 +448,7 @@ export const DEFAULT_SITE_DATA: SiteData = {
       date: "04/04/2026",
       time: "19:00 - 21:00",
       location: "Online qua Zoom",
-      image: "/talkshow-vibe-coding.png",
+      image: "/workshop-talkshow.png",
       category: "Talkshow",
       status: "upcoming",
       highlights: [
@@ -481,7 +481,7 @@ export const DEFAULT_SITE_DATA: SiteData = {
       date: "26/04/2026",
       time: "2 buổi/tuần",
       location: "Online",
-      image: "/khoa-hoc-vibe-coding.png",
+      image: "/workshop-khoa-hoc.png",
       category: "Khoá học",
       status: "upcoming",
       highlights: [

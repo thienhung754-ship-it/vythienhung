@@ -10,6 +10,16 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       overlay: false,
     },
+    proxy: {
+      "/api": {
+        target: "http://localhost:45456",
+        changeOrigin: true,
+      },
+      "/uploads": {
+        target: "http://localhost:45456",
+        changeOrigin: true,
+      },
+    },
   },
   preview: {
     host: "0.0.0.0",

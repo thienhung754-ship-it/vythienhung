@@ -91,7 +91,13 @@ const EbookCard: React.FC<{
 
       if (!res.ok) throw new Error("Upload failed");
       const data = await res.json();
-      onUpdateFields(index, { file: data.url, fileName: data.originalName || file.name });
+      onUpdateFields(index, {
+        file: data.url,
+        fileName: data.originalName || file.name,
+        title: data.title || ebook.title || (data.originalName || file.name).replace(/\.[^/.]+$/, ""),
+        pages: data.pages ? `${data.pages} trang` : ebook.pages || "32 trang",
+        format: "PDF"
+      });
     } catch (err) {
       setUploadError("Upload thất bại. Vui lòng thử lại.");
       console.error("PDF upload error:", err);

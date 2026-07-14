@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Temp/Archives
+*.zip
+*.png
+*.html
+*.ps1
+trucanh-questionnaire/
