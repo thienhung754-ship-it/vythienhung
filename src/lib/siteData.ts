@@ -195,7 +195,7 @@ export const DEFAULT_SITE_DATA: SiteData = {
   },
   about: {
     sectionLabel: "Lời ngỏ",
-    heading: "Lời ngỏ từ Vy Thiên Hùng",
+    heading: "Lời ngỏ từ tôi",
     paragraphsVisible: [
       'Chúng ta đang đứng giữa một cuộc cách mạng chưa từng có — khi Trí tuệ Nhân tạo không còn là viễn tưởng, mà đã trở thành đồng nghiệp, trở thành đối thủ, và đôi khi — trở thành người thay thế.',
       'AI viết code nhanh hơn lập trình viên. AI thiết kế logo đẹp hơn designer. AI phân tích dữ liệu chính xác hơn cả một đội ngũ analyst. Vậy câu hỏi đặt ra không phải là "AI có thể làm gì?" — mà là "Bạn sẽ đứng ở đâu trong kỷ nguyên này?"',
