@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vy Thiên Hùng - Second Brain & Story Bank</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #050811;
+            --card-bg: rgba(13, 20, 38, 0.6);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --accent: #8a2be2;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --neon-glow: 0 0 20px rgba(0, 242, 254, 0.25);
+            --glass-blur: blur(16px);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--secondary) var(--bg-color);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 4px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(138, 43, 226, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Grid Background Pattern */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.007) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255, 255, 255, 0.007) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 2.5rem 2rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.4));
+        }
+
+        .logo-title h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-title p {
+            font-size: 0.75rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .share-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .share-btn:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000;
+            font-weight: 600;
+            border-color: transparent;
+            box-shadow: var(--neon-glow);
+            transform: translateY(-2px);
+        }
+
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            main {
+                grid-template-columns: 350px 1fr;
+            }
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .glass-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            backdrop-filter: var(--glass-blur);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.75rem;
+        }
+
+        .card-header i {
+            color: var(--primary);
+            font-size: 1.25rem;
+            filter: drop-shadow(0 0 5px rgba(0, 242, 254, 0.4));
+        }
+
+        .card-header h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        /* Profile details */
+        .profile-area {
+            text-align: center;
+            padding: 0.5rem 0;
+        }
+
+        .avatar-glow {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--neon-glow);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .avatar-glow i {
+            font-size: 2.25rem;
+            color: #000000;
+        }
+
+        .profile-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .profile-tag {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Brand rules styling */
+        .rule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .rule-item i {
+            margin-top: 0.2rem;
+        }
+
+        .rule-item.allowed i {
+            color: #10b981;
+        }
+
+        .rule-item.banned i {
+            color: #ef4444;
+        }
+
+        /* Main Content Container */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Interactive Timeline */
+        .timeline-container {
+            position: relative;
+            padding-left: 2rem;
+            margin-top: 1rem;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent), transparent);
+        }
+
+        .timeline-node {
+            position: relative;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-node::before {
+            content: '';
+            position: absolute;
+            left: -2.3rem;
+            top: 0.25rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            border: 3px solid var(--text-muted);
+            transition: all 0.3s ease;
+            box-shadow: 0 0 0 rgba(0, 242, 254, 0);
+        }
+
+        .timeline-node.active::before {
+            border-color: var(--primary);
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            transform: scale(1.2);
+        }
+
+        .timeline-node:hover::before {
+            border-color: var(--secondary);
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-date {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .timeline-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #ffffff;
+            transition: color 0.3s ease;
+        }
+
+        .timeline-node:hover .timeline-title {
+            color: var(--secondary);
+        }
+
+        .timeline-node.active .timeline-title {
+            color: var(--primary);
+        }
+
+        .timeline-desc {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            display: none;
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 2px solid var(--secondary);
+            border-radius: 0 8px 8px 0;
+            animation: slideDown 0.3s ease forwards;
+        }
+
+        .timeline-node.active .timeline-desc {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Script Player Component */
+        .tab-menu {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.5rem 1.25rem;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -0.6rem;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+        }
+
+        .script-display {
+            background: rgba(5, 8, 17, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            min-height: 250px;
+        }
+
+        .script-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .script-section-title {
+            font-size: 0.75rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .script-text {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-main);
+            white-space: pre-line;
+        }
+
+        /* Toggle Button styling */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .toggle-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: .3s;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.4);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Form styling */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            width: 100%;
+            background: rgba(5, 8, 17, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 8px rgba(0, 242, 254, 0.2);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            box-shadow: var(--neon-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Success Animation Overlay */
+        .sync-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 8, 17, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            z-index: 100;
+            border-radius: 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .sync-animation.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sync-spinner {
+            font-size: 3rem;
+            color: var(--primary);
+            animation: spin 1.5s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(13, 20, 38, 0.9);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            box-shadow: var(--neon-glow);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: var(--glass-blur);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast i {
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            max-width: 1200px;
+            margin: 2rem auto 0;
+        }
+        
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+    
+    <!-- Top Header -->
+    <header>
+        <div class="logo-area">
+            <i class="fa-solid fa-brain logo-icon"></i>
+            <div class="logo-title">
+                <h1>Vy Thiên Hùng</h1>
+                <p>Second Brain & Story Bank</p>
+            </div>
+        </div>
+        <button class="share-btn" onclick="shareDashboard()">
+            <i class="fa-solid fa-share-nodes"></i> Chia sẻ liên kết
+        </button>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main>
+        <!-- Sidebar Column -->
+        <div class="sidebar">
+            <!-- Profile Card -->
+            <div class="glass-card">
+                <div class="profile-area">
+                    <div class="avatar-glow">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <h3 class="profile-name">Vy Thiên Hùng</h3>
+                    <p class="profile-tag">Founder, Mơ Xi Tếch</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-num" id="stat-episodes">3</div>
+                            <div class="stat-label">Tập TikTok</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-num" id="stat-stories">6</div>
+                            <div class="stat-label">Cột mốc</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-num">100%</div>
+                            <div class="stat-label">Thật sự</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand Guidelines Card -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <i class="fa-solid fa-volume-high"></i>
+                    <h2>Quy tắc Tone giọng</h2>
+                </div>
+                <div class="rule-list">
+                    <div class="toggle-label" style="margin-bottom: 0.5rem;">CÁCH DÙNG TỪ CHUẨN</div>
+                    <div class="rule-item allowed">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Xưng hô: <b>mình - anh em</b> (Tuyệt đối không dùng "các sếp", "tôi")</span>
+                    </div>
+                    <div class="rule-item allowed">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Phong cách: <b>Mộc mạc, bình dân, đời thường</b> (Trà đá vỉa hè)</span>
+                    </div>
+                    <div class="rule-item allowed">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Phát âm: <b>Mơ Xi Tếch</b> (Viết phiên âm khi lồng tiếng)</span>
+                    </div>
+                    
+                    <div class="toggle-label" style="margin-top: 1rem; margin-bottom: 0.5rem;">CẤM TUYỆT ĐỐI</div>
+                    <div class="rule-item banned">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                        <span>Cấm từ văn vẻ sáo rỗng: <i>ma trận pháp lý, khai tử, đòn cô lập tàn nhẫn, vũ khí tối thượng...</i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story Syncer Card -->
+            <div class="glass-card" id="sync-card">
+                <!-- Sync Animation Layer -->
+                <div class="sync-animation" id="sync-overlay">
+                    <i class="fa-solid fa-arrows-rotate sync-spinner"></i>
+                    <h3 style="font-family: 'Outfit', sans-serif;">Đang đồng bộ hóa...</h3>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Đang ghi vào Second Brain Database</p>
+                </div>
+                
+                <div class="card-header">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <h2>Đồng bộ câu chuyện mới</h2>
+                </div>
+                <form id="story-form" onsubmit="handleStorySubmit(event)">
+                    <div class="form-group">
+                        <label for="story-date">Thời gian</label>
+                        <input type="text" id="story-date" class="form-control" placeholder="Ví dụ: Tháng 7/2024" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="story-title">Tiêu đề cột mốc</label>
+                        <input type="text" id="story-title" class="form-control" placeholder="Ví dụ: Sự cố kỹ thuật nhớ đời" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="story-content">Nội dung câu chuyện & Bài học xương máu</label>
+                        <textarea id="story-content" class="form-control" rows="4" placeholder="Anh Hùng kể gì mới, điền vào đây..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <i class="fa-solid fa-bolt"></i> Đồng bộ ngay
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main Workspace Column -->
+        <div class="content-area">
+            <!-- TikTok Series Workspace -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <i class="fa-brands fa-tiktok"></i>
+                    <h2>TikTok Series: Xin làm nhân viên được làm Tổng giám đốc</h2>
+                </div>
+                
+                <!-- Toggle Mode -->
+                <div class="toggle-container">
+                    <span class="toggle-label"><i class="fa-solid fa-microphone"></i> BẬT PHIÊN ÂM VIỆT HÓA ĐỂ THU ÂM (TTS)</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="phonetic-toggle" onchange="togglePhonetics()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <!-- Tab Menu -->
+                <div class="tab-menu">
+                    <button class="tab-btn active" onclick="switchTab(0)">Tập 1: 8 Follower</button>
+                    <button class="tab-btn" onclick="switchTab(1)">Tập 2: Chiến dịch Tết</button>
+                    <button class="tab-btn" onclick="switchTab(2)">Tập 3: Ác mộng pháp lý</button>
+                </div>
+
+                <!-- Script Content Player -->
+                <div class="script-display">
+                    <div class="script-section">
+                        <div class="script-section-title" id="script-title-display">
+                            <i class="fa-solid fa-heading"></i> Tiêu đề tập
+                        </div>
+                        <h3 id="script-title" style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; margin-bottom: 1rem;"></h3>
+                    </div>
+                    
+                    <div class="script-section">
+                        <div class="script-section-title">
+                            <i class="fa-solid fa-clapperboard"></i> Cảnh B-Roll minh họa gợi ý
+                        </div>
+                        <div class="script-text" id="script-broll" style="color: var(--secondary); font-style: italic; margin-bottom: 1.25rem; background: rgba(79, 172, 254, 0.05); padding: 0.75rem; border-radius: 8px; border-left: 2px solid var(--secondary);"></div>
+                    </div>
+
+                    <div class="script-section">
+                        <div class="script-section-title">
+                            <i class="fa-solid fa-comment-dots"></i> Lời thoại lồng tiếng (Voiceover)
+                        </div>
+                        <div class="script-text" id="script-voice" style="background: rgba(255,255,255,0.01); padding: 1rem; border-radius: 8px; border: 1px dashed rgba(255,255,255,0.05); white-space: pre-wrap;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline Dashboard -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <i class="fa-solid fa-route"></i>
+                    <h2>Bản đồ cột mốc lịch sử khởi nghiệp</h2>
+                </div>
+                <div class="timeline-container" id="timeline-list">
+                    <!-- Dynamic timeline items go here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Vy Thiên Hùng. Được thiết kế và vận hành tự động hóa quy trình bởi <a href="#">Mơ Xi Tếch</a>.</p>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast-notify">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-text">Đã cập nhật câu chuyện thành công!</span>
+    </div>
+
+    <script>
+        // Core Database
+        const defaultTimeline = [
+            {
+                date: "24/12/2023",
+                title: "Phỏng vấn xin làm nhân viên được giao làm Tổng giám đốc",
+                desc: "Hùng đi phỏng vấn vị trí TMĐT. Hai anh em nói chuyện 3 tiếng đồng hồ, sếp hào hứng giao luôn chức vụ đứng tên xin giấy phép làm giám đốc dự án sách nói. Hùng rén và run thật sự vì chưa có kinh nghiệm quản trị và đã từng thất bại vài lần trước đó."
+            },
+            {
+                date: "Tháng 1/2024",
+                title: "Tiếp quản kênh TikTok Shop 8 Follower và Đòn cô lập",
+                desc: "Cày làm 30-60 video ngắn một ngày (lifting book, show quote, lồng nhạc). Trộm vía nổ đơn ngay ngày đầu tiên. Đồng thời bị cô lập hoàn toàn riêng một phòng theo triết lý 'Tam Quốc đấu tranh' của sếp, nhân sự cũ ghét ra mặt vì nghĩ lầm lì khó ưa."
+            },
+            {
+                date: "Tết Âm Lịch (Tháng 2/2024)",
+                title: "Chiến dịch Tết trực chiến và Bước ngoặt Tam Quốc Chí",
+                desc: "Không về nhà ăn Tết dù cách công ty chỉ 20km. Ngồi lủi thủi văn phòng trống ngày Tết tủi thân vcl. Hùng cùng sếp chuyển hướng bán bộ sách Tam Quốc Chí thành giải pháp quà tặng ngoại giao cao cấp cho giới làm chủ. Đơn nổ liên tục gãy hệ thống, dọn sạch kho. Ra Tết leo lên doanh số thứ hai công ty, được giao lead team mới."
+            },
+            {
+                date: "Tháng 3/2024",
+                title: "Bắt đầu chạy đề án pháp lý & Cơn ác mộng giấy tờ",
+                desc: "Giai đoạn bắt đầu chạy vạy xin giấy phép hoạt động sách nói. Hùng quay cuồng trong đống giấy tờ đề án bảo mật thông tin cấp độ lạ hoắc, hồ sơ bị trả về liên tục vì sai một dấu chấm dấu phẩy. Sếp dí tiến độ, dev ngồi chơi xơi nước, Hùng đứng giữa chịu trận mất ăn ngủ vì sợ dự án sập."
+            },
+            {
+                date: "Tháng 6/2024",
+                title: "Chính thức có giấy phép sách nói & Sai lầm tuyển dụng",
+                desc: "Cầm tờ giấy phép sách nói trên tay mới dám thở phào nhẹ nhõm. Tuy nhiên, sai lầm lớn tiếp theo ập đến khi tuyển dụng nhân sự mới chưa vững quy trình làm việc, khiến Hùng phải làm 'bảo mẫu' chỉ tay dạy việc, app lỗi liên tục, tự code sửa app đến 3h sáng cực kỳ bất lực."
+            },
+            {
+                date: "Tháng 7/2024",
+                title: "Rút ra bài học quản trị đắt giá & Đặt nền móng Mơ Xi Tếch",
+                desc: "Ngộ ra chân lý xương máu: Cày trâu làm tay và Excel thì scale đến mức là gãy. Muốn doanh nghiệp chạy êm thì quy trình và hệ thống tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Thành lập Mơ Xi Tếch để tự động hóa quy trình cho doanh nghiệp."
+            }
+        ];
+
+        const defaultScripts = [
+            {
+                title: "Tập 1: Buổi phỏng vấn định mệnh & 8 Follower",
+                broll: "• Góc tối: Ngón tay nhấn phím liên tục.\n• Laptop hắt sáng lên mặt.\n• Chụp màn hình kênh TikTok 8 follower.\n• Cảnh lầm lì ngồi một mình trong phòng riêng.",
+                normal: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Ngày hai mươi tư tháng mười hai năm hai nghìn không trăm hai mươi ba. Lúc đó mình chỉ là một đứa làm KOC review sách đơn thuần vì thích sách vãi l. Nhận lời phỏng vấn từ một người sếp, hai anh em ngồi tâm sự suốt ba tiếng đồng hồ. Mình chia sẻ là bản thân hay nghe sách nói và podcast thường xuyên. Ai dè sếp hào hứng kể về dự án app sách nói sếp đang ấp ủ, rồi bảo luôn: 'Em về làm thương mại điện tử trước, rồi đứng tên giấy phép công ty sách nói luôn nhé!' Bản thân lúc đó chỉ là một đứa từng thất bại vài dự án nhỏ trước đó, chưa biết quản trị là gì nên mình run thật sự.\n\nThế là mình nhận việc với một kênh TikTok mới tinh đúng tám follower. Để xứng với cái danh tổng giám đốc hờ sếp giao, ngày đầu đi làm mình cày làm khoảng ba mươi đến sáu mươi cái video ngắn. Chỉ đúng một kiểu: Nhấc quyển sách lên, hiển thị câu nói hay rồi lồng nhạc. Video đầu tiên trộm vía được hai trăm view, nhưng với một đứa chưa biết làm kênh như mình lúc đó thì vui phát khóc. Mình nghĩ bụng cứ tích tiểu thành đại, làm nhiều rồi sẽ có đơn. May mắn là ngay tối hôm đó, những đơn hàng đầu tiên đã nổ.\n\nNhưng cái khó nhất là sếp bảo mình: 'Em ngồi riêng một phòng, đừng ăn chung hay nói chuyện với nhân sự cũ để tập trung cạnh tranh phát triển.' Mình hiền lành, hòa đồng nhưng lại nghe lời sếp ngồi tách biệt hoàn toàn. Thành ra mọi người chưa hiểu nhau, lại nghĩ mình lầm lì khó gần, đâm ra ghét mình luôn. Sự bít kín thông tin và chia rẽ nội bộ chính là sai lầm làm kiệt quệ tinh thần nhân sự. Sau này làm Mercy Tech, mình luôn tự dặn: Doanh nghiệp muốn đi nhanh thì quy trình và thông tin phải cực kỳ minh bạch để ai cũng tự chủ động làm việc được, xóa bỏ khoảng cách phe phái. Bấm follow mình để đón xem tập tiếp theo ngay nhé!",
+                phonetic: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Ngày hai mươi tư tháng mười hai năm hai nghìn không trăm hai mươi ba. Lúc đó mình chỉ là một đứa làm ca-o-xê review sách đơn thuần vì thích sách vãi lờ. Nhận lời phỏng vấn từ một người sếp, hai anh em ngồi tâm sự suốt ba tiếng đồng hồ. Mình chia sẻ là bản thân hay nghe sách nói và pót-cát thường xuyên. Ai dè sếp hào hứng kể về dự án áp sách nói sếp đang ấp ủ, rồi bảo luôn: 'Em về làm thương mại điện tử trước, rồi đứng tên giấy phép công ty sách nói luôn nhé!' Bản thân lúc đó chỉ là một đứa từng thất bại vài dự án nhỏ trước đó, chưa biết quản trị là gì nên mình run thật sự. Thế là mình nhận việc với một kênh tích-tốc mới tinh đúng tám phao-lô-uơ. Để xứng với cái danh tổng giám đốc hờ sếp giao, ngày đầu đi làm mình cày làm khoảng ba mươi đến sáu mươi cái video ngắn. Chỉ đúng một kiểu: Nhấc quyển sách lên, hiển thị câu nói hay rồi lồng nhạc. Video đầu tiên trộm vía được hai trăm viu, nhưng với một đứa chưa biết làm kênh như mình lúc đó thì vui phát khóc. Mình nghĩ bụng cứ tích tiểu thành đại, làm nhiều rồi sẽ có đơn. May mắn là ngay tối hôm đó, những đơn hàng đầu tiên đã nổ. Nhưng cái khó nhất là sếp bảo mình: 'Em ngồi riêng một phòng, đừng ăn chung hay nói chuyện với nhân sự cũ để tập trung cạnh tranh phát triển.' Mình hiền lành, hòa đồng nhưng lại nghe lời sếp ngồi tách biệt hoàn toàn. Thành ra mọi người chưa hiểu nhau, lại nghĩ mình lầm lì khó gần, đâm ra ghét mình luôn. Sự bít kín thông tin và chia rẽ nội bộ chính là sai lầm làm kiệt quệ tinh thần nhân sự. Sau này làm Mơ Xi Tếch, mình luôn tự dặn: Doanh nghiệp muốn đi nhanh thì quy trình và thông tin phải cực kỳ minh bạch để ai cũng tự chủ động làm việc được, xóa bỏ khoảng cách phe phái. Bấm phao-lô mình để đón xem tập tiếp theo ngay nhé!"
+            },
+            {
+                title: "Tập 2: Chiến dịch Tết & Giới hạn sức người",
+                broll: "• Đống carton đóng gói hàng chất cao.\n• Bộ sách Tam Quốc Chí gáy mạ vàng sang trọng.\n• Cảnh Hùng ngồi lủi thủi đóng gói đơn hàng một mình ngày Tết.\n• Sơ đồ biểu đồ doanh thu dựng đứng.",
+                normal: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Để xứng với vị trí tổng giám đốc cho dự án sách nói sắp tới, Tết năm đó mình chọn không về nhà, ngồi lủi thủi trực chiến ở công ty suốt ba ngày Tết. Triết lý của sếp lúc đó là muốn nhân sự cũ mới phải tự cạnh tranh quyết liệt để lớn lên. Trong lúc phe cũ nghỉ ngơi đi chơi xuân, mình biết đây là cơ hội duy nhất để mình nỗ lực chứng minh xem mình có xứng đáng với chức danh tổng giám đốc hay không. Nhà cách công ty hai mươi cây số thôi nhưng Tết không về, lủi thủi ngồi cày một mình tủi thân vcl. Lúc đó công ty tồn đống bộ sách Tam Quốc Chí cao cấp giá khá đắt. Hai anh em bàn nhau chuyển hướng: Đếch bán sách lẻ nữa, bán giải pháp làm quà tặng biếu Tết cho các sếp lớn. Đánh đúng tâm lý biếu quà sang trọng ngày Tết của giới làm chủ. May mắn là chiến dịch thành công ngoài mong đợi. Trong Tết đơn nổ liên tục gãy cả hệ thống, bán sạch cả trăm bộ mỗi ngày. Ra Tết anh em đi làm thấy số lượng đơn chạy mượt mà thì ai cũng bất ngờ. Nhờ kết quả đó, mình chính thức chứng minh được năng lực, trộm vía vươn lên doanh số thứ hai toàn công ty sau một tháng và được sếp giao lead một team mới. Đi làm cứ tập trung tạo ra giá trị thực tế là tự khắc mọi người sẽ nể trọng nhau. Từ căn phòng bị cô lập ngày đầu, mình đã xây dựng được một team chiến đấu hết mình để xứng đáng với vị trí của một người dẫn dắt.\n\nĐợt cày trâu bò đó giúp mình ngộ ra một điều: Cứ dùng sức người làm thủ công và Excel thì chỉ scale đến một mức nào đó là gãy hệ thống. Nếu CEO cứ phải trực chiến hai mươi tư trên bảy thì doanh nghiệp chưa kịp lớn, chủ đã kiệt sức trước. Đó là lý do sau này mình sáng lập Mercy Tech để tự động hóa mọi quy trình cho doanh nghiệp. Nhưng tết qua đi cũng là lúc thử thách thực sự ập đến khi bắt tay xin giấy phép cho dự án sách nói. Bấm follow mình để đón xem tập tiếp theo nhé!",
+                phonetic: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Để xứng với vị trí tổng giám đốc cho dự án sách nói sắp tới, Tết năm đó mình chọn không về nhà, ngồi lủi thủi trực chiến ở công ty suốt ba ngày Tết. Triết lý của sếp lúc đó là muốn nhân sự cũ mới phải tự cạnh tranh quyết liệt để lớn lên. Trong lúc phe cũ nghỉ ngơi đi chơi xuân, mình biết đây là cơ hội duy nhất để mình nỗ lực chứng minh xem mình có xứng đáng với chức danh tổng giám đốc hay không. Nhà cách công ty hai mươi cây số thôi nhưng Tết không về, lủi thủi ngồi cày một mình tủi thân vcl. Lúc đó công ty tồn đống bộ sách Tam Quốc Chí cao cấp giá khá đắt. Hai anh em bàn nhau chuyển hướng: Đếch bán sách lẻ nữa, bán giải pháp làm quà tặng biếu Tết cho các sếp lớn. Đánh đúng tâm lý biếu quà sang trọng ngày Tết của giới làm chủ. May mắn là chiến dịch thành công ngoài mong đợi. Trong Tết đơn nổ liên tục gãy cả hệ thống, bán sạch cả trăm bộ mỗi ngày. Ra Tết anh em đi làm thấy số lượng đơn chạy mượt mà thì ai cũng bất ngờ. Nhờ kết quả đó, mình chính thức chứng minh được năng lực, trộm vía vươn lên doanh số thứ hai toàn công ty sau một tháng và được sếp giao lít một tim mới. Đi làm cứ tập trung tạo ra giá trị thực tế là tự khắc mọi người sẽ nể trọng nhau. Từ căn phòng bị cô lập ngày đầu, mình đã xây dựng được một tim chiến đấu hết mình để xứng đáng với vị trí của một người dẫn dắt. Đợt cày trâu bò đó giúp mình ngộ ra một điều: Cứ dùng sức người làm thủ công và Excel thì chỉ sờ-kay đến một mức nào đó là gãy hệ thống. Nếu CEO cứ phải trực chiến hai mươi tư trên bảy thì doanh nghiệp chưa kịp lớn, chủ đã kiệt sức trước. Đó là lý do sau này mình sáng lập Mơ Xi Tếch để tự động hóa mọi quy trình cho doanh nghiệp. Nhưng tết qua đi cũng là lúc thử thách thực sự ập đến khi bắt tay xin giấy phép cho dự án sách nói. Bấm phao-lô mình để xem ngay tập tiếp theo nhé!"
+            },
+            {
+                title: "Tập 3: Cơn ác mộng giấy phép & Bài học quản trị",
+                broll: "• Cận cảnh xấp hồ sơ in đen trắng dày cộp.\n• Màn hình app code bị lỗi code đỏ lòm.\n• Anh đứng viết sơ đồ quy trình lên bảng trắng, gục mặt mệt mỏi.",
+                normal: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Để xứng với vị trí tổng giám đốc cho dự án sách nói sắp tới, tháng ba năm hai nghìn không trăm hai mươi tư, mình tập trung toàn lực chạy đề án xin giấy phép. Lúc đó làm app sách nói ở Việt Nam, xin được cái giấy phép là cái ải khó nuốt nhất đời mình. Suốt từ tháng ba đến tháng sáu, mình bị hành lên hành xuống vì thủ tục giấy tờ. Làm đề án hoạt động, chứng minh bản quyền sách, rồi hồ sơ bảo mật thông tin cấp độ... Toàn những thứ lạ hoắc với một đứa mới làm sếp như mình. Hồ sơ viết dày cộp nộp lên, rồi lại bị trả về sửa liên tục chỉ vì sai một dấu chấm dấu phẩy. Ở trên thì sếp dí hỏi khi nào xong, ở dưới thì mấy ông dev ngồi chơi xơi nước chờ app lên store để test, còn mình đứng ở giữa chịu trận, mất ăn mất ngủ vì sợ dự án bị sập trước khi kịp chạy. Ròng rã ba tháng trời chạy vạy, lúc cầm được cái giấy phép trên tay mới dám thở phào nhẹ nhõm.\n\nĐể xứng tầm với vị trí tổng giám đốc đó, mình phải tự tay gánh mọi thứ. Và cái dại nhất của mình lúc đó là chưa biết cách xây dựng quy trình làm việc chuẩn. Mình tuyển nhân sự về nhưng lại không có quy trình rõ ràng cho mọi người chạy, hệ thống vận hành cứ thay đổi liên tục tuần này qua tuần khác làm anh em xoay như chong chóng. Còn bản thân mình lúc đó lần đầu làm quản lý, bập bẹ chưa vững, thành ra thay vì dẫn dắt thì mình lại đi làm thay, ôm đồm tất cả. Việc gì cũng đến tay, app lỗi liên tục, có hôm phải thức đến ba giờ sáng tự sửa lỗi code mà lòng bất lực vcl.\n\nTrải qua những ngày kiệt sức đó mình mới ngộ ra: Muốn doanh nghiệp chạy êm thì quy trình và hệ thống phải đi trước con người. Một người tổng giám đốc giỏi không phải là người đi làm thay nhân viên, mà là người biết xây quy trình tự động hóa để hệ thống tự vận hành trơn tru. Đừng bao giờ tuyển người về rồi mới vắt óc nghĩ quy trình vận hành. Quy trình lộn xộn sẽ giết chết đam mê khởi nghiệp của chính bạn và làm kiệt quệ tinh thần cả đội ngũ. Mình ngộ ra rằng: Muốn phát triển bền vững, hệ thống và quy trình tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Đó chính là bài học xương máu lớn nhất giúp mình trưởng thành hơn ở vị trí này. Bấm follow mình để đón chờ những bài học khởi nghiệp thực chiến tiếp theo nhé!",
+                phonetic: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Để xứng với vị trí tổng giám đốc cho dự án sách nói sắp tới, tháng ba năm hai nghìn không trăm hai mươi tư, mình tập trung toàn lực chạy đề án xin giấy phép. Lúc đó làm app sách nói ở Việt Nam, xin được cái giấy phép là cái ải khó nuốt nhất đời mình. Suốt từ tháng ba đến tháng sáu, mình bị hành lên hành xuống vì thủ tục giấy tờ. Làm đề án hoạt động, chứng minh bản quyền sách, rồi hồ sơ bảo mật thông tin cấp độ... Toàn những thứ lạ hoắc với một đứa mới làm sếp như mình. Hồ sơ viết dày cộp nộp lên, rồi lại bị trả về sửa liên tục chỉ vì sai một dấu chấm dấu phẩy. Ở trên thì sếp dí hỏi khi nào xong, ở dưới thì mấy ông dev ngồi chơi xơi nước chờ app lên store để test, còn mình đứng ở giữa chịu trận, mất ăn mất ngủ vì sợ dự án bị sập trước khi kịp chạy. Ròng rã ba tháng trời chạy vạy, lúc cầm được cái giấy phép trên tay mới dám thở phào nhẹ nhõm. Để xứng tầm với vị trí tổng giám đốc đó, mình phải tự tay gánh mọi thứ. Và cái dại nhất của mình lúc đó là chưa biết cách xây dựng quy trình làm việc chuẩn. Mình tuyển nhân sự về nhưng lại không có quy trình rõ ràng cho mọi người chạy, hệ thống vận hành cứ thay đổi liên tục tuần này qua tuần khác làm anh em xoay như chong chóng. Còn bản thân mình lúc đó lần đầu làm quản lý, bập bẹ chưa vững, thành ra thay vì dẫn dắt thì mình lại đi làm thay, ôm đồm tất cả. Việc gì cũng đến tay, app lỗi liên tục, có hôm phải thức đến ba giờ sáng tự sửa lỗi code mà lòng bất lực vcl. Trải qua những ngày kiệt sức đó mình mới ngộ ra: Muốn doanh nghiệp chạy êm thì quy trình và hệ thống phải đi trước con người. Một người tổng giám đốc giỏi không phải là người đi làm thay nhân viên, mà là người biết xây quy trình tự động hóa để hệ thống tự vận hành trơn tru. Đừng bao giờ tuyển người về rồi mới vắt óc nghĩ quy trình vận hành. Quy trình lộn xộn sẽ giết chết đam mê khởi nghiệp của chính bạn và làm kiệt quệ tinh thần cả đội ngũ. Mình ngộ ra rằng: Muốn phát triển bền vững, hệ thống và quy trình tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Đó chính là bài học xương máu lớn nhất giúp mình trưởng thành hơn ở vị trí này. Bấm phao-lô mình để đón chờ những bài học khởi nghiệp thực chiến tiếp theo nhé!"
+            }
+        ];
+
+        // State variables
+        let currentTab = 0;
+        let timelineData = [...defaultTimeline];
+
+        // On document load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load custom stories from localStorage if available
+            const storedTimeline = localStorage.getItem('hung_second_brain_timeline');
+            if (storedTimeline) {
+                timelineData = JSON.parse(storedTimeline);
+            }
+            
+            renderTimeline();
+            updateScriptView();
+            updateStats();
+        });
+
+        // Switch Script Tabs
+        function switchTab(index) {
+            currentTab = index;
+            document.querySelectorAll('.tab-btn').forEach((btn, idx) => {
+                if (idx === index) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+            updateScriptView();
+        }
+
+        // Toggle Normal vs Phonetic text
+        function togglePhonetics() {
+            updateScriptView();
+        }
+
+        // Update Script Content
+        function updateScriptView() {
+            const script = defaultScripts[currentTab];
+            const isPhonetic = document.getElementById('phonetic-toggle').checked;
+            
+            document.getElementById('script-title').textContent = script.title;
+            document.getElementById('script-broll').innerHTML = script.broll.replace(/\n/g, '<br>');
+            document.getElementById('script-voice').textContent = isPhonetic ? script.phonetic : script.normal;
+            
+            document.getElementById('script-title-display').innerHTML = `<i class="fa-solid fa-film"></i> Tập ${currentTab + 1}: Kịch Bản Chi Tiết`;
+        }
+
+        // Render Timeline Nodes
+        function renderTimeline() {
+            const listContainer = document.getElementById('timeline-list');
+            listContainer.innerHTML = '';
+            
+            timelineData.forEach((item, index) => {
+                const node = document.createElement('div');
+                node.className = `timeline-node ${index === timelineData.length - 1 ? 'active' : ''}`;
+                node.onclick = () => selectTimelineNode(index);
+                
+                node.innerHTML = `
+                    <div class="timeline-header">
+                        <span class="timeline-date">${item.date}</span>
+                    </div>
+                    <div class="timeline-title">${item.title}</div>
+                    <div class="timeline-desc">${item.desc}</div>
+                `;
+                listContainer.appendChild(node);
+            });
+        }
+
+        // Select Timeline Node
+        function selectTimelineNode(index) {
+            document.querySelectorAll('.timeline-node').forEach((node, idx) => {
+                if (idx === index) node.classList.add('active');
+                else node.classList.remove('active');
+            });
+        }
+
+        // Handle new story submission
+        function handleStorySubmit(event) {
+            event.preventDefault();
+            
+            const date = document.getElementById('story-date').value;
+            const title = document.getElementById('story-title').value;
+            const content = document.getElementById('story-content').value;
+            
+            // Show Sync Animation Layer
+            const overlay = document.getElementById('sync-overlay');
+            overlay.classList.add('active');
+            
+            setTimeout(() => {
+                // Add new story at the end of the timeline
+                const newStory = { date, title, desc: content };
+                timelineData.push(newStory);
+                
+                // Save to localStorage
+                localStorage.setItem('hung_second_brain_timeline', JSON.stringify(timelineData));
+                
+                // Refresh views
+                renderTimeline();
+                updateStats();
+                
+                // Select the newly added item
+                selectTimelineNode(timelineData.length - 1);
+                
+                // Clear Form
+                document.getElementById('story-form').reset();
+                overlay.classList.remove('active');
+                
+                // Show Success Toast
+                showToast("Đã đồng bộ câu chuyện vào Second Brain thành công!");
+            }, 1500);
+        }
+
+        // Update Dashboard Stats
+        function updateStats() {
+            document.getElementById('stat-stories').textContent = timelineData.length;
+            document.getElementById('stat-episodes').textContent = defaultScripts.length;
+        }
+
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast-notify');
+            document.getElementById('toast-text').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Simulate Share
+        function shareDashboard() {
+            navigator.clipboard.writeText(window.location.href);
+            showToast("Đã sao chép liên kết vào bộ nhớ tạm để chia sẻ!");
+        }
+    </script>
+</body>
+</html>
