@@ -1,1223 +1,568 @@
 <!DOCTYPE html>
-<html lang="vi" class="dark">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vy Thiên Hùng | Second Brain & Story Bank</title>
-    
-    <!-- Google Fonts: Outfit & Plus Jakarta Sans & JetBrains Mono -->
+    <title>Vy Thiên Hùng — Second Brain</title>
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- FontAwesome 6 Pro CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-dark: #030712;
-            --bg-card: rgba(15, 23, 42, 0.55);
-            --bg-card-hover: rgba(30, 41, 59, 0.7);
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --border-highlight: rgba(168, 85, 247, 0.4);
-            
-            --accent-cyan: #06b6d4;
-            --accent-purple: #a855f7;
-            --accent-pink: #ec4899;
-            --accent-emerald: #10b981;
-            
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-tertiary: #64748b;
-            
-            --glow-purple: 0 0 30px rgba(168, 85, 247, 0.25);
-            --glow-cyan: 0 0 30px rgba(6, 182, 212, 0.25);
-            --radius-lg: 20px;
-            --radius-md: 14px;
+            --bg-color: #09090b;
+            --surface-color: #121215;
+            --border-color: #27272a;
+            --border-hover: #3f3f46;
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent: #ffffff;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent-purple) var(--bg-dark);
         }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-dark); }
-        ::-webkit-scrollbar-thumb { background: var(--accent-purple); border-radius: 3px; }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-dark);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
             color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
             min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
         }
 
-        /* Background Particle Canvas */
-        #canvas-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* Ambient Radial Mesh Lights */
-        .ambient-light-1 {
-            position: fixed;
-            top: -10%;
-            left: 20%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
-            filter: blur(80px);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .ambient-light-2 {
-            position: fixed;
-            bottom: -10%;
-            right: 10%;
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%);
-            filter: blur(100px);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* Floating Navbar */
-        .navbar-wrapper {
-            position: sticky;
-            top: 1.5rem;
-            z-index: 100;
-            max-width: 1240px;
+        .container {
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0 1.5rem;
         }
 
-        nav {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border-glass);
-            border-radius: 999px;
-            padding: 0.75rem 1.75rem;
+        /* Minimal Header */
+        header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .nav-brand {
-            display: flex;
             align-items: center;
-            gap: 0.85rem;
-            text-decoration: none;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
         }
 
-        .nav-logo-box {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 1.2rem;
-            box-shadow: var(--glow-purple);
-        }
-
-        .nav-brand-text h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 800;
-            letter-spacing: -0.3px;
-            background: linear-gradient(to right, #ffffff, #cbd5e1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-brand-text p {
-            font-size: 0.7rem;
-            color: var(--accent-cyan);
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        .nav-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.2);
-            padding: 0.35rem 0.85rem;
-            border-radius: 999px;
-            font-size: 0.75rem;
+        .brand h1 {
+            font-size: 1.25rem;
             font-weight: 600;
-            color: var(--accent-emerald);
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
         }
 
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: var(--accent-emerald);
-            box-shadow: 0 0 10px var(--accent-emerald);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(1.3); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        .btn-glow {
-            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
-            color: #ffffff;
-            border: none;
-            padding: 0.55rem 1.25rem;
-            border-radius: 999px;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
+        .brand p {
             font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .btn-minimal {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-family: inherit;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
+        }
+
+        .btn-minimal:hover {
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+            background: var(--surface-color);
+        }
+
+        /* Minimal Navigation Tabs */
+        .nav-tabs {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: var(--glow-purple);
+            gap: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
         }
 
-        .btn-glow:hover {
-            transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.5);
-        }
-
-        /* App Container Layout */
-        .app-container {
+        .tab-item {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.6rem 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
             position: relative;
-            z-index: 10;
-            max-width: 1240px;
-            margin: 2.5rem auto 4rem;
-            padding: 0 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 2.5rem;
+            transition: color 0.2s ease;
         }
 
-        /* Hero Banner Section */
-        .hero-banner {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.7));
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg);
-            padding: 3rem 2.5rem;
-            backdrop-filter: blur(20px);
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        .tab-item:hover {
+            color: var(--text-secondary);
         }
 
-        @media (min-width: 900px) {
-            .hero-banner {
-                grid-template-columns: 1.4fr 1fr;
-                align-items: center;
-            }
+        .tab-item.active {
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
-        .hero-banner::before {
+        .tab-item.active::after {
             content: '';
             position: absolute;
-            top: 0;
+            bottom: -1px;
             left: 0;
             width: 100%;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--accent-purple), transparent);
+            background: var(--text-primary);
         }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(168, 85, 247, 0.1);
-            border: 1px solid rgba(168, 85, 247, 0.25);
-            color: #c084fc;
+        /* Section Cards */
+        .card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        /* Timeline List */
+        .timeline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .timeline-item {
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .timeline-date {
             font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
+            font-weight: 600;
+            color: var(--text-muted);
             text-transform: uppercase;
-            padding: 0.4rem 0.9rem;
-            border-radius: 999px;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-heading {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* TikTok Script Reader */
+        .script-selector {
+            display: flex;
+            gap: 0.5rem;
             margin-bottom: 1.25rem;
         }
 
-        .hero-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 900;
-            line-height: 1.15;
-            letter-spacing: -1px;
-            margin-bottom: 1rem;
-        }
-
-        .hero-title span {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple), var(--accent-pink));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-desc {
-            font-size: 1rem;
+        .script-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
             color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 1.75rem;
-            max-width: 620px;
+            padding: 0.4rem 0.85rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .hero-metrics {
-            display: flex;
-            gap: 2rem;
-            border-top: 1px solid var(--border-glass);
-            padding-top: 1.5rem;
+        .script-btn.active {
+            background: var(--text-primary);
+            color: var(--bg-color);
+            border-color: var(--text-primary);
+            font-weight: 600;
         }
 
-        .metric-box h4 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.75rem;
-            font-weight: 800;
-            color: #ffffff;
-        }
-
-        .metric-box p {
-            font-size: 0.8rem;
-            color: var(--text-tertiary);
-            font-weight: 500;
-            margin-top: 0.2rem;
-        }
-
-        /* Main Grid Split */
-        .grid-split {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        @media (min-width: 1024px) {
-            .grid-split {
-                grid-template-columns: 360px 1fr;
-            }
-        }
-
-        /* Glass Card Base */
-        .glass-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg);
-            padding: 1.75rem;
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(255, 255, 255, 0.18);
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
-        }
-
-        .section-header {
+        .toggle-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border-glass);
+            padding: 0.75rem 1rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1.25rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
         }
 
-        .section-title-box {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+        .checkbox-custom {
+            cursor: pointer;
         }
 
-        .section-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glass);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--accent-cyan);
-            font-size: 1rem;
+        .broll-box {
+            background: var(--bg-color);
+            border-left: 2px solid var(--text-muted);
+            padding: 0.85rem 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            border-radius: 0 6px 6px 0;
+            white-space: pre-line;
         }
 
-        .section-header h3 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
+        .voiceover-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            white-space: pre-line;
         }
 
-        /* Brand Tone Matrix Cards */
-        .tone-grid {
-            display: flex;
-            flex-direction: column;
+        /* Tone Checklists */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 1rem;
         }
 
-        .tone-card {
-            border-radius: var(--radius-md);
-            padding: 1.2rem;
-            border: 1px solid var(--border-glass);
-            transition: transform 0.3s ease;
+        @media (min-width: 640px) {
+            .rules-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
-        .tone-card:hover {
-            transform: translateY(-2px);
+        .rule-box {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
         }
 
-        .tone-card.allowed {
-            background: rgba(16, 185, 129, 0.04);
-            border-color: rgba(16, 185, 129, 0.2);
-        }
-
-        .tone-card.banned {
-            background: rgba(239, 68, 68, 0.04);
-            border-color: rgba(239, 68, 68, 0.2);
-        }
-
-        .tone-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.7rem;
-            font-weight: 800;
-            letter-spacing: 1px;
+        .rule-box h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
             text-transform: uppercase;
-            margin-bottom: 0.6rem;
+            letter-spacing: 0.05em;
         }
 
-        .tone-card.allowed .tone-tag { color: var(--accent-emerald); }
-        .tone-card.banned .tone-tag { color: #f87171; }
+        .rule-box.do h4 { color: #a1a1aa; }
+        .rule-box.dont h4 { color: #71717a; }
 
-        .tone-list {
+        .rule-box ul {
             list-style: none;
-            font-size: 0.875rem;
-            line-height: 1.6;
+            font-size: 0.85rem;
             color: var(--text-secondary);
         }
 
-        .tone-list li {
-            margin-bottom: 0.4rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-
-        /* Form Controls */
-        .form-label {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .rule-box ul li {
             margin-bottom: 0.5rem;
-            display: block;
+            line-height: 1.5;
         }
 
-        .custom-input {
+        /* Minimal Form */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.35rem;
+        }
+
+        .form-input, .form-textarea {
             width: 100%;
-            background: rgba(30, 41, 59, 0.4);
-            border: 1px solid var(--border-glass);
-            border-radius: 12px;
-            padding: 0.85rem 1.1rem;
-            color: #ffffff;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 0.6rem 0.85rem;
+            color: var(--text-primary);
             font-family: inherit;
             font-size: 0.9rem;
-            transition: all 0.3s ease;
         }
 
-        .custom-input:focus {
+        .form-input:focus, .form-textarea:focus {
             outline: none;
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
-            background: rgba(30, 41, 59, 0.7);
+            border-color: var(--text-secondary);
         }
 
-        /* Studio Script Viewer Player */
-        .studio-nav {
-            display: flex;
-            gap: 0.75rem;
-            background: rgba(30, 41, 59, 0.4);
-            padding: 0.4rem;
-            border-radius: 14px;
-            border: 1px solid var(--border-glass);
-            margin-bottom: 1.5rem;
-        }
-
-        .studio-tab {
-            flex: 1;
-            background: transparent;
+        .btn-submit {
+            background: var(--text-primary);
+            color: var(--bg-color);
             border: none;
-            color: var(--text-tertiary);
-            padding: 0.65rem 1rem;
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700;
-            font-size: 0.875rem;
-            border-radius: 10px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-family: inherit;
+            transition: opacity 0.2s ease;
         }
 
-        .studio-tab.active {
-            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.2));
-            color: #ffffff;
-            border: 1px solid rgba(168, 85, 247, 0.4);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        .btn-submit:hover {
+            opacity: 0.9;
         }
 
-        /* Soundwave Visualizer Bars */
-        .soundwave-box {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            height: 24px;
-        }
-
-        .wave-bar {
-            width: 3px;
-            height: 100%;
-            background: var(--accent-cyan);
-            border-radius: 3px;
-            animation: wave 1.2s ease-in-out infinite alternate;
-        }
-
-        .wave-bar:nth-child(2) { animation-delay: 0.2s; height: 70%; }
-        .wave-bar:nth-child(3) { animation-delay: 0.4s; height: 40%; }
-        .wave-bar:nth-child(4) { animation-delay: 0.1s; height: 90%; }
-        .wave-bar:nth-child(5) { animation-delay: 0.3s; height: 60%; }
-
-        @keyframes wave {
-            0% { transform: scaleY(0.3); }
-            100% { transform: scaleY(1); }
-        }
-
-        .mode-toggle-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(30, 41, 59, 0.25);
-            border: 1px solid var(--border-glass);
-            padding: 0.85rem 1.25rem;
-            border-radius: 14px;
-            margin-bottom: 1.5rem;
-        }
-
-        .mode-toggle-info {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .toggle-switch-input {
-            appearance: none;
-            width: 48px;
-            height: 26px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 999px;
-            position: relative;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            outline: none;
-        }
-
-        .toggle-switch-input::after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            border-radius: 50%;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .toggle-switch-input:checked {
-            background: var(--accent-cyan);
-            box-shadow: var(--glow-cyan);
-        }
-
-        .toggle-switch-input:checked::after {
-            transform: translateX(22px);
-        }
-
-        /* Script Paper Box */
-        .script-paper {
-            background: rgba(3, 7, 18, 0.6);
-            border: 1px solid var(--border-glass);
-            border-radius: 16px;
-            padding: 1.75rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .broll-pill {
-            background: rgba(6, 182, 212, 0.06);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            border-radius: 12px;
-            padding: 1rem;
-            color: #a5f3fc;
-            font-size: 0.9rem;
-            line-height: 1.6;
-        }
-
-        .voiceover-box {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.015);
-            border: 1px dashed rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 1.25rem;
-            white-space: pre-wrap;
-            position: relative;
-        }
-
-        .voiceover-box.phonetic-mode {
-            font-family: 'JetBrains Mono', monospace;
-            color: #e2e8f0;
-            background: rgba(168, 85, 247, 0.03);
-            border-color: rgba(168, 85, 247, 0.2);
-        }
-
-        /* High-Tech Interactive Timeline */
-        .timeline-flow {
-            position: relative;
-            padding-left: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .timeline-flow::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-purple), transparent);
-        }
-
-        .timeline-card {
-            position: relative;
-            background: rgba(15, 23, 42, 0.4);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md);
-            padding: 1.25rem 1.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .timeline-card::after {
-            content: '';
-            position: absolute;
-            left: -2.35rem;
-            top: 1.5rem;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--bg-dark);
-            border: 3px solid var(--text-tertiary);
-            transition: all 0.3s ease;
-        }
-
-        .timeline-card.active {
-            background: rgba(30, 41, 59, 0.6);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
-        }
-
-        .timeline-card.active::after {
-            border-color: var(--accent-cyan);
-            background: var(--accent-cyan);
-            box-shadow: 0 0 12px var(--accent-cyan);
-        }
-
-        .timeline-card:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .timeline-meta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 0.4rem;
-        }
-
-        .timeline-time {
-            font-family: 'Outfit', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: var(--accent-cyan);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .timeline-node-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-body {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            display: none;
-            margin-top: 0.75rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            animation: fadeIn 0.3s ease forwards;
-        }
-
-        .timeline-card.active .timeline-body {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-4px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Toast Animation */
-        .toast-msg {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: rgba(15, 23, 42, 0.9);
-            border: 1px solid var(--accent-cyan);
-            box-shadow: var(--glow-cyan);
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            z-index: 1000;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            backdrop-filter: blur(16px);
-        }
-
-        .toast-msg.show {
-            transform: translateY(0);
-            opacity: 1;
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
     </style>
 </head>
 <body>
 
-    <!-- Particle Background Canvas -->
-    <canvas id="canvas-bg"></canvas>
-    
-    <!-- Ambient Light Meshes -->
-    <div class="ambient-light-1"></div>
-    <div class="ambient-light-2"></div>
-
-    <!-- Sticky Floating Navigation Header -->
-    <div class="navbar-wrapper">
-        <nav>
-            <a href="#" class="nav-brand">
-                <div class="nav-logo-box">
-                    <i class="fa-solid fa-brain"></i>
-                </div>
-                <div class="nav-brand-text">
-                    <h1>Vy Thiên Hùng</h1>
-                    <p>Second Brain System</p>
-                </div>
-            </a>
-            
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <div class="nav-status">
-                    <div class="pulse-dot"></div>
-                    <span>ONLINE • LIVE DATA</span>
-                </div>
-                <button class="btn-glow" onclick="copyShareLink()">
-                    <i class="fa-solid fa-share-nodes"></i> Chia sẻ
-                </button>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="brand">
+                <h1>Vy Thiên Hùng</h1>
+                <p>Second Brain & Story Bank</p>
             </div>
-        </nav>
-    </div>
+            <button class="btn-minimal" onclick="copyLink()">Sao chép liên kết</button>
+        </header>
 
-    <!-- Main Container -->
-    <div class="app-container">
-        
-        <!-- Hero Banner Section -->
-        <div class="hero-banner">
-            <div>
-                <div class="hero-badge">
-                    <i class="fa-solid fa-sparkles"></i> Founder Startup Journey
-                </div>
-                <h2 class="hero-title">
-                    Thư Viện Ký Ức & <span>Second Brain</span> Trực Quan
-                </h2>
-                <p class="hero-desc">
-                    Hệ thống lưu trữ lịch sử khởi nghiệp thực tế của Vy Thiên Hùng. Tự động hóa quy trình nội dung, lưu giữ bài học xương máu và chuyển hóa thành giá trị thực chiến cho doanh nghiệp.
-                </p>
-                
-                <div class="hero-metrics">
-                    <div class="metric-box">
-                        <h4 id="count-episodes">3</h4>
-                        <p>KỊCH BẢN TIKTOK</p>
-                    </div>
-                    <div class="metric-box">
-                        <h4 id="count-milestones">6</h4>
-                        <p>CỘT MỐC LỊCH SỬ</p>
-                    </div>
-                    <div class="metric-box">
-                        <h4>100%</h4>
-                        <p>THỰC TẾ & CHÂN THẬT</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div style="display: flex; justify-content: center; align-items: center;">
-                <div style="position: relative; width: 220px; height: 220px; border-radius: 50%; background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(6, 182, 212, 0.2)); border: 1px solid var(--border-glass); display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: var(--glow-purple);">
-                    <i class="fa-solid fa-quote-left" style="font-size: 2.5rem; color: var(--accent-cyan); margin-bottom: 0.75rem;"></i>
-                    <p style="text-align: center; font-size: 0.85rem; padding: 0 1.25rem; font-style: italic; color: var(--text-secondary);">
-                        "Muốn doanh nghiệp chạy êm thì quy trình và hệ thống phải đi trước con người."
-                    </p>
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="tab-item active" onclick="switchView('timeline', this)">Cột Mốc Khởi Nghiệp</button>
+            <button class="tab-item" onclick="switchView('scripts', this)">TikTok Scripts</button>
+            <button class="tab-item" onclick="switchView('rules', this)">Quy Tắc Giọng Nói</button>
+            <button class="tab-item" onclick="switchView('add', this)">Thêm Ký Ức</button>
+        </div>
+
+        <!-- View 1: Timeline -->
+        <div id="view-timeline">
+            <div class="card">
+                <div class="card-title">Dòng Thời Gian Lịch Sử</div>
+                <div class="timeline-list" id="timeline-container">
+                    <!-- Dynamic timeline items -->
                 </div>
             </div>
         </div>
 
-        <!-- Split Grid Layout -->
-        <div class="grid-split">
-            
-            <!-- Left Sidebar -->
-            <div style="display: flex; flex-direction: column; gap: 2rem;">
-                
-                <!-- Tone & Rules Card -->
-                <div class="glass-card">
-                    <div class="section-header">
-                        <div class="section-title-box">
-                            <div class="section-icon">
-                                <i class="fa-solid fa-volume-high"></i>
-                            </div>
-                            <h3>Quy tắc Tone Giọng</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="tone-grid">
-                        <div class="tone-card allowed">
-                            <div class="tone-tag">
-                                <i class="fa-solid fa-circle-check"></i> ĐƯỢC NÓI & NÊN DÙNG
-                            </div>
-                            <ul class="tone-list">
-                                <li><i class="fa-solid fa-angle-right" style="color: var(--accent-emerald);"></i> Xưng <b>mình</b> - gọi người xem là <b>anh em</b></li>
-                                <li><i class="fa-solid fa-angle-right" style="color: var(--accent-emerald);"></i> Giọng mộc mạc, bình dân, đời thường (trà đá vỉa hè)</li>
-                                <li><i class="fa-solid fa-angle-right" style="color: var(--accent-emerald);"></i> Tên công ty đọc lồng tiếng: <b>Mơ Xi Tếch</b></li>
-                            </ul>
-                        </div>
-                        
-                        <div class="tone-card banned">
-                            <div class="tone-tag">
-                                <i class="fa-solid fa-circle-xmark"></i> CẤM NÓI SÁO RỖNG
-                            </div>
-                            <ul class="tone-list">
-                                <li><i class="fa-solid fa-angle-right" style="color: #f87171;"></i> Cấm xưng: <i>các sếp, tôi, các bạn</i></li>
-                                <li><i class="fa-solid fa-angle-right" style="color: #f87171;"></i> Cấm từ sến văn dịch: <i>ma trận pháp lý, khai tử, đòn cô lập tàn nhẫn...</i></li>
-                            </ul>
-                        </div>
-                    </div>
+        <!-- View 2: TikTok Scripts -->
+        <div id="view-scripts" style="display: none;">
+            <div class="card">
+                <div class="script-selector">
+                    <button class="script-btn active" onclick="selectScript(0, this)">Tập 1</button>
+                    <button class="script-btn" onclick="selectScript(1, this)">Tập 2</button>
+                    <button class="script-btn" onclick="selectScript(2, this)">Tập 3</button>
                 </div>
 
-                <!-- Story Submitter Card -->
-                <div class="glass-card">
-                    <div class="section-header">
-                        <div class="section-title-box">
-                            <div class="section-icon">
-                                <i class="fa-solid fa-plus-node"></i>
-                            </div>
-                            <h3>Thêm Ký Ức Mới</h3>
-                        </div>
-                    </div>
-                    
-                    <form onsubmit="saveNewMilestone(event)">
-                        <div style="margin-bottom: 1rem;">
-                            <label class="form-label">Thời gian / Mốc năm</label>
-                            <input type="text" id="new-date" class="custom-input" placeholder="Ví dụ: Tháng 8/2024" required>
-                        </div>
-                        <div style="margin-bottom: 1rem;">
-                            <label class="form-label">Tên cột mốc / Sự kiện</label>
-                            <input type="text" id="new-title" class="custom-input" placeholder="Ví dụ: Thử nghiệm công cụ mới" required>
-                        </div>
-                        <div style="margin-bottom: 1.25rem;">
-                            <label class="form-label">Nội dung chi tiết & Bài học</label>
-                            <textarea id="new-desc" class="custom-input" rows="4" placeholder="Anh Hùng chia sẻ gì mới, nhập vào đây..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn-glow" style="width: 100%; justify-content: center; border-radius: 12px;">
-                            <i class="fa-solid fa-floppy-disk"></i> Đồng bộ vào Second Brain
-                        </button>
-                    </form>
+                <div class="toggle-row">
+                    <span>Phiên âm Việt hóa (Cho máy đọc thu âm TTS)</span>
+                    <input type="checkbox" id="phonetic-check" class="checkbox-custom" onchange="renderScriptContent()">
                 </div>
 
+                <div class="broll-box" id="script-broll-text"></div>
+                <div class="voiceover-text" id="script-voice-text"></div>
             </div>
-
-            <!-- Right Workspace Column -->
-            <div style="display: flex; flex-direction: column; gap: 2rem;">
-                
-                <!-- TikTok Studio Viewer -->
-                <div class="glass-card">
-                    <div class="section-header">
-                        <div class="section-title-box">
-                            <div class="section-icon" style="color: var(--accent-purple);">
-                                <i class="fa-brands fa-tiktok"></i>
-                            </div>
-                            <h3>TikTok Script Studio</h3>
-                        </div>
-                        
-                        <!-- Soundwave Indicator -->
-                        <div class="soundwave-box">
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                        </div>
-                    </div>
-
-                    <!-- Studio Tabs -->
-                    <div class="studio-nav">
-                        <button class="studio-tab active" onclick="switchScript(0)">Tập 1: 8 Follower</button>
-                        <button class="studio-tab" onclick="switchScript(1)">Tập 2: Trực Tết 20km</button>
-                        <button class="studio-tab" onclick="switchScript(2)">Tập 3: Ải Giấy Phép</button>
-                    </div>
-
-                    <!-- Audio Mode Toggle -->
-                    <div class="mode-toggle-bar">
-                        <div class="mode-toggle-info">
-                            <i class="fa-solid fa-microphone-lines" style="color: var(--accent-cyan);"></i>
-                            <div>
-                                <h5 style="font-size: 0.85rem; font-weight: 700;">Chế độ phiên âm lồng tiếng (TTS Reading)</h5>
-                                <p style="font-size: 0.75rem; color: var(--text-tertiary);">Việt hóa phát âm tiếng Anh để đọc thu âm không bị vấp</p>
-                            </div>
-                        </div>
-                        <input type="checkbox" id="phonetic-toggle-check" class="toggle-switch-input" onchange="renderScriptText()">
-                    </div>
-
-                    <!-- Script Display Paper -->
-                    <div class="script-paper">
-                        <div>
-                            <span style="font-size: 0.75rem; font-weight: 800; color: var(--accent-cyan); letter-spacing: 1px; text-transform: uppercase;">TIÊU ĐỀ TẬP PHIM</span>
-                            <h4 id="view-script-title" style="font-family: 'Outfit', sans-serif; font-size: 1.2rem; font-weight: 800; margin-top: 0.25rem;"></h4>
-                        </div>
-                        
-                        <div>
-                            <span style="font-size: 0.75rem; font-weight: 800; color: var(--accent-purple); letter-spacing: 1px; text-transform: uppercase;">MINH HỌA B-ROLL</span>
-                            <div id="view-script-broll" class="broll-pill" style="margin-top: 0.35rem;"></div>
-                        </div>
-
-                        <div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
-                                <span style="font-size: 0.75rem; font-weight: 800; color: var(--text-secondary); letter-spacing: 1px; text-transform: uppercase;">LỜI THOẠI LỒNG TIẾNG (VOICEOVER)</span>
-                                <button onclick="copyVoiceoverText()" style="background: none; border: none; color: var(--accent-cyan); font-size: 0.8rem; cursor: pointer; font-weight: 600;">
-                                    <i class="fa-solid fa-copy"></i> Sao chép lời thoại
-                                </button>
-                            </div>
-                            <div id="view-script-voice" class="voiceover-box"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Interactive Timeline List -->
-                <div class="glass-card">
-                    <div class="section-header">
-                        <div class="section-title-box">
-                            <div class="section-icon" style="color: var(--accent-cyan);">
-                                <i class="fa-solid fa-route"></i>
-                            </div>
-                            <h3>Dòng Thời Gian Khởi Nghiệp</h3>
-                        </div>
-                    </div>
-
-                    <div class="timeline-flow" id="timeline-flow-list">
-                        <!-- Dynamic Nodes Injected Here -->
-                    </div>
-                </div>
-
-            </div>
-
         </div>
 
+        <!-- View 3: Rules -->
+        <div id="view-rules" style="display: none;">
+            <div class="card">
+                <div class="card-title">Quy Tắc Ngôn Từ</div>
+                <div class="rules-grid">
+                    <div class="rule-box do">
+                        <h4>Cách Nói Chuẩn</h4>
+                        <ul>
+                            <li>✓ Xưng <b>mình</b> - gọi người xem là <b>anh em</b></li>
+                            <li>✓ Phong cách mộc mạc, bình dân, đời thường</li>
+                            <li>✓ Đọc lồng tiếng tên công ty: <b>Mơ Xi Tếch</b></li>
+                            <li>✓ Tự nhận lỗi quản lý về mình, không đổ lỗi cho nhân sự</li>
+                        </ul>
+                    </div>
+                    <div class="rule-box dont">
+                        <h4>Cấm Sử Dụng</h4>
+                        <ul>
+                            <li>✕ Cấm xưng: <i>các sếp, tôi, các bạn</i></li>
+                            <li>✕ Cấm từ văn dịch sáo rỗng: <i>ma trận pháp lý, khai tử, đòn cô lập tàn nhẫn, vũ khí tối thượng</i></li>
+                            <li>✕ Cấm chào bán dịch vụ ở cuối clip</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 4: Add Memory -->
+        <div id="view-add" style="display: none;">
+            <div class="card">
+                <div class="card-title">Đồng Bộ Ký Ức Mới</div>
+                <form onsubmit="handleAddMemory(event)">
+                    <div class="form-group">
+                        <label>Thời gian (Mốc thời gian)</label>
+                        <input type="text" id="input-date" class="form-input" placeholder="Ví dụ: Tháng 8/2024" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tiêu đề câu chuyện</label>
+                        <input type="text" id="input-title" class="form-input" placeholder="Tiêu đề mộc mạc..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nội dung chi tiết & Bài học xương máu</label>
+                        <textarea id="input-desc" class="form-textarea" rows="5" placeholder="Nhập câu chuyện thực tế vào đây..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Lưu vào Second Brain</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>Second Brain for Business — Vy Thiên Hùng / Mơ Xi Tếch</p>
+        </footer>
     </div>
 
-    <!-- Toast Notification Popup -->
-    <div class="toast-msg" id="toast">
-        <i class="fa-solid fa-circle-check" style="color: var(--accent-cyan); font-size: 1.2rem;"></i>
-        <span id="toast-text" style="font-size: 0.9rem; font-weight: 600;">Đã lưu thành công!</span>
-    </div>
-
-    <!-- Dynamic JavaScript Logic -->
     <script>
-        // Database of Milestones
-        const defaultTimelineData = [
+        const timelineData = [
             {
                 date: "24/12/2023",
-                title: "Phỏng vấn xin làm nhân viên được giao làm Tổng giám đốc",
-                desc: "Hùng đi phỏng vấn vị trí TMĐT. Hai anh em nói chuyện 3 tiếng đồng hồ (2h-5h chiều). Sếp đề nghị Hùng đứng tên giấy phép làm Giám đốc dự án sách nói con. Hùng bập bẹ khởi nghiệp thất bại vài lần trước đó nên rén và run thật sự."
+                title: "Phỏng vấn xin làm nhân viên nhưng được giao đứng tên Tổng giám đốc",
+                desc: "Hùng đi phỏng vấn vị trí TMĐT. Hai anh em nói chuyện suốt 3 tiếng đồng hồ (2h - 5h chiều). Sếp đề nghị Hùng làm TMĐT trước rồi đứng tên giấy phép làm Giám đốc công ty sách nói con. Hùng từng thất bại vài lần trước đó nên rén và run thật sự."
             },
             {
                 date: "Tháng 1/2024",
-                title: "Kênh TikTok Shop 8 Follower & Nỗi đau cô lập",
-                desc: "Tiếp quản kênh TikTok chết yểu 8 follower. Cày 30-60 video ngắn/ngày, video đầu 200 view, tối nổ đơn liền. Đồng thời bị sếp xếp ngồi phòng riêng không cho ăn chung nói chuyện với nhân sự cũ (triết lý Tam Quốc đấu tranh), bị cả công ty ghét vì nghĩ lầm lì khó ưa."
+                title: "Tiếp quản kênh TikTok Shop 8 Follower & Nỗi đau cô lập",
+                desc: "Tiếp quản kênh chết 8 follower. Cày 30-60 video ngắn/ngày (chỉ nhấc sách, show quote, lồng nhạc). Video đầu 200 view, ngay tối nổ đơn liền. Sếp xếp ngồi riêng phòng không cho ăn chung nói chuyện với nhân sự cũ (triết lý Tam Quốc đấu tranh), bị cả công ty ghét vì nghĩ lầm lì khó ưa."
             },
             {
                 date: "Tết Âm Lịch 2024",
                 title: "Trực Tết 20km & Bán sạch kho sách Tam Quốc Chí",
-                desc: "Nhà cách 20km nhưng chọn không về nhà ăn Tết. Một mình lủi thủi ở văn phòng cày việc ngày Giao thừa, Mùng 1, Mùng 2 tủi thân vcl. Chuyển hướng bán bộ sách Tam Quốc Chí thành giải pháp quà tặng cao cấp cho các sếp. Đơn nổ gãy hệ thống, bán sạch kho. Ra Tết vươn lên doanh số thứ hai công ty, được giao lead team mới."
+                desc: "Nhà cách 20km nhưng chọn không về nhà ăn Tết. Một mình lủi thủi văn phòng trống ngày Tết tủi thân vcl. Chuyển hướng bán bộ sách Tam Quốc Chí thành quà tặng ngoại giao cao cấp cho giới làm chủ. Đơn nổ liên tục gãy hệ thống, bán sạch kho. Ra Tết vươn lên doanh số thứ hai công ty, được giao lead team mới."
             },
             {
                 date: "Tháng 3/2024 - Tháng 6/2024",
-                title: "Cơn ác mộng xin giấy phép sách nói",
-                desc: "Suốt 3 tháng trời quay cuồng trong đống thủ tục đề án bảo mật thông tin cấp độ lạ hoắc. Hồ sơ bị trả về liên tục vì sai một dấu chấm dấu phẩy. Sếp dí tiến độ, dev ngồi chơi xơi nước, Hùng đứng giữa chịu trận lo dự án sập. Đến tháng 6/2024 mới cầm được giấy phép trên tay mới dám thở phào."
+                title: "Cái ải khó nuốt: Xin giấy phép sách nói",
+                desc: "Suốt từ tháng 3 đến tháng 6 bị hành lên hành xuống vì thủ tục giấy tờ: đề án hoạt động, chứng minh bản quyền, hồ sơ bảo mật thông tin cấp độ... Toàn thứ lạ hoắc. Hồ sơ bị trả về liên tục vì sai dấu chấm dấu phẩy. Ở trên sếp dí tiến độ, ở dưới dev ngồi chơi xơi nước chờ app lên store, Hùng đứng giữa chịu trận lo dự án sập. Tháng 6 mới cầm được giấy phép trên tay mới dám thở phào."
             },
             {
-                date: "Giai đoạn quản trị",
-                title: "Sai lầm làm bảo mẫu & Đêm sửa code đến 3h sáng",
-                desc: "Chưa có kinh nghiệm làm sếp nên quy trình thay đổi liên tục tuần này qua tuần khác khiến anh em xoay như chong chóng. Hùng đi ôm đồm làm thay mọi việc, thức đến 3h sáng tự sửa lỗi code mà bất lực vcl."
+                date: "Giai đoạn vận hành",
+                title: "Sai lầm tuyển dụng & Đêm thức sửa code đến 3h sáng",
+                desc: "Chưa biết xây quy trình chuẩn nhưng đã tuyển nhân sự về, quy trình thay đổi liên tục tuần này qua tuần khác khiến anh em xoay như chong chóng. Hùng lần đầu làm quản lý nên đi ôm đồm làm thay tất cả, thức đến 3h sáng tự sửa lỗi code mà lòng bất lực vcl."
             },
             {
-                date: "Độ ngộ & Hiện tại",
-                title: "Chân lý tự động hóa & Sáng lập Mơ Xi Tếch",
-                desc: "Ngộ ra bài học xương máu: Cứ dùng sức trâu làm tay và Excel thì scale đến mức nào đó là gãy hệ thống. Muốn doanh nghiệp chạy êm thì quy trình và hệ thống tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Thành lập Mơ Xi Tếch."
+                date: "Độ ngộ & Sáng lập",
+                title: "Chân lý tự động hóa & Đặt nền móng Mơ Xi Tếch",
+                desc: "Rút ra bài học xương máu: Cứ dùng sức trâu làm tay và Excel thì scale đến mức nào đó là gãy. Muốn doanh nghiệp chạy êm thì quy trình và hệ thống tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Sáng lập Mơ Xi Tếch."
             }
         ];
 
-        // Database of Scripts
-        const scriptDatabase = [
+        const scriptsData = [
             {
                 title: "Tập 1: Buổi phỏng vấn định mệnh & 8 Follower",
-                broll: "• Góc tối: Ngón tay nhấn phím liên tục.\n• Laptop hắt sáng lên mặt.\n• Chụp màn hình kênh TikTok 8 follower.\n• Cảnh lầm lì ngồi một mình trong phòng riêng.",
+                broll: "• Cận cảnh tay gõ bàn phím liên tục trong đêm.\n• Màn hình kênh TikTok 8 follower.\n• Cảnh lầm lì ngồi làm việc một mình trong phòng riêng.",
                 normal: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Ngày hai mươi tư tháng mười hai năm hai nghìn không trăm hai mươi ba. Lúc đó mình chỉ là một đứa làm KOC review sách đơn thuần vì thích sách vãi l. Nhận lời phỏng vấn từ một người sếp, hai anh em ngồi tâm sự suốt ba tiếng đồng hồ. Mình chia sẻ là bản thân hay nghe sách nói và podcast thường xuyên. Ai dè sếp hào hứng kể về dự án app sách nói sếp đang ấp ủ, rồi bảo luôn: 'Em về làm thương mại điện tử trước, rồi đứng tên giấy phép công ty sách nói luôn nhé!' Bản thân lúc đó chỉ là một đứa từng thất bại vài dự án nhỏ trước đó, chưa biết quản trị là gì nên mình run thật sự.\n\nThế là mình nhận việc với một kênh TikTok mới tinh đúng tám follower. Để xứng với cái danh tổng giám đốc hờ sếp giao, ngày đầu đi làm mình cày làm khoảng ba mươi đến sáu mươi cái video ngắn. Chỉ đúng một kiểu: Nhấc quyển sách lên, hiển thị câu nói hay rồi lồng nhạc. Video đầu tiên trộm vía được hai trăm view, nhưng với một đứa chưa biết làm kênh như mình lúc đó thì vui phát khóc. Mình nghĩ bụng cứ tích tiểu thành đại, làm nhiều rồi sẽ có đơn. May mắn là ngay tối hôm đó, những đơn hàng đầu tiên đã nổ.\n\nNhưng cái khó nhất là sếp bảo mình: 'Em ngồi riêng một phòng, đừng ăn chung hay nói chuyện với nhân sự cũ để tập trung cạnh tranh phát triển.' Mình hiền lành, hòa đồng nhưng lại nghe lời sếp ngồi tách biệt hoàn toàn. Thành ra mọi người chưa hiểu nhau, lại nghĩ mình lầm lì khó gần, đâm ra ghét mình luôn. Sự bít kín thông tin và chia rẽ nội bộ chính là sai lầm làm kiệt quệ tinh thần nhân sự. Sau này làm Mercy Tech, mình luôn tự dặn: Doanh nghiệp muốn đi nhanh thì quy trình và thông tin phải cực kỳ minh bạch để ai cũng tự chủ động làm việc được, xóa bỏ khoảng cách phe phái. Bấm follow mình để đón xem tập tiếp theo ngay nhé!",
                 phonetic: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Ngày hai mươi tư tháng mười hai năm hai nghìn không trăm hai mươi ba. Lúc đó mình chỉ là một đứa làm ca-o-xê review sách đơn thuần vì thích sách vãi lờ. Nhận lời phỏng vấn từ một người sếp, hai anh em ngồi tâm sự suốt ba tiếng đồng hồ. Mình chia sẻ là bản thân hay nghe sách nói và pót-cát thường xuyên. Ai dè sếp hào hứng kể về dự án áp sách nói sếp đang ấp ủ, rồi bảo luôn: 'Em về làm thương mại điện tử trước, rồi đứng tên giấy phép công ty sách nói luôn nhé!' Bản thân lúc đó chỉ là một đứa từng thất bại vài dự án nhỏ trước đó, chưa biết quản trị là gì nên mình run thật sự. Thế là mình nhận việc với một kênh tích-tốc mới tinh đúng tám phao-lô-uơ. Để xứng với cái danh tổng giám đốc hờ sếp giao, ngày đầu đi làm mình cày làm khoảng ba mươi đến sáu mươi cái video ngắn. Chỉ đúng một kiểu: Nhấc quyển sách lên, hiển thị câu nói hay rồi lồng nhạc. Video đầu tiên trộm vía được hai trăm viu, nhưng với một đứa chưa biết làm kênh như mình lúc đó thì vui phát khóc. Mình nghĩ bụng cứ tích tiểu thành đại, làm nhiều rồi sẽ có đơn. May mắn là ngay tối hôm đó, những đơn hàng đầu tiên đã nổ. Nhưng cái khó nhất là sếp bảo mình: 'Em ngồi riêng một phòng, đừng ăn chung hay nói chuyện với nhân sự cũ để tập trung cạnh tranh phát triển.' Mình hiền lành, hòa đồng nhưng lại nghe lời sếp ngồi tách biệt hoàn toàn. Thành ra mọi người chưa hiểu nhau, lại nghĩ mình lầm lì khó gần, đâm ra ghét mình luôn. Sự bít kín thông tin và chia rẽ nội bộ chính là sai lầm làm kiệt quệ tinh thần nhân sự. Sau này làm Mơ Xi Tếch, mình luôn tự dặn: Doanh nghiệp muốn đi nhanh thì quy trình và thông tin phải cực kỳ minh bạch để ai cũng tự chủ động làm việc được, xóa bỏ khoảng cách phe phái. Bấm phao-lô mình để đón xem tập tiếp theo ngay nhé!"
             },
             {
                 title: "Tập 2: Chiến dịch Tết & Giới hạn sức người",
-                broll: "• Đống carton đóng gói hàng chất cao.\n• Bộ sách Tam Quốc Chí gáy mạ vàng sang trọng.\n• Cảnh Hùng ngồi lủi thủi đóng gói đơn hàng một mình ngày Tết.\n• Sơ đồ biểu đồ doanh thu dựng đứng.",
+                broll: "• Đống thùng carton hàng chất cao.\n• Bộ sách Tam Quốc Chí gáy mạ vàng sang trọng.\n• Cảnh Hùng ngồi lủi thủi đóng gói đơn hàng một mình ngày Tết.",
                 normal: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Để xứng với vị trí tổng giám đốc cho dự án sách nói sắp tới, Tết năm đó mình chọn không về nhà, ngồi lủi thủi trực chiến ở công ty suốt ba ngày Tết. Triết lý của sếp lúc đó là muốn nhân sự cũ mới phải tự cạnh tranh quyết liệt để lớn lên. Trong lúc phe cũ nghỉ ngơi đi chơi xuân, mình biết đây là cơ hội duy nhất để mình nỗ lực chứng minh xem mình có xứng đáng với chức danh tổng giám đốc hay không. Nhà cách công ty hai mươi cây số thôi nhưng Tết không về, lủi thủi ngồi cày một mình tủi thân vcl. Lúc đó công ty tồn đống bộ sách Tam Quốc Chí cao cấp giá khá đắt. Hai anh em bàn nhau chuyển hướng: Đếch bán sách lẻ nữa, bán giải pháp làm quà tặng biếu Tết cho các sếp lớn. Đánh đúng tâm lý biếu quà sang trọng ngày Tết của giới làm chủ. May mắn là chiến dịch thành công ngoài mong đợi. Trong Tết đơn nổ liên tục gãy cả hệ thống, bán sạch cả trăm bộ mỗi ngày. Ra Tết anh em đi làm thấy số lượng đơn chạy mượt mà thì ai cũng bất ngờ. Nhờ kết quả đó, mình chính thức chứng minh được năng lực, trộm vía vươn lên doanh số thứ hai toàn công ty sau một tháng và được sếp giao lead một team mới. Đi làm cứ tập trung tạo ra giá trị thực tế là tự khắc mọi người sẽ nể trọng nhau. Từ căn phòng bị cô lập ngày đầu, mình đã xây dựng được một team chiến đấu hết mình để xứng đáng với vị trí của một người dẫn dắt.\n\nĐợt cày trâu bò đó giúp mình ngộ ra một điều: Cứ dùng sức người làm thủ công và Excel thì chỉ scale đến một mức nào đó là gãy hệ thống. Nếu CEO cứ phải trực chiến hai mươi tư trên bảy thì doanh nghiệp chưa kịp lớn, chủ đã kiệt sức trước. Đó là lý do sau này mình sáng lập Mercy Tech để tự động hóa mọi quy trình cho doanh nghiệp. Nhưng tết qua đi cũng là lúc thử thách thực sự ập đến khi bắt tay xin giấy phép cho dự án sách nói. Bấm follow mình để đón xem tập tiếp theo nhé!",
                 phonetic: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Để xứng với vị trí tổng giám đốc cho dự án sách nói sắp tới, Tết năm đó mình chọn không về nhà, ngồi lủi thủi trực chiến ở công ty suốt ba ngày Tết. Triết lý của sếp lúc đó là muốn nhân sự cũ mới phải tự cạnh tranh quyết liệt để lớn lên. Trong lúc phe cũ nghỉ ngơi đi chơi xuân, mình biết đây là cơ hội duy nhất để mình nỗ lực chứng minh xem mình có xứng đáng với chức danh tổng giám đốc hay không. Nhà cách công ty hai mươi cây số thôi nhưng Tết không về, lủi thủi ngồi cày một mình tủi thân vcl. Lúc đó công ty tồn đống bộ sách Tam Quốc Chí cao cấp giá khá đắt. Hai anh em bàn nhau chuyển hướng: Đếch bán sách lẻ nữa, bán giải pháp làm quà tặng biếu Tết cho các sếp lớn. Đánh đúng tâm lý biếu quà sang trọng ngày Tết của giới làm chủ. May mắn là chiến dịch thành công ngoài mong đợi. Trong Tết đơn nổ liên tục gãy cả hệ thống, bán sạch cả trăm bộ mỗi ngày. Ra Tết anh em đi làm thấy số lượng đơn chạy mượt mà thì ai cũng bất ngờ. Nhờ kết quả đó, mình chính thức chứng minh được năng lực, trộm vía vươn lên doanh số thứ hai toàn công ty sau một tháng và được sếp giao lít một tim mới. Đi làm cứ tập trung tạo ra giá trị thực tế là tự khắc mọi người sẽ nể trọng nhau. Từ căn phòng bị cô lập ngày đầu, mình đã xây dựng được một tim chiến đấu hết mình để xứng đáng với vị trí của một người dẫn dắt. Đợt cày trâu bò đó giúp mình ngộ ra một điều: Cứ dùng sức người làm thủ công và Excel thì chỉ sờ-kay đến một mức nào đó là gãy hệ thống. Nếu CEO cứ phải trực chiến hai mươi tư trên bảy thì doanh nghiệp chưa kịp lớn, chủ đã kiệt sức trước. Đó là lý do sau này mình sáng lập Mơ Xi Tếch để tự động hóa mọi quy trình cho doanh nghiệp. Nhưng tết qua đi cũng là lúc thử thách thực sự ập đến khi bắt tay xin giấy phép cho dự án sách nói. Bấm phao-lô mình để xem ngay tập tiếp theo nhé!"
             },
             {
-                title: "Tập 3: Cơn ác mộng giấy phép & Bài học quản trị",
-                broll: "• Cận cảnh xấp hồ sơ in đen trắng dày cộp.\n• Màn hình app code bị lỗi code đỏ lòm.\n• Anh đứng viết sơ đồ quy trình lên bảng trắng, gục mặt mệt mỏi.",
+                title: "Tập 3: Cái ải giấy phép & Bài học quản trị",
+                broll: "• Cận cảnh xấp hồ sơ in đen trắng trên bàn.\n• Màn hình app hiển thị lỗi code màu đỏ.\n• Anh gục mặt xuống bàn làm việc đầy mệt mỏi.",
                 normal: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Để xứng với vị trí tổng giám đốc cho dự án sách nói sắp tới, tháng ba năm hai nghìn không trăm hai mươi tư, mình tập trung toàn lực chạy đề án xin giấy phép. Lúc đó làm app sách nói ở Việt Nam, xin được cái giấy phép là cái ải khó nuốt nhất đời mình. Suốt từ tháng ba đến tháng sáu, mình bị hành lên hành xuống vì thủ tục giấy tờ. Làm đề án hoạt động, chứng minh bản quyền sách, rồi hồ sơ bảo mật thông tin cấp độ... Toàn những thứ lạ hoắc với một đứa mới làm sếp như mình. Hồ sơ viết dày cộp nộp lên, rồi lại bị trả về sửa liên tục chỉ vì sai một dấu chấm dấu phẩy. Ở trên thì sếp dí hỏi khi nào xong, ở dưới thì mấy ông dev ngồi chơi xơi nước chờ app lên store để test, còn mình đứng ở giữa chịu trận, mất ăn mất ngủ vì sợ dự án bị sập trước khi kịp chạy. Ròng rã ba tháng trời chạy vạy, lúc cầm được cái giấy phép trên tay mới dám thở phào nhẹ nhõm.\n\nĐể xứng tầm với vị trí tổng giám đốc đó, mình phải tự tay gánh mọi thứ. Và cái dại nhất của mình lúc đó là chưa biết cách xây dựng quy trình làm việc chuẩn. Mình tuyển nhân sự về nhưng lại không có quy trình rõ ràng cho mọi người chạy, hệ thống vận hành cứ thay đổi liên tục tuần này qua tuần khác làm anh em xoay như chong chóng. Còn bản thân mình lúc đó lần đầu làm quản lý, bập bẹ chưa vững, thành ra thay vì dẫn dắt thì mình lại đi làm thay, ôm đồm tất cả. Việc gì cũng đến tay, app lỗi liên tục, có hôm phải thức đến ba giờ sáng tự sửa lỗi code mà lòng bất lực vcl.\n\nTrải qua những ngày kiệt sức đó mình mới ngộ ra: Muốn doanh nghiệp chạy êm thì quy trình và hệ thống phải đi trước con người. Một người tổng giám đốc giỏi không phải là người đi làm thay nhân viên, mà là người biết xây quy trình tự động hóa để hệ thống tự vận hành trơn tru. Đừng bao giờ tuyển người về rồi mới vắt óc nghĩ quy trình vận hành. Quy trình lộn xộn sẽ giết chết đam mê khởi nghiệp của chính bạn và làm kiệt quệ tinh thần cả đội ngũ. Mình ngộ ra rằng: Muốn phát triển bền vững, hệ thống và quy trình tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Đó chính là bài học xương máu lớn nhất giúp mình trưởng thành hơn ở vị trí này. Bấm follow mình để đón chờ những bài học khởi nghiệp thực chiến tiếp theo nhé!",
                 phonetic: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Để xứng với vị trí tổng giám đốc cho dự án sách nói sắp tới, tháng ba năm hai nghìn không trăm hai mươi tư, mình tập trung toàn lực chạy đề án xin giấy phép. Lúc đó làm app sách nói ở Việt Nam, xin được cái giấy phép là cái ải khó nuốt nhất đời mình. Suốt từ tháng ba đến tháng sáu, mình bị hành lên hành xuống vì thủ tục giấy tờ. Làm đề án hoạt động, chứng minh bản quyền sách, rồi hồ sơ bảo mật thông tin cấp độ... Toàn những thứ lạ hoắc với một đứa mới làm sếp như mình. Hồ sơ viết dày cộp nộp lên, rồi lại bị trả về sửa liên tục chỉ vì sai một dấu chấm dấu phẩy. Ở trên thì sếp dí hỏi khi nào xong, ở dưới thì mấy ông dev ngồi chơi xơi nước chờ app lên store để test, còn mình đứng ở giữa chịu trận, mất ăn mất ngủ vì sợ dự án bị sập trước khi kịp chạy. Ròng rã ba tháng trời chạy vạy, lúc cầm được cái giấy phép trên tay mới dám thở phào nhẹ nhõm. Để xứng tầm với vị trí tổng giám đốc đó, mình phải tự tay gánh mọi thứ. Và cái dại nhất của mình lúc đó là chưa biết cách xây dựng quy trình làm việc chuẩn. Mình tuyển nhân sự về nhưng lại không có quy trình rõ ràng cho mọi người chạy, hệ thống vận hành cứ thay đổi liên tục tuần này qua tuần khác làm anh em xoay như chong chóng. Còn bản thân mình lúc đó lần đầu làm quản lý, bập bẹ chưa vững, thành ra thay vì dẫn dắt thì mình lại đi làm thay, ôm đồm tất cả. Việc gì cũng đến tay, app lỗi liên tục, có hôm phải thức đến ba giờ sáng tự sửa lỗi code mà lòng bất lực vcl. Trải qua những ngày kiệt sức đó mình mới ngộ ra: Muốn doanh nghiệp chạy êm thì quy trình và hệ thống phải đi trước con người. Một người tổng giám đốc giỏi không phải là người đi làm thay nhân viên, mà là người biết xây quy trình tự động hóa để hệ thống tự vận hành trơn tru. Đừng bao giờ tuyển người về rồi mới vắt óc nghĩ quy trình vận hành. Quy trình lộn xộn sẽ giết chết đam mê khởi nghiệp của chính bạn và làm kiệt quệ tinh thần cả đội ngũ. Mình ngộ ra rằng: Muốn phát triển bền vững, hệ thống và quy trình tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Đó chính là bài học xương máu lớn nhất giúp mình trưởng thành hơn ở vị trí này. Bấm phao-lô mình để đón chờ những bài học khởi nghiệp thực chiến tiếp theo nhé!"
             }
         ];
 
-        let activeScriptIndex = 0;
-        let timelineData = [...defaultTimelineData];
+        let selectedScript = 0;
+        let currentTimeline = [...timelineData];
 
-        // Init
         document.addEventListener('DOMContentLoaded', () => {
-            initBackgroundCanvas();
-            
-            const saved = localStorage.getItem('vth_secondbrain_timeline');
-            if (saved) {
-                timelineData = JSON.parse(saved);
-            }
+            const saved = localStorage.getItem('vth_minimal_secondbrain');
+            if (saved) currentTimeline = JSON.parse(saved);
 
             renderTimeline();
-            renderScriptText();
-            updateCounts();
+            renderScriptContent();
         });
 
-        // Background Particles
-        function initBackgroundCanvas() {
-            const canvas = document.getElementById('canvas-bg');
-            const ctx = canvas.getContext('2d');
-            
-            let width = canvas.width = window.innerWidth;
-            let height = canvas.height = window.innerHeight;
-            
-            window.addEventListener('resize', () => {
-                width = canvas.width = window.innerWidth;
-                height = canvas.height = window.innerHeight;
+        function switchView(viewName, btnEl) {
+            document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+
+            ['timeline', 'scripts', 'rules', 'add'].forEach(v => {
+                document.getElementById(`view-${v}`).style.display = (v === viewName) ? 'block' : 'none';
             });
-
-            const particles = [];
-            for (let i = 0; i < 45; i++) {
-                particles.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    vx: (Math.random() - 0.5) * 0.4,
-                    vy: (Math.random() - 0.5) * 0.4,
-                    radius: Math.random() * 1.5 + 1,
-                    alpha: Math.random() * 0.4 + 0.1
-                });
-            }
-
-            function animate() {
-                ctx.clearRect(0, 0, width, height);
-                
-                particles.forEach((p, idx) => {
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    
-                    if (p.x < 0 || p.x > width) p.vx *= -1;
-                    if (p.y < 0 || p.y > height) p.vy *= -1;
-                    
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(168, 85, 247, ${p.alpha})`;
-                    ctx.fill();
-
-                    // Connect lines
-                    for (let j = idx + 1; j < particles.length; j++) {
-                        const p2 = particles[j];
-                        const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
-                        if (dist < 120) {
-                            ctx.beginPath();
-                            ctx.moveTo(p.x, p.y);
-                            ctx.lineTo(p2.x, p2.y);
-                            ctx.strokeStyle = `rgba(6, 182, 212, ${0.15 * (1 - dist / 120)})`;
-                            ctx.stroke();
-                        }
-                    }
-                });
-
-                requestAnimationFrame(animate);
-            }
-            animate();
         }
 
-        // Switch Script Tabs
-        function switchScript(idx) {
-            activeScriptIndex = idx;
-            document.querySelectorAll('.studio-tab').forEach((tab, i) => {
-                if (i === idx) tab.classList.add('active');
-                else tab.classList.remove('active');
-            });
-            renderScriptText();
-        }
-
-        // Render Active Script
-        function renderScriptText() {
-            const data = scriptDatabase[activeScriptIndex];
-            const isPhonetic = document.getElementById('phonetic-toggle-check').checked;
-
-            document.getElementById('view-script-title').textContent = data.title;
-            document.getElementById('view-script-broll').textContent = data.broll;
-
-            const voiceBox = document.getElementById('view-script-voice');
-            if (isPhonetic) {
-                voiceBox.textContent = data.phonetic;
-                voiceBox.classList.add('phonetic-mode');
-            } else {
-                voiceBox.textContent = data.normal;
-                voiceBox.classList.remove('phonetic-mode');
-            }
-        }
-
-        // Render Timeline Flow
         function renderTimeline() {
-            const container = document.getElementById('timeline-flow-list');
+            const container = document.getElementById('timeline-container');
             container.innerHTML = '';
 
-            timelineData.forEach((item, idx) => {
-                const card = document.createElement('div');
-                card.className = `timeline-card ${idx === timelineData.length - 1 ? 'active' : ''}`;
-                card.onclick = () => toggleTimelineNode(card);
-
-                card.innerHTML = `
-                    <div class="timeline-meta">
-                        <span class="timeline-time">${item.date}</span>
-                    </div>
-                    <div class="timeline-node-title">${item.title}</div>
-                    <div class="timeline-body">${item.desc}</div>
+            currentTimeline.forEach(item => {
+                const el = document.createElement('div');
+                el.className = 'timeline-item';
+                el.innerHTML = `
+                    <div class="timeline-date">${item.date}</div>
+                    <div class="timeline-heading">${item.title}</div>
+                    <div class="timeline-text">${item.desc}</div>
                 `;
-
-                container.appendChild(card);
+                container.appendChild(el);
             });
         }
 
-        function toggleTimelineNode(cardElement) {
-            document.querySelectorAll('.timeline-card').forEach(c => {
-                if (c === cardElement) c.classList.toggle('active');
-                else c.classList.remove('active');
-            });
+        function selectScript(idx, btn) {
+            selectedScript = idx;
+            document.querySelectorAll('.script-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderScriptContent();
         }
 
-        // Add New Milestone
-        function saveNewMilestone(e) {
+        function renderScriptContent() {
+            const item = scriptsData[selectedScript];
+            const isPhonetic = document.getElementById('phonetic-check').checked;
+
+            document.getElementById('script-broll-text').textContent = item.broll;
+            document.getElementById('script-voice-text').textContent = isPhonetic ? item.phonetic : item.normal;
+        }
+
+        function handleAddMemory(e) {
             e.preventDefault();
-            
-            const date = document.getElementById('new-date').value;
-            const title = document.getElementById('new-title').value;
-            const desc = document.getElementById('new-desc').value;
+            const date = document.getElementById('input-date').value;
+            const title = document.getElementById('input-title').value;
+            const desc = document.getElementById('input-desc').value;
 
-            const newObj = { date, title, desc };
-            timelineData.push(newObj);
+            currentTimeline.push({ date, title, desc });
+            localStorage.setItem('vth_minimal_secondbrain', JSON.stringify(currentTimeline));
 
-            localStorage.setItem('vth_secondbrain_timeline', JSON.stringify(timelineData));
-            
             renderTimeline();
-            updateCounts();
 
-            // Clear inputs
-            document.getElementById('new-date').value = '';
-            document.getElementById('new-title').value = '';
-            document.getElementById('new-desc').value = '';
+            document.getElementById('input-date').value = '';
+            document.getElementById('input-title').value = '';
+            document.getElementById('input-desc').value = '';
 
-            showToast("Đã ghi thêm cột mốc mới vào Second Brain!");
+            alert('Đã lưu thành công vào Second Brain!');
+            switchView('timeline', document.querySelectorAll('.tab-item')[0]);
         }
 
-        function updateCounts() {
-            document.getElementById('count-milestones').textContent = timelineData.length;
-            document.getElementById('count-episodes').textContent = scriptDatabase.length;
-        }
-
-        // Copy Voiceover
-        function copyVoiceoverText() {
-            const text = document.getElementById('view-script-voice').textContent;
-            navigator.clipboard.writeText(text);
-            showToast("Đã sao chép kịch bản voiceover vào khay nhớ tạm!");
-        }
-
-        // Share Link
-        function copyShareLink() {
+        function copyLink() {
             navigator.clipboard.writeText(window.location.href);
-            showToast("Đã sao chép đường dẫn Second Brain!");
-        }
-
-        // Toast Helper
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-text').textContent = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
+            alert('Đã sao chép liên kết!');
         }
     </script>
 </body>
