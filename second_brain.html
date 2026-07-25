@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vy Thiên Hùng — Second Brain</title>
-    <!-- Google Fonts: Inter -->
+    <title>Nhật Ký & Second Brain — Vy Thiên Hùng</title>
+    <!-- Google Fonts: Inter & Newsreader for journal typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg-color: #09090b;
-            --surface-color: #121215;
-            --border-color: #27272a;
-            --border-hover: #3f3f46;
-            --text-primary: #f4f4f5;
-            --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
-            --accent: #ffffff;
+            --bg-color: #0b0b0d;
+            --surface-color: #141417;
+            --surface-hover: #1a1a1e;
+            --border-color: #222226;
+            --border-active: #383840;
+            --text-primary: #ededed;
+            --text-secondary: #a0a0a8;
+            --text-muted: #62626a;
+            --accent-glow: rgba(255, 255, 255, 0.05);
+            --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
@@ -32,284 +34,387 @@
             background-color: var(--bg-color);
             color: var(--text-primary);
             line-height: 1.6;
-            padding: 2rem 1rem;
+            padding: 2.5rem 1.25rem;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 800px;
+        .journal-vault {
+            max-width: 760px;
             margin: 0 auto;
         }
 
-        /* Minimal Header */
+        /* Journal Header */
         header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding-bottom: 1.5rem;
+            align-items: flex-end;
+            padding-bottom: 1.75rem;
             border-bottom: 1px solid var(--border-color);
             margin-bottom: 2rem;
         }
 
-        .brand h1 {
-            font-size: 1.25rem;
-            font-weight: 600;
+        .journal-title h1 {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 500;
             letter-spacing: -0.02em;
             color: var(--text-primary);
+            margin-bottom: 0.2rem;
         }
 
-        .brand p {
+        .journal-title p {
             font-size: 0.85rem;
             color: var(--text-muted);
         }
 
-        .btn-minimal {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            padding: 0.4rem 0.85rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-minimal:hover {
-            border-color: var(--border-hover);
-            color: var(--text-primary);
-            background: var(--surface-color);
-        }
-
-        /* Minimal Navigation Tabs */
-        .nav-tabs {
-            display: flex;
-            gap: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 2rem;
-        }
-
-        .tab-item {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            padding: 0.6rem 0;
-            font-size: 0.9rem;
-            font-weight: 500;
-            font-family: inherit;
-            cursor: pointer;
+        .search-box {
             position: relative;
-            transition: color 0.2s ease;
-        }
-
-        .tab-item:hover {
-            color: var(--text-secondary);
-        }
-
-        .tab-item.active {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .tab-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--text-primary);
-        }
-
-        /* Section Cards */
-        .card {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
 
-        .card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+        .search-input {
+            width: 100%;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.65rem 1rem 0.65rem 2.4rem;
             color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.875rem;
+            transition: all 0.3s var(--ease-apple);
         }
 
-        /* Timeline List */
-        .timeline-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
+        .search-input:focus {
+            outline: none;
+            border-color: var(--border-active);
+            background: var(--surface-hover);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .timeline-item {
-            padding-bottom: 1.25rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .timeline-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .timeline-date {
-            font-size: 0.75rem;
-            font-weight: 600;
+        .search-icon {
+            position: absolute;
+            left: 0.85rem;
+            top: 50%;
+            transform: translateY(-50%);
             color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
+            font-size: 0.85rem;
+            pointer-events: none;
         }
 
-        .timeline-heading {
-            font-size: 1rem;
+        /* Smooth Navigation Tabs */
+        .nav-bar {
+            display: flex;
+            gap: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.75rem 0;
+            font-size: 0.875rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: color 0.25s var(--ease-apple);
+            position: relative;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-secondary);
+        }
+
+        .nav-btn.active {
+            color: var(--text-primary);
             font-weight: 600;
+        }
+
+        .nav-indicator {
+            position: absolute;
+            bottom: -1px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all 0.3s var(--ease-apple);
+        }
+
+        /* Content Views with Fade Transition */
+        .view-content {
+            opacity: 1;
+            transition: opacity 0.25s var(--ease-apple), transform 0.25s var(--ease-apple);
+        }
+
+        .view-content.switching {
+            opacity: 0;
+            transform: translateY(4px);
+        }
+
+        /* Journal Entry Cards */
+        .entry-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            transition: all 0.3s var(--ease-apple);
+            cursor: pointer;
+        }
+
+        .entry-card:hover {
+            border-color: var(--border-active);
+            background: var(--surface-hover);
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .entry-badge {
+            font-size: 0.7rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .entry-title {
+            font-family: 'Newsreader', Georgia, serif;
+            font-size: 1.2rem;
+            font-weight: 500;
             color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
 
-        .timeline-text {
+        .entry-body {
             font-size: 0.9rem;
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.65;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s var(--ease-apple), opacity 0.3s var(--ease-apple), margin 0.3s var(--ease-apple);
         }
 
-        /* TikTok Script Reader */
+        .entry-card.expanded .entry-body {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .expand-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .entry-card:hover .expand-hint {
+            color: var(--text-secondary);
+        }
+
+        /* Script Reader */
         .script-selector {
             display: flex;
             gap: 0.5rem;
             margin-bottom: 1.25rem;
         }
 
-        .script-btn {
-            background: transparent;
+        .pill-btn {
+            background: var(--surface-color);
             border: 1px solid var(--border-color);
             color: var(--text-secondary);
-            padding: 0.4rem 0.85rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            padding: 0.45rem 1rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-family: inherit;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.25s var(--ease-apple);
         }
 
-        .script-btn.active {
+        .pill-btn.active {
             background: var(--text-primary);
             color: var(--bg-color);
             border-color: var(--text-primary);
             font-weight: 600;
         }
 
-        .toggle-row {
+        .mode-bar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 0.75rem 1rem;
-            background: var(--bg-color);
+            background: var(--surface-color);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 8px;
             margin-bottom: 1.25rem;
             font-size: 0.85rem;
             color: var(--text-secondary);
         }
 
-        .checkbox-custom {
-            cursor: pointer;
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 38px;
+            height: 20px;
         }
 
-        .broll-box {
-            background: var(--bg-color);
-            border-left: 2px solid var(--text-muted);
-            padding: 0.85rem 1rem;
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--border-color);
+            transition: .3s var(--ease-apple);
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s var(--ease-apple);
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--text-primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(18px);
+            background-color: var(--bg-color);
+        }
+
+        .script-paper {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.75rem;
+        }
+
+        .broll-note {
             font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            border-radius: 0 6px 6px 0;
+            color: var(--text-muted);
+            background: var(--bg-color);
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            border-left: 2px solid var(--text-secondary);
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
             white-space: pre-line;
         }
 
-        .voiceover-text {
+        .voiceover-content {
             font-size: 0.95rem;
-            line-height: 1.7;
+            line-height: 1.75;
             color: var(--text-primary);
             white-space: pre-line;
+            transition: opacity 0.2s ease;
         }
 
-        /* Tone Checklists */
-        .rules-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        @media (min-width: 640px) {
-            .rules-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .rule-box {
+        /* Rules Layout */
+        .rules-card {
+            background: var(--surface-color);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 1rem;
+            border-radius: 10px;
+            padding: 1.75rem;
         }
 
-        .rule-box h4 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
+        .rules-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .rules-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .rules-header {
+            font-size: 0.8rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
         }
 
-        .rule-box.do h4 { color: #a1a1aa; }
-        .rule-box.dont h4 { color: #71717a; }
-
-        .rule-box ul {
-            list-style: none;
-            font-size: 0.85rem;
+        .rule-item {
+            font-size: 0.9rem;
             color: var(--text-secondary);
-        }
-
-        .rule-box ul li {
-            margin-bottom: 0.5rem;
-            line-height: 1.5;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
         }
 
         /* Minimal Form */
-        .form-group {
-            margin-bottom: 1rem;
+        .form-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.75rem;
         }
 
-        .form-group label {
+        .form-field {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-field label {
             display: block;
             font-size: 0.8rem;
             color: var(--text-muted);
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.4rem;
         }
 
-        .form-input, .form-textarea {
+        .field-input, .field-textarea {
             width: 100%;
             background: var(--bg-color);
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            padding: 0.6rem 0.85rem;
+            padding: 0.7rem 0.9rem;
             color: var(--text-primary);
             font-family: inherit;
             font-size: 0.9rem;
+            transition: border-color 0.2s ease;
         }
 
-        .form-input:focus, .form-textarea:focus {
+        .field-input:focus, .field-textarea:focus {
             outline: none;
-            border-color: var(--text-secondary);
+            border-color: var(--border-active);
         }
 
-        .btn-submit {
+        .btn-save {
             background: var(--text-primary);
             color: var(--bg-color);
             border: none;
-            padding: 0.6rem 1.2rem;
+            padding: 0.65rem 1.4rem;
             border-radius: 6px;
             font-size: 0.85rem;
             font-weight: 600;
@@ -318,12 +423,35 @@
             transition: opacity 0.2s ease;
         }
 
-        .btn-submit:hover {
+        .btn-save:hover {
             opacity: 0.9;
         }
 
+        /* Toast Feedback */
+        .toast {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--surface-color);
+            border: 1px solid var(--border-active);
+            color: var(--text-primary);
+            padding: 0.65rem 1.1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s var(--ease-apple);
+            pointer-events: none;
+        }
+
+        .toast.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
         footer {
-            margin-top: 3rem;
+            margin-top: 3.5rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--border-color);
             text-align: center;
@@ -334,97 +462,102 @@
 </head>
 <body>
 
-    <div class="container">
+    <div class="journal-vault">
         <!-- Header -->
         <header>
-            <div class="brand">
-                <h1>Vy Thiên Hùng</h1>
-                <p>Second Brain & Story Bank</p>
+            <div class="journal-title">
+                <h1>Nhật Ký & Second Brain</h1>
+                <p>Vy Thiên Hùng — Lưu trữ trải nghiệm & bài học khởi nghiệp</p>
             </div>
-            <button class="btn-minimal" onclick="copyLink()">Sao chép liên kết</button>
+            <button class="pill-btn" onclick="copyShareLink()">Chia sẻ</button>
         </header>
 
-        <!-- Navigation Tabs -->
-        <div class="nav-tabs">
-            <button class="tab-item active" onclick="switchView('timeline', this)">Cột Mốc Khởi Nghiệp</button>
-            <button class="tab-item" onclick="switchView('scripts', this)">TikTok Scripts</button>
-            <button class="tab-item" onclick="switchView('rules', this)">Quy Tắc Giọng Nói</button>
-            <button class="tab-item" onclick="switchView('add', this)">Thêm Ký Ức</button>
+        <!-- Search Input -->
+        <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="search-input" placeholder="Tìm kiếm ký ức... (Ví dụ: Tam Quốc, giấy phép, Tết, tuyển dụng)" oninput="filterEntries()">
         </div>
 
-        <!-- View 1: Timeline -->
-        <div id="view-timeline">
-            <div class="card">
-                <div class="card-title">Dòng Thời Gian Lịch Sử</div>
-                <div class="timeline-list" id="timeline-container">
-                    <!-- Dynamic timeline items -->
-                </div>
+        <!-- Tab Navigation -->
+        <div class="nav-bar">
+            <button class="nav-btn active" onclick="switchTab('journal', this)">Nhật Ký Khởi Nghiệp</button>
+            <button class="nav-btn" onclick="switchTab('scripts', this)">Kịch Bản TikTok</button>
+            <button class="nav-btn" onclick="switchTab('rules', this)">Quy Tắc Giọng Nói</button>
+            <button class="nav-btn" onclick="switchTab('add', this)">Ghi Chép Mới</button>
+            <div class="nav-indicator" id="nav-indicator"></div>
+        </div>
+
+        <!-- View 1: Journal Entries -->
+        <div id="view-journal" class="view-content">
+            <div id="journal-list">
+                <!-- Dynamic Journal Entries -->
             </div>
         </div>
 
         <!-- View 2: TikTok Scripts -->
-        <div id="view-scripts" style="display: none;">
-            <div class="card">
-                <div class="script-selector">
-                    <button class="script-btn active" onclick="selectScript(0, this)">Tập 1</button>
-                    <button class="script-btn" onclick="selectScript(1, this)">Tập 2</button>
-                    <button class="script-btn" onclick="selectScript(2, this)">Tập 3</button>
+        <div id="view-scripts" class="view-content" style="display: none;">
+            <div class="script-selector">
+                <button class="pill-btn active" onclick="selectScriptTab(0, this)">Tập 1: 8 Follower</button>
+                <button class="pill-btn" onclick="selectScriptTab(1, this)">Tập 2: Trực Tết</button>
+                <button class="pill-btn" onclick="selectScriptTab(2, this)">Tập 3: Ải Giấy Phép</button>
+            </div>
+
+            <div class="mode-bar">
+                <span>Chế độ phiên âm Việt hóa (Cho máy đọc thu âm TTS)</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="phonetic-toggle" onchange="renderScript()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="script-paper">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 id="script-title-text" style="font-family: 'Newsreader', serif; font-size: 1.25rem; font-weight: 500;"></h3>
+                    <button class="pill-btn" onclick="copyVoiceover()" style="font-size: 0.75rem; padding: 0.3rem 0.75rem;">Sao chép lời thoại</button>
                 </div>
 
-                <div class="toggle-row">
-                    <span>Phiên âm Việt hóa (Cho máy đọc thu âm TTS)</span>
-                    <input type="checkbox" id="phonetic-check" class="checkbox-custom" onchange="renderScriptContent()">
-                </div>
-
-                <div class="broll-box" id="script-broll-text"></div>
-                <div class="voiceover-text" id="script-voice-text"></div>
+                <div class="broll-note" id="script-broll-text"></div>
+                <div class="voiceover-content" id="script-voice-text"></div>
             </div>
         </div>
 
-        <!-- View 3: Rules -->
-        <div id="view-rules" style="display: none;">
-            <div class="card">
-                <div class="card-title">Quy Tắc Ngôn Từ</div>
-                <div class="rules-grid">
-                    <div class="rule-box do">
-                        <h4>Cách Nói Chuẩn</h4>
-                        <ul>
-                            <li>✓ Xưng <b>mình</b> - gọi người xem là <b>anh em</b></li>
-                            <li>✓ Phong cách mộc mạc, bình dân, đời thường</li>
-                            <li>✓ Đọc lồng tiếng tên công ty: <b>Mơ Xi Tếch</b></li>
-                            <li>✓ Tự nhận lỗi quản lý về mình, không đổ lỗi cho nhân sự</li>
-                        </ul>
-                    </div>
-                    <div class="rule-box dont">
-                        <h4>Cấm Sử Dụng</h4>
-                        <ul>
-                            <li>✕ Cấm xưng: <i>các sếp, tôi, các bạn</i></li>
-                            <li>✕ Cấm từ văn dịch sáo rỗng: <i>ma trận pháp lý, khai tử, đòn cô lập tàn nhẫn, vũ khí tối thượng</i></li>
-                            <li>✕ Cấm chào bán dịch vụ ở cuối clip</li>
-                        </ul>
-                    </div>
+        <!-- View 3: Brand Rules -->
+        <div id="view-rules" class="view-content" style="display: none;">
+            <div class="rules-card">
+                <div class="rules-section">
+                    <div class="rules-header">Phong Cách & Xưng Hô Chuẩn</div>
+                    <div class="rule-item">✓ Xưng <b>mình</b> - gọi người xem là <b>anh em</b> (tạo sự gần gũi, ngang hàng)</div>
+                    <div class="rule-item">✓ Giọng mộc mạc, bình dân, chân thực (phong cách trà đá vỉa hè)</div>
+                    <div class="rule-item">✓ Tên công ty khi thu âm lồng tiếng: <b>Mơ Xi Tếch</b></div>
+                    <div class="rule-item">✓ Nhận 100% trách nhiệm quản lý về mình, không đổ lỗi cho nhân sự</div>
+                </div>
+
+                <div class="rules-section" style="margin-top: 1.5rem;">
+                    <div class="rules-header">Những Điều Cấm Tuyệt Đối</div>
+                    <div class="rule-item">✕ Cấm xưng: <i>các sếp, tôi, các bạn</i></div>
+                    <div class="rule-item">✕ Cấm dùng từ văn dịch sáo rỗng: <i>ma trận pháp lý, khai tử, đòn cô lập tàn nhẫn, vũ khí tối thượng</i></div>
+                    <div class="rule-item">✕ Cấm chèn quảng cáo/chào bán dịch vụ ở đoạn kết clip</div>
                 </div>
             </div>
         </div>
 
-        <!-- View 4: Add Memory -->
-        <div id="view-add" style="display: none;">
-            <div class="card">
-                <div class="card-title">Đồng Bộ Ký Ức Mới</div>
-                <form onsubmit="handleAddMemory(event)">
-                    <div class="form-group">
-                        <label>Thời gian (Mốc thời gian)</label>
-                        <input type="text" id="input-date" class="form-input" placeholder="Ví dụ: Tháng 8/2024" required>
+        <!-- View 4: Add New Entry -->
+        <div id="view-add" class="view-content" style="display: none;">
+            <div class="form-card">
+                <form onsubmit="handleSaveEntry(event)">
+                    <div class="form-field">
+                        <label>Mốc thời gian</label>
+                        <input type="text" id="input-date" class="field-input" placeholder="Ví dụ: Tháng 8/2024" required>
                     </div>
-                    <div class="form-group">
-                        <label>Tiêu đề câu chuyện</label>
-                        <input type="text" id="input-title" class="form-input" placeholder="Tiêu đề mộc mạc..." required>
+                    <div class="form-field">
+                        <label>Tiêu đề nhật ký</label>
+                        <input type="text" id="input-title" class="field-input" placeholder="Viết tiêu đề ngắn gọn..." required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-field">
                         <label>Nội dung chi tiết & Bài học xương máu</label>
-                        <textarea id="input-desc" class="form-textarea" rows="5" placeholder="Nhập câu chuyện thực tế vào đây..." required></textarea>
+                        <textarea id="input-desc" class="field-textarea" rows="6" placeholder="Anh Hùng kể lại chi tiết trải nghiệm..." required></textarea>
                     </div>
-                    <button type="submit" class="btn-submit">Lưu vào Second Brain</button>
+                    <button type="submit" class="btn-save">Ghi vào Second Brain</button>
                 </form>
             </div>
         </div>
@@ -435,27 +568,33 @@
         </footer>
     </div>
 
+    <!-- Toast Notification -->
+    <div class="toast" id="toast-notify">Đã lưu ký ức thành công!</div>
+
     <script>
-        const timelineData = [
+        const initialJournal = [
             {
                 date: "24/12/2023",
-                title: "Phỏng vấn xin làm nhân viên nhưng được giao đứng tên Tổng giám đốc",
-                desc: "Hùng đi phỏng vấn vị trí TMĐT. Hai anh em nói chuyện suốt 3 tiếng đồng hồ (2h - 5h chiều). Sếp đề nghị Hùng làm TMĐT trước rồi đứng tên giấy phép làm Giám đốc công ty sách nói con. Hùng từng thất bại vài lần trước đó nên rén và run thật sự."
+                badge: "Khởi đầu",
+                title: "Phỏng vấn xin làm nhân viên nhưng được giao làm Tổng giám đốc",
+                desc: "Hùng đi phỏng vấn vị trí TMĐT. Hai anh em ngồi tâm sự suốt 3 tiếng đồng hồ (từ 2h đến 5h chiều). Sếp đề nghị Hùng làm TMĐT trước rồi đứng tên giấy phép làm Giám đốc công ty sách nói con. Hùng từng thất bại vài dự án nhỏ trước đó nên rén và run thật sự."
             },
             {
                 date: "Tháng 1/2024",
-                title: "Tiếp quản kênh TikTok Shop 8 Follower & Nỗi đau cô lập",
-                desc: "Tiếp quản kênh chết 8 follower. Cày 30-60 video ngắn/ngày (chỉ nhấc sách, show quote, lồng nhạc). Video đầu 200 view, ngay tối nổ đơn liền. Sếp xếp ngồi riêng phòng không cho ăn chung nói chuyện với nhân sự cũ (triết lý Tam Quốc đấu tranh), bị cả công ty ghét vì nghĩ lầm lì khó ưa."
+                title: "Kênh TikTok 8 Follower & Nỗi đau cô lập",
+                desc: "Tiếp quản kênh TikTok chết yểu 8 follower. Cày 30-60 video ngắn/ngày (chỉ nhấc sách, show quote, lồng nhạc). Video đầu 200 view, ngay tối nổ đơn liền. Đồng thời bị sếp xếp ngồi riêng phòng không cho ăn chung hay nói chuyện với nhân sự cũ (triết lý Tam Quốc đấu tranh), bị cả công ty ghét vì nghĩ lầm lì khó ưa."
             },
             {
                 date: "Tết Âm Lịch 2024",
+                badge: "Chiến dịch Tết",
                 title: "Trực Tết 20km & Bán sạch kho sách Tam Quốc Chí",
-                desc: "Nhà cách 20km nhưng chọn không về nhà ăn Tết. Một mình lủi thủi văn phòng trống ngày Tết tủi thân vcl. Chuyển hướng bán bộ sách Tam Quốc Chí thành quà tặng ngoại giao cao cấp cho giới làm chủ. Đơn nổ liên tục gãy hệ thống, bán sạch kho. Ra Tết vươn lên doanh số thứ hai công ty, được giao lead team mới."
+                desc: "Nhà cách công ty 20km nhưng chọn không về nhà ăn Tết. Một mình lủi thủi ở văn phòng cày việc ngày Giao thừa, Mùng 1, Mùng 2 tủi thân vcl. Chuyển hướng bán bộ sách Tam Quốc Chí thành giải pháp quà tặng ngoại giao cao cấp cho giới làm chủ. Đơn nổ liên tục gãy hệ thống, bán sạch kho. Ra Tết vươn lên doanh số thứ hai công ty, được giao lead team mới."
             },
             {
                 date: "Tháng 3/2024 - Tháng 6/2024",
+                badge: "Cực hình pháp lý",
                 title: "Cái ải khó nuốt: Xin giấy phép sách nói",
-                desc: "Suốt từ tháng 3 đến tháng 6 bị hành lên hành xuống vì thủ tục giấy tờ: đề án hoạt động, chứng minh bản quyền, hồ sơ bảo mật thông tin cấp độ... Toàn thứ lạ hoắc. Hồ sơ bị trả về liên tục vì sai dấu chấm dấu phẩy. Ở trên sếp dí tiến độ, ở dưới dev ngồi chơi xơi nước chờ app lên store, Hùng đứng giữa chịu trận lo dự án sập. Tháng 6 mới cầm được giấy phép trên tay mới dám thở phào."
+                desc: "Suốt từ tháng 3 đến tháng 6 bị hành lên hành xuống vì thủ tục giấy tờ: đề án hoạt động, chứng minh bản quyền, hồ sơ bảo mật thông tin cấp độ... Toàn thứ lạ hoắc với một đứa mới làm sếp. Hồ sơ bị trả về liên tục vì sai dấu chấm dấu phẩy. Ở trên sếp dí tiến độ, ở dưới dev ngồi chơi xơi nước chờ app lên store, Hùng đứng giữa chịu trận lo dự án sập. Tháng 6 mới cầm được giấy phép trên tay mới dám thở phào."
             },
             {
                 date: "Giai đoạn vận hành",
@@ -464,8 +603,9 @@
             },
             {
                 date: "Độ ngộ & Sáng lập",
+                badge: "Mơ Xi Tếch",
                 title: "Chân lý tự động hóa & Đặt nền móng Mơ Xi Tếch",
-                desc: "Rút ra bài học xương máu: Cứ dùng sức trâu làm tay và Excel thì scale đến mức nào đó là gãy. Muốn doanh nghiệp chạy êm thì quy trình và hệ thống tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Sáng lập Mơ Xi Tếch."
+                desc: "Rút ra bài học xương máu: Cứ dùng sức trâu làm tay và Excel thì scale đến mức nào đó là gãy. Muốn doanh nghiệp chạy êm thì quy trình và hệ thống tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Thành lập Mơ Xi Tếch để tự động hóa quy trình cho doanh nghiệp."
             }
         ];
 
@@ -485,84 +625,147 @@
             {
                 title: "Tập 3: Cái ải giấy phép & Bài học quản trị",
                 broll: "• Cận cảnh xấp hồ sơ in đen trắng trên bàn.\n• Màn hình app hiển thị lỗi code màu đỏ.\n• Anh gục mặt xuống bàn làm việc đầy mệt mỏi.",
-                normal: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Để xứng với vị trí tổng giám đốc cho dự án sách nói sắp tới, tháng ba năm hai nghìn không trăm hai mươi tư, mình tập trung toàn lực chạy đề án xin giấy phép. Lúc đó làm app sách nói ở Việt Nam, xin được cái giấy phép là cái ải khó nuốt nhất đời mình. Suốt từ tháng ba đến tháng sáu, mình bị hành lên hành xuống vì thủ tục giấy tờ. Làm đề án hoạt động, chứng minh bản quyền sách, rồi hồ sơ bảo mật thông tin cấp độ... Toàn những thứ lạ hoắc với một đứa mới làm sếp như mình. Hồ sơ viết dày cộp nộp lên, rồi lại bị trả về sửa liên tục chỉ vì sai một dấu chấm dấu phẩy. Ở trên thì sếp dí hỏi khi nào xong, ở dưới thì mấy ông dev ngồi chơi xơi nước chờ app lên store để test, còn mình đứng ở giữa chịu trận, mất ăn mất ngủ vì sợ dự án bị sập trước khi kịp chạy. Ròng rã ba tháng trời chạy vạy, lúc cầm được cái giấy phép trên tay mới dám thở phào nhẹ nhõm.\n\nĐể xứng tầm với vị trí tổng giám đốc đó, mình phải tự tay gánh mọi thứ. Và cái dại nhất của mình lúc đó là chưa biết cách xây dựng quy trình làm việc chuẩn. Mình tuyển nhân sự về nhưng lại không có quy trình rõ ràng cho mọi người chạy, hệ thống vận hành cứ thay đổi liên tục tuần này qua tuần khác làm anh em xoay như chong chóng. Còn bản thân mình lúc đó lần đầu làm quản lý, bập bẹ chưa vững, thành ra thay vì dẫn dắt thì mình lại đi làm thay, ôm đồm tất cả. Việc gì cũng đến tay, app lỗi liên tục, có hôm phải thức đến ba giờ sáng tự sửa lỗi code mà lòng bất lực vcl.\n\nTrải qua những ngày kiệt sức đó mình mới ngộ ra: Muốn doanh nghiệp chạy êm thì quy trình và hệ thống phải đi trước con người. Một người tổng giám đốc giỏi không phải là người đi làm thay nhân viên, mà là người biết xây quy trình tự động hóa để hệ thống tự vận hành trơn tru. Đừng bao giờ tuyển người về rồi mới vắt óc nghĩ quy trình vận hành. Quy trình lộn xộn sẽ giết chết đam mê khởi nghiệp của chính bạn và làm kiệt quệ tinh thần cả đội ngũ. Mình ngộ ra rằng: Muốn phát triển bền vững, hệ thống và quy trình tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Đó chính là bài học xương máu lớn nhất giúp mình trưởng thành hơn ở vị trí này. Bấm follow mình để đón chờ những bài học khởi nghiệp thực chiến tiếp theo nhé!",
+                normal: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Để xứng với vị trí tổng giám đốc cho dự án sách nói sắp tới, tháng ba năm hai nghìn không trăm hai mươi tư, mình tập trung toàn lực chạy đề án xin giấy phép. Lúc đó làm app sách nói ở Việt Nam, xin được cái giấy phép là cái ải khó nuốt nhất đời mình. Suốt từ tháng ba đến tháng sáu, mình bị hành lên hành xuống vì thủ tục giấy tờ. Làm đề án hoạt động, chứng minh bản quyền sách, rồi hồ sơ bảo mật thông tin cấp độ... Toàn những thứ lạ hoắc với một đứa mới làm sếp như mình. Hồ sơ viết dày cộp nộp lên, rồi lại bị trả về sửa liên tục chỉ vì sai một dấu chấm dấu phẩy. Ở trên thì sếp dí hỏi khi nào xong, ở dưới thì mấy ông dev ngồi chơi xơi nước chờ app lên store để test, còn mình đứng ở giữa chịu trận, mất ăn mất ngủ vì sợ dự án bị sập trước khi kịp chạy. Ròng rã ba tháng trời chạy vạy, lúc cầm được cái giấy phép trên tay mới dám thở phào nhẹ nhõm.\n\nĐể xứng tầm với vị trí tổng giám đốc đó, mình phải tự tay gánh mọi thứ. Và cái dại nhất của mình lúc đó là chưa biết cách xây dựng quy trình làm việc chuẩn. Mình tuyển nhân sự về nhưng lại không có quy trình rõ ràng cho mọi người chạy, hệ thống vận hành cứ thay đổi liên tục tuần này qua tuần khác làm anh em xoay như chong chóng. Còn bản thân mình lúc đó lần đầu làm quản lý, bập bẹ chưa vững, thành ra thay vì dẫn dắt thì mình lại đi làm thay, ôm đồm tất cả. Việc gì cũng đến tay, app lỗi liên tục, có hôm phải thức đến ba giờ sáng tự sửa lỗi code mà lòng bất lực vcl.\n\nTrải qua những ngày kiệt sức đó mình mới ngộ ra: Muốn doanh nghiệp chạy êm thì quy trình và hệ thống phải đi trước con người. Một người tổng giám đốc giỏi không phải là người đi làm thay nhân viên, mà là người biết xây quy trình tự động hóa để hệ thống tự vận hành trơn tru. Đừng bao giờ tuyển người về rồi mới vắt óc nghĩ quy trình vận hành. Quy trình lộn xộn sẽ giết chết đam me khởi nghiệp của chính bạn và làm kiệt quệ tinh thần cả đội ngũ. Mình ngộ ra rằng: Muốn phát triển bền vững, hệ thống và quy trình tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Đó chính là bài học xương máu lớn nhất giúp mình trưởng thành hơn ở vị trí này. Bấm follow mình để đón chờ những bài học khởi nghiệp thực chiến tiếp theo nhé!",
                 phonetic: "Ngày đầu phỏng vấn xin làm nhân viên nhưng được đứng tên làm tổng giám đốc sẽ như thế nào? Để xứng với vị trí tổng giám đốc cho dự án sách nói sắp tới, tháng ba năm hai nghìn không trăm hai mươi tư, mình tập trung toàn lực chạy đề án xin giấy phép. Lúc đó làm app sách nói ở Việt Nam, xin được cái giấy phép là cái ải khó nuốt nhất đời mình. Suốt từ tháng ba đến tháng sáu, mình bị hành lên hành xuống vì thủ tục giấy tờ. Làm đề án hoạt động, chứng minh bản quyền sách, rồi hồ sơ bảo mật thông tin cấp độ... Toàn những thứ lạ hoắc với một đứa mới làm sếp như mình. Hồ sơ viết dày cộp nộp lên, rồi lại bị trả về sửa liên tục chỉ vì sai một dấu chấm dấu phẩy. Ở trên thì sếp dí hỏi khi nào xong, ở dưới thì mấy ông dev ngồi chơi xơi nước chờ app lên store để test, còn mình đứng ở giữa chịu trận, mất ăn mất ngủ vì sợ dự án bị sập trước khi kịp chạy. Ròng rã ba tháng trời chạy vạy, lúc cầm được cái giấy phép trên tay mới dám thở phào nhẹ nhõm. Để xứng tầm với vị trí tổng giám đốc đó, mình phải tự tay gánh mọi thứ. Và cái dại nhất của mình lúc đó là chưa biết cách xây dựng quy trình làm việc chuẩn. Mình tuyển nhân sự về nhưng lại không có quy trình rõ ràng cho mọi người chạy, hệ thống vận hành cứ thay đổi liên tục tuần này qua tuần khác làm anh em xoay như chong chóng. Còn bản thân mình lúc đó lần đầu làm quản lý, bập bẹ chưa vững, thành ra thay vì dẫn dắt thì mình lại đi làm thay, ôm đồm tất cả. Việc gì cũng đến tay, app lỗi liên tục, có hôm phải thức đến ba giờ sáng tự sửa lỗi code mà lòng bất lực vcl. Trải qua những ngày kiệt sức đó mình mới ngộ ra: Muốn doanh nghiệp chạy êm thì quy trình và hệ thống phải đi trước con người. Một người tổng giám đốc giỏi không phải là người đi làm thay nhân viên, mà là người biết xây quy trình tự động hóa để hệ thống tự vận hành trơn tru. Đừng bao giờ tuyển người về rồi mới vắt óc nghĩ quy trình vận hành. Quy trình lộn xộn sẽ giết chết đam mê khởi nghiệp của chính bạn và làm kiệt quệ tinh thần cả đội ngũ. Mình ngộ ra rằng: Muốn phát triển bền vững, hệ thống và quy trình tự động hóa phải đi trước con người, chứ không phải đi sau dọn rác. Đó chính là bài học xương máu lớn nhất giúp mình trưởng thành hơn ở vị trí này. Bấm phao-lô mình để đón chờ những bài học khởi nghiệp thực chiến tiếp theo nhé!"
             }
         ];
 
-        let selectedScript = 0;
-        let currentTimeline = [...timelineData];
+        let activeScript = 0;
+        let journalEntries = [...initialJournal];
 
         document.addEventListener('DOMContentLoaded', () => {
-            const saved = localStorage.getItem('vth_minimal_secondbrain');
-            if (saved) currentTimeline = JSON.parse(saved);
+            const saved = localStorage.getItem('vth_journal_entries');
+            if (saved) journalEntries = JSON.parse(saved);
 
-            renderTimeline();
-            renderScriptContent();
+            renderJournal();
+            renderScript();
+            updateIndicator(document.querySelector('.nav-btn.active'));
         });
 
-        function switchView(viewName, btnEl) {
-            document.querySelectorAll('.tab-item').forEach(b => b.classList.remove('active'));
+        // Smooth Tab Switching
+        function switchTab(viewName, btnEl) {
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             btnEl.classList.add('active');
+            updateIndicator(btnEl);
 
-            ['timeline', 'scripts', 'rules', 'add'].forEach(v => {
-                document.getElementById(`view-${v}`).style.display = (v === viewName) ? 'block' : 'none';
-            });
+            const activeView = document.querySelector('.view-content:not([style*="display: none"])');
+            const targetView = document.getElementById(`view-${viewName}`);
+
+            if (activeView && activeView !== targetView) {
+                activeView.classList.add('switching');
+                setTimeout(() => {
+                    activeView.style.display = 'none';
+                    activeView.classList.remove('switching');
+
+                    targetView.style.display = 'block';
+                    targetView.classList.add('switching');
+                    setTimeout(() => targetView.classList.remove('switching'), 20);
+                }, 200);
+            }
         }
 
-        function renderTimeline() {
-            const container = document.getElementById('timeline-container');
+        function updateIndicator(el) {
+            const indicator = document.getElementById('nav-indicator');
+            if (el && indicator) {
+                indicator.style.left = `${el.offsetLeft}px`;
+                indicator.style.width = `${el.offsetWidth}px`;
+            }
+        }
+
+        // Render Journal
+        function renderJournal(filterText = '') {
+            const container = document.getElementById('journal-list');
             container.innerHTML = '';
 
-            currentTimeline.forEach(item => {
-                const el = document.createElement('div');
-                el.className = 'timeline-item';
-                el.innerHTML = `
-                    <div class="timeline-date">${item.date}</div>
-                    <div class="timeline-heading">${item.title}</div>
-                    <div class="timeline-text">${item.desc}</div>
+            const lowerFilter = filterText.toLowerCase();
+
+            journalEntries.forEach((item, index) => {
+                if (lowerFilter && !item.title.toLowerCase().includes(lowerFilter) && !item.desc.toLowerCase().includes(lowerFilter)) {
+                    return;
+                }
+
+                const card = document.createElement('div');
+                card.className = `entry-card ${index === 0 ? 'expanded' : ''}`;
+                card.onclick = () => card.classList.toggle('expanded');
+
+                card.innerHTML = `
+                    <div class="entry-header">
+                        <span class="entry-date">${item.date}</span>
+                        ${item.badge ? `<span class="entry-badge">${item.badge}</span>` : ''}
+                    </div>
+                    <div class="entry-title">${item.title}</div>
+                    <div class="entry-body">${item.desc}</div>
+                    <div class="expand-hint">Click để ${card.classList.contains('expanded') ? 'thu gọn' : 'đọc chi tiết câu chuyện & bài học'}</div>
                 `;
-                container.appendChild(el);
+
+                container.appendChild(card);
             });
         }
 
-        function selectScript(idx, btn) {
-            selectedScript = idx;
-            document.querySelectorAll('.script-btn').forEach(b => b.classList.remove('active'));
+        function filterEntries() {
+            const text = document.getElementById('search-input').value;
+            renderJournal(text);
+        }
+
+        // Script Selector
+        function selectScriptTab(idx, btn) {
+            activeScript = idx;
+            document.querySelectorAll('.script-selector .pill-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            renderScriptContent();
+            renderScript();
         }
 
-        function renderScriptContent() {
-            const item = scriptsData[selectedScript];
-            const isPhonetic = document.getElementById('phonetic-check').checked;
+        function renderScript() {
+            const data = scriptsData[activeScript];
+            const isPhonetic = document.getElementById('phonetic-toggle').checked;
 
-            document.getElementById('script-broll-text').textContent = item.broll;
-            document.getElementById('script-voice-text').textContent = isPhonetic ? item.phonetic : item.normal;
+            document.getElementById('script-title-text').textContent = data.title;
+            document.getElementById('script-broll-text').textContent = data.broll;
+
+            const voiceEl = document.getElementById('script-voice-text');
+            voiceEl.style.opacity = '0';
+            setTimeout(() => {
+                voiceEl.textContent = isPhonetic ? data.phonetic : data.normal;
+                voiceEl.style.opacity = '1';
+            }, 150);
         }
 
-        function handleAddMemory(e) {
+        // Add Entry
+        function handleSaveEntry(e) {
             e.preventDefault();
             const date = document.getElementById('input-date').value;
             const title = document.getElementById('input-title').value;
             const desc = document.getElementById('input-desc').value;
 
-            currentTimeline.push({ date, title, desc });
-            localStorage.setItem('vth_minimal_secondbrain', JSON.stringify(currentTimeline));
+            journalEntries.unshift({ date, title, desc, badge: "Mới" });
+            localStorage.setItem('vth_journal_entries', JSON.stringify(journalEntries));
 
-            renderTimeline();
+            renderJournal();
 
             document.getElementById('input-date').value = '';
             document.getElementById('input-title').value = '';
             document.getElementById('input-desc').value = '';
 
-            alert('Đã lưu thành công vào Second Brain!');
-            switchView('timeline', document.querySelectorAll('.tab-item')[0]);
+            showToast("Đã ghi thành công vào Nhật ký!");
+            switchTab('journal', document.querySelectorAll('.nav-btn')[0]);
         }
 
-        function copyLink() {
+        function copyVoiceover() {
+            const text = document.getElementById('script-voice-text').textContent;
+            navigator.clipboard.writeText(text);
+            showToast("Đã sao chép lời thoại!");
+        }
+
+        function copyShareLink() {
             navigator.clipboard.writeText(window.location.href);
-            alert('Đã sao chép liên kết!');
+            showToast("Đã sao chép liên kết!");
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast-notify');
+            t.textContent = msg;
+            t.classList.add('visible');
+            setTimeout(() => t.classList.remove('visible'), 2500);
         }
     </script>
 </body>
